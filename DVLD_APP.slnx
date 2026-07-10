@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="bus/bus.csproj" Id="f7d064b8-1b7b-430d-9a67-e754ec10c475" />
+  <Project Path="Data/Data.csproj" Id="dea97e95-5a19-4d22-aefa-c52b7dba13a1" />
+  <Project Path="DVLD_APP/DVLD_APP.csproj" Id="e8492d0c-ab98-468c-965f-ce418a9a96b9" />
+</Solution>
