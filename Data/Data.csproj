@@ -41,8 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clsApplication.cs" />
+    <Compile Include="clsApplicationType.cs" />
+    <Compile Include="clsDataAccessSetting.cs" />
+    <Compile Include="clsDriver.cs" />
+    <Compile Include="clsInternationalLicense.cs" />
+    <Compile Include="clsLicense.cs" />
+    <Compile Include="clsLicenseClass.cs" />
+    <Compile Include="clsperson.cs" />
+    <Compile Include="clsTest.cs" />
+    <Compile Include="clsTestAppointment.cs" />
+    <Compile Include="clsTestType.cs" />
+    <Compile Include="clsUser.cs" />
     <Compile Include="DataLayer.cs" />
-    <Compile Include="dataSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

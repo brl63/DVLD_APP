@@ -8,7 +8,7 @@ namespace Data
 {
     public class DataLayer
     {
-        private string connectionString = dataSettings.connectionString;
+        private string connectionString = clsDataAccessSetting._connectionString;
 
 
     }
