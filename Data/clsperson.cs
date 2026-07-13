@@ -24,7 +24,7 @@ namespace Data
 
 
 
-        public bool GetPersonByID(int personID, ref string NationalNo, ref string FirstName, ref string SecondName, ref string ThirdName, ref string LastName, ref DateTime DateOfBirth, ref byte Gender, ref string Address, ref string Phone, ref string Email, ref int NationalityCountryID, ref string ImagePath)
+        public static bool GetPersonByID(int personID, ref string NationalNo, ref string FirstName, ref string SecondName, ref string ThirdName, ref string LastName, ref DateTime DateOfBirth, ref byte Gender, ref string Address, ref string Phone, ref string Email, ref int NationalityCountryID, ref string ImagePath)
         {
             string sql = "SELECT * FROM People WHERE PersonID = @PersonID";
             using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
@@ -62,7 +62,7 @@ namespace Data
             }
         }
 
-        public bool GetPersonByNationalID(string nationalID, ref int PersonID, ref string FirstName, ref string SecondName, ref string ThirdName, ref string LastName, ref DateTime DateOfBirth, ref byte Gender, ref string Address, ref string Phone, ref string Email, ref int NationalityCountryID, ref string ImagePath)
+        public static bool GetPersonByNationalID(string nationalID, ref int PersonID, ref string FirstName, ref string SecondName, ref string ThirdName, ref string LastName, ref DateTime DateOfBirth, ref byte Gender, ref string Address, ref string Phone, ref string Email, ref int NationalityCountryID, ref string ImagePath)
         {
             string sql = "SELECT * FROM People WHERE NationalNo = @NationalNo";
             using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
@@ -100,7 +100,7 @@ namespace Data
             }
         }
 
-        public DataTable GetAll()
+        public static DataTable GetAll()
         {
             DataTable dtPersons = new DataTable();
 
@@ -121,7 +121,7 @@ namespace Data
             return dtPersons;
         }
 
-        public int AddNew(string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateofBirth, byte Gender, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
+        public static int AddNew(string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateofBirth, byte Gender, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
         {
             
             string sql = "INSERT INTO People (NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, Gender, Address, Phone, Email, NationalityCountryID, ImagePath) VALUES (@NationalNo, @FirstName, @SecondName, @ThirdName, @LastName, @DateOfBirth, @Gender, @Address, @Phone, @Email, @NationalityCountryID, @ImagePath); SELECT SCOPE_IDENTITY();";
@@ -165,7 +165,7 @@ namespace Data
             return NewPersonID;
         }
 
-        public bool Update(int PersonID, string NationalNo, string FirstName, string SecondName, string ThirdName , string LastName, DateTime DateofBirth, byte Gender, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
+        public static bool Update(int PersonID, string NationalNo, string FirstName, string SecondName, string ThirdName , string LastName, DateTime DateofBirth, byte Gender, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
         {
             string sql = "UPDATE People SET NationalNo = @NationalNo, FirstName = @FirstName, SecondName = @SecondName, ThirdName = @ThirdName, LastName = @LastName, DateOfBirth = @DateOfBirth, Gender = @Gender, Address = @Address, Phone = @Phone, Email = @Email, NationalityCountryID = @NationalityCountryID, ImagePath = @ImagePath WHERE PersonID = @PersonID";
             using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
@@ -204,7 +204,7 @@ namespace Data
             }
         }
 
-        public bool Delete(int PersonID)
+        public static bool Delete(int PersonID)
         {
             string sql = "DELETE FROM People WHERE PersonID = @PersonID";
             using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
@@ -219,7 +219,7 @@ namespace Data
             }
         }
 
-        public bool PersonExists(int personID)
+        public static bool PersonExists(int personID)
         {
             string sql = "SELECT COUNT(*) FROM People WHERE PersonID = @PersonID";
             using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))

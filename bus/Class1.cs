@@ -9,5 +9,6 @@ namespace bus
 {
     public class busLayer 
     {
+        public enum enApplicationStatus { New = 1, Cancelled = 2, Completed = 3 }
     }
 }
