@@ -334,7 +334,7 @@ namespace Data
                     return rowsAffected > 0; // Return true if at least one row was updated
                 }
             }
-        }
+        } 
 
         public static bool CheckActiveLicenseByClass(int DriverID, int classID)
         {
