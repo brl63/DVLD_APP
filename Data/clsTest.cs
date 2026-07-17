@@ -111,6 +111,7 @@ namespace Data
 
         public static bool GetLastTestByPersonAndTestType(int PersonID, int TestTypeID, int licenseClassID, ref int testID, ref int testAppointmentID, ref bool testResult, ref string notes, ref int createdByUserID)
         {
+            bool result = false;
             string sql = @"SELECT TOP 1 Tests.TestID, Tests.TestAppointmentID, Tests.TestResult, Tests.Notes, Tests.CreatedByUserID 
                          FROM Tests 
                          INNER JOIN TestAppointments ON Tests.TestAppointmentID = TestAppointments.TestAppointmentID
@@ -125,6 +126,7 @@ namespace Data
             {
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
+                    result = true;
                     command.Parameters.AddWithValue("@ApplicantPersonID", PersonID);
                     command.Parameters.AddWithValue("@LicenseClassID", licenseClassID);
                     command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
@@ -133,6 +135,7 @@ namespace Data
                     {
                         if (reader.Read())
                         {
+
                             testID = reader.GetInt32(reader.GetOrdinal("TestID"));
                             testAppointmentID = reader.GetInt32(reader.GetOrdinal("TestAppointmentID"));
                             if (reader.IsDBNull(reader.GetOrdinal("Notes")))
@@ -149,8 +152,51 @@ namespace Data
                     }
                 }  
             }
-            return true;
 
+            return result;
+
+        }
+
+        public static bool UpdateTest(int testID, int testAppointmentID, bool testResult, string notes, int createdByUserID)
+        {
+            string sql = "UPDATE Tests SET TestAppointmentID = @TestAppointmentID, TestResult = @TestResult, Notes = @Notes, CreatedByUserID = @CreatedByUserID WHERE TestID = @TestID";
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@TestID", testID);
+                    command.Parameters.AddWithValue("@TestAppointmentID", testAppointmentID);
+                    command.Parameters.AddWithValue("@TestResult", testResult);
+                    if (string.IsNullOrEmpty(notes))
+                        command.Parameters.AddWithValue("@Notes", DBNull.Value);
+                    else
+                        command.Parameters.AddWithValue("@Notes", notes);
+                    command.Parameters.AddWithValue("@Notes", notes);
+                    command.Parameters.AddWithValue("@CreatedByUserID", createdByUserID);
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+                    connection.Close();
+                    return rowsAffected > 0; // Return true if at least one row was updated
+                }
+            }
+        }
+
+        public static bool UpdateResult(int testID, bool testResult, int createdByUserID)
+        {
+            string sql = "UPDATE Tests SET TestResult = @TestResult, CreatedByUserID = @CreatedByUserID WHERE TestID = @TestID";
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@TestID", testID);
+                    command.Parameters.AddWithValue("@TestResult", testResult);
+                    command.Parameters.AddWithValue("@CreatedByUserID", createdByUserID);
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+                    connection.Close();
+                    return rowsAffected > 0; // Return true if at least one row was updated
+                }
+            }
         }
     }
 }

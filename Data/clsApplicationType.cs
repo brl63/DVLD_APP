@@ -89,5 +89,38 @@ namespace Data
             }
         }
 
+        public static int InsertApplicationType(string applicationTypeTitle,decimal fee)
+        {
+            string sql = "INSERT INTO ApplicationTypes (ApplicationTypeTitle, Fee) VALUES (@ApplicationTypeTitle, @Fee); SELECT SCOPE_IDENTITY();";
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@ApplicationTypeTitle", applicationTypeTitle);
+                    command.Parameters.AddWithValue("@Fee", fee);
+                    connection.Open();
+                    int applicationTypeID = Convert.ToInt32(command.ExecuteScalar());
+                    connection.Close();
+                    return applicationTypeID;
+                }
+            }
+        }
+
+
+        public static bool DeleteApplicationType(int applicationTypeID)
+        {
+            string sql = "DELETE FROM ApplicationTypes WHERE ApplicationTypeID = @ApplicationTypeID";
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@ApplicationTypeID", applicationTypeID);
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+                    connection.Close();
+                    return rowsAffected > 0; // Return true if at least one row was deleted
+                }
+            }
+        }
     }
 }

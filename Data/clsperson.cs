@@ -234,5 +234,20 @@ namespace Data
             }
         }
 
+
+        public static bool IsNationalNumExcist(string NationalNo)
+        {
+            string sql = "SELECT COUNT(*) FROM People WHERE NationalNo = @NationalNo";
+            using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, cn))
+                {
+                    cmd.Parameters.AddWithValue("@NationalNo", NationalNo);
+                    cn.Open();
+                    int count = (int)cmd.ExecuteScalar();
+                    return count > 0;
+                }
+            }
+        }
     }
 }

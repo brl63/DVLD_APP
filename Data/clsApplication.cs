@@ -216,6 +216,39 @@ namespace Data
                 }
             }
         }
+
+        public static bool GetLatestApplicationByPerson(int personID, int ApplicationTypeID, ref int ApplicationID, ref DateTime ApplicationDate, ref byte ApplicationStatus, ref DateTime LastStatusDate, ref decimal PaidFees, ref int CreatedByUserID)
+        {
+            string sql = "SELECT TOP 1 * FROM Applications WHERE ApplicantPersonID = @ApplicantPersonID AND ApplicationTypeID = @ApplicationTypeID ORDER BY ApplicationDate DESC";
+            using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, cn))
+                {
+                    cmd.Parameters.AddWithValue("@ApplicantPersonID", personID);
+                    cmd.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
+                    cn.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            ApplicationID = reader.GetInt32(reader.GetOrdinal("ApplicationID"));
+                            ApplicationDate = reader.GetDateTime(reader.GetOrdinal("ApplicationDate"));
+                            ApplicationTypeID = reader.GetInt32(reader.GetOrdinal("ApplicationTypeID"));
+                            ApplicationStatus = reader.GetByte(reader.GetOrdinal("ApplicationStatus"));
+                            LastStatusDate = reader.GetDateTime(reader.GetOrdinal("LastStatusDate"));
+                            PaidFees = reader.GetDecimal(reader.GetOrdinal("PaidFees"));
+                            CreatedByUserID = reader.GetInt32(reader.GetOrdinal("CreatedByUserID"));
+                            return true;
+
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }
-

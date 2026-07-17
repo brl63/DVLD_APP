@@ -175,6 +175,25 @@ namespace Data
             }
         }
 
+        public static int InsertClass(string className, string classDescription, byte minimumAge, byte defaultValidityLength, decimal fee)
+        {
+            string sql = "INSERT INTO LicenseClasses (ClassName, ClassDescription, MinimumAllowedAge, DefaultValidityLength, ClassFees) VALUES (@ClassName, @ClassDescription, @MinimumAge, @DefaultValidityLength, @Fees);SELECT SCOPE_IDENTITY();";
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@ClassName", className);
+                    command.Parameters.AddWithValue("@ClassDescription", classDescription);
+                    command.Parameters.AddWithValue("@MinimumAge", minimumAge);
+                    command.Parameters.AddWithValue("@DefaultValidityLength", defaultValidityLength);
+                    command.Parameters.AddWithValue("@Fees", fee);
+                    connection.Open();
+                    object NewId = command.ExecuteScalar();
+                    return Convert.ToInt32(NewId);
+                }
+            }
+        }
+
 
 
     }
