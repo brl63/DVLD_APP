@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 
- namespace Data
+namespace Data
 {
     public class clsTestAppointment
     {
@@ -13,7 +13,6 @@ using System.Data.SqlClient;
         public decimal PaidFees { get; set; }
         public bool IsLocked { get; set; }
         public int CreatedByUserID { get; set; }
-
 
         public static DataTable GetAll()
         {
@@ -43,7 +42,6 @@ using System.Data.SqlClient;
                     cmd.Parameters.AddWithValue("@PaidFees", paidFees);
                     cn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
-                    cn.Close();
                     return rowsAffected > 0;
                 }
             }
@@ -59,31 +57,31 @@ using System.Data.SqlClient;
                     cmd.Parameters.AddWithValue("@TestAppointmentID", testAppointmentID);
                     cn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
-                    cn.Close();
                     return rowsAffected > 0;
                 }
             }
         }
 
-        public static int AddNewAppointment(int testTypeID, int localDrivingLicenseApplicationID, DateTime appointmentDate, decimal paidFees, bool isLocked, int createdByUserID)
+        // تم تنظيف الـ INSERT تماماً من أي أعمدة زيادة
+        public static int AddNewAppointment(int testTypeID, int localDrivingLicenseApplicationID, DateTime appointmentDate, decimal paidFees, int createdByUserID)
         {
-            string sql = @"INSERT INTO TestAppointments (TestTypeID, LocalDrivingLicenseApplicationID, AppointmentDate, PaidFees, IsLocked, CreatedByUserID, RetakeTestApplicationID) VALUES (@TestTypeID, @LocalDrivingLicenseApplicationID, @AppointmentDate, @PaidFees, 0, @CreatedByUserID, @RetakeTestApplicationID); SELECT SCOPE_IDENTITY()";
+            string sql = @"INSERT INTO TestAppointments (TestTypeID, LocalDrivingLicenseApplicationID, AppointmentDate, PaidFees, IsLocked, CreatedByUserID) 
+                           VALUES (@TestTypeID, @LocalDrivingLicenseApplicationID, @AppointmentDate, @PaidFees, 0, @CreatedByUserID); 
+                           SELECT SCOPE_IDENTITY();";
+
             using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(sql, cn))
                 {
-                    cn.Open();
                     cmd.Parameters.AddWithValue("@TestTypeID", testTypeID);
                     cmd.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", localDrivingLicenseApplicationID);
                     cmd.Parameters.AddWithValue("@AppointmentDate", appointmentDate);
                     cmd.Parameters.AddWithValue("@PaidFees", paidFees);
                     cmd.Parameters.AddWithValue("@CreatedByUserID", createdByUserID);
-                    cmd.Parameters.AddWithValue("@RetakeTestApplicationID", DBNull.Value);
-                    int testAppointmentID = Convert.ToInt32(cmd.ExecuteScalar());
-                    cn.Close();
-                    return testAppointmentID;
 
-
+                    cn.Open();
+                    object result = cmd.ExecuteScalar();
+                    return (result != null && int.TryParse(result.ToString(), out int insertedID)) ? insertedID : -1;
                 }
             }
         }
@@ -98,59 +96,57 @@ using System.Data.SqlClient;
                     cmd.Parameters.AddWithValue("@TestAppointmentID", testAppointmentID);
                     cn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
-                    cn.Close();
                     return rowsAffected > 0;
                 }
             }
         }
 
+        // تم تنظيف ميثود الـ Get لتطابق جدولك الحالي
         public static bool GetAppointment(int testAppointmentID, ref int testTypeID, ref int localDrivingLicenseApplicationID, ref DateTime appointmentDate, ref decimal paidFees, ref bool isLocked, ref int createdByUserID)
         {
-            string sql = "SELECT * FROM TestAppointments WHERE TestAppointmentID = @TestAppointmentID AND IsLocked = 0 AND RetakeTestApplicationID IS NULL";
+            bool isFound = false;
+            string sql = "SELECT * FROM TestAppointments WHERE TestAppointmentID = @TestAppointmentID";
             using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(sql, cn))
                 {
+                    cmd.Parameters.AddWithValue("@TestAppointmentID", testAppointmentID);
+                    cn.Open();
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
                         if (dr.Read())
                         {
+                            isFound = true;
                             testTypeID = Convert.ToInt32(dr["TestTypeID"]);
                             localDrivingLicenseApplicationID = Convert.ToInt32(dr["LocalDrivingLicenseApplicationID"]);
                             appointmentDate = Convert.ToDateTime(dr["AppointmentDate"]);
                             paidFees = Convert.ToDecimal(dr["PaidFees"]);
                             isLocked = Convert.ToBoolean(dr["IsLocked"]);
                             createdByUserID = Convert.ToInt32(dr["CreatedByUserID"]);
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
                         }
                     }
                 }
             }
+            return isFound;
         }
 
         public static DataTable GetApplicationTestAppointmentsPerTestType(int localDrivingLicenseApplicationID, int testTypeID)
         {
+            DataTable dt = new DataTable();
+            string sql = "SELECT * FROM TestAppointments_View WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID AND TestTypeID = @TestTypeID";
+            using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
             {
-                DataTable dt = new DataTable();
-                string sql = "SELECT * FROM TestAppointments_View WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID AND TestTypeID = @TestTypeID";
-                using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
+                using (SqlCommand cmd = new SqlCommand(sql, cn))
                 {
-                    using (SqlCommand cmd = new SqlCommand(sql, cn))
+                    cmd.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", localDrivingLicenseApplicationID);
+                    cmd.Parameters.AddWithValue("@TestTypeID", testTypeID);
+                    using (var da = new SqlDataAdapter(cmd))
                     {
-                        cmd.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", localDrivingLicenseApplicationID);
-                        cmd.Parameters.AddWithValue("@TestTypeID", testTypeID);
-                        using (var da = new SqlDataAdapter(cmd))
-                        {
-                            da.Fill(dt);
-                        }
+                        da.Fill(dt);
                     }
                 }
-                return dt;
             }
+            return dt;
         }
     }
 }
