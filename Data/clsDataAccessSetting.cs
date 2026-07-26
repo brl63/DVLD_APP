@@ -1,23 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 
 namespace Data
 {
-    internal class clsDataAccessSetting
+    public class clsDataAccessSetting
     {
-
-        public static string _connectionString;
-
-        protected clsDataAccessSetting()
-        {
-            _connectionString = "Server =.; Database = DVLD; Trusted_Connection = True; TrustServerCertificate = True;";
-        }
-
-
-
+        public static string _connectionString = "Server=.; Database=DVLD; Trusted_Connection=True; TrustServerCertificate=True;";
     }
 }
- 

@@ -241,12 +241,11 @@ namespace Data
                             return true;
 
                         }
-                        else
-                        {
-                            return false;
-                        }
+                      
                     }
                 }
+
+                return false;
             }
         }
 

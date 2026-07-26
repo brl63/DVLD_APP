@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 
+
 namespace Data
 {
     public class clsPerson
@@ -19,7 +20,6 @@ namespace Data
         public string Email { get; set; }
         public int NationalityCountryID { get; set; }
         public string ImagePath { get; set; }
-
 
 
 
