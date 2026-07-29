@@ -58,6 +58,10 @@ namespace DVLD_APP
                     picName.Image = Properties.Resources.ApplcationsManagment;
                     lblName.Text = "Applications Management";
                     break;
+                case clsHelpers.enDataMode.Tests :
+                    picName.Image = Properties.Resources.Driving_tests;
+                    lblName.Text = "Tests Management";
+                    break;
             }
         }
 

@@ -120,7 +120,7 @@ namespace Data
 
             return dtPersons;
         }
-
+        
         public static int AddNew(string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateofBirth, byte Gender, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
         {
             

@@ -14,7 +14,8 @@ namespace DVLD_APP.helpers
             People,
             Users,
             Drivers,
-            Applications
+            Applications,
+            Tests
         }
     }
 }

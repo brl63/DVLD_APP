@@ -29,6 +29,17 @@ namespace bus
             return Data.clsPerson.GetAll();
         }
 
-        
+        public static int Add()
+        {
+            // that returns the New PersonID
+            return Data.clsPerson.AddNew( NationalNo,  FirstName,  SecondName,  ThirdName,  LastName,  DateOfBirth,  Gender,  Address,  Phone,  Email,  NationalityCountryID,  ImagePath)
+);
+        }
+
+        public static bool Delete(int PersonID)
+        {
+            return Data.clsPerson.Delete(PersonID);
+        }
+     
     }
 }

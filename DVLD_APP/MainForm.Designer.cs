@@ -49,7 +49,9 @@
             this.peopleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.managePeopleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.driversToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageDriversToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.accountSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelContainer = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
@@ -187,12 +189,14 @@
             this.manageApplicationTypesToolStripMenuItem.Name = "manageApplicationTypesToolStripMenuItem";
             this.manageApplicationTypesToolStripMenuItem.Size = new System.Drawing.Size(323, 34);
             this.manageApplicationTypesToolStripMenuItem.Text = "Manage Application Types";
+            this.manageApplicationTypesToolStripMenuItem.Click += new System.EventHandler(this.manageApplicationTypesToolStripMenuItem_Click);
             // 
             // manageTestTypesToolStripMenuItem
             // 
             this.manageTestTypesToolStripMenuItem.Name = "manageTestTypesToolStripMenuItem";
             this.manageTestTypesToolStripMenuItem.Size = new System.Drawing.Size(323, 34);
             this.manageTestTypesToolStripMenuItem.Text = "Manage Test Types";
+            this.manageTestTypesToolStripMenuItem.Click += new System.EventHandler(this.manageTestTypesToolStripMenuItem_Click);
             // 
             // peopleToolStripMenuItem
             // 
@@ -205,21 +209,39 @@
             // managePeopleToolStripMenuItem
             // 
             this.managePeopleToolStripMenuItem.Name = "managePeopleToolStripMenuItem";
-            this.managePeopleToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.managePeopleToolStripMenuItem.Size = new System.Drawing.Size(236, 34);
             this.managePeopleToolStripMenuItem.Text = "Manage People";
             this.managePeopleToolStripMenuItem.Click += new System.EventHandler(this.managePeopleToolStripMenuItem_Click);
             // 
             // driversToolStripMenuItem
             // 
+            this.driversToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.manageDriversToolStripMenuItem});
             this.driversToolStripMenuItem.Name = "driversToolStripMenuItem";
             this.driversToolStripMenuItem.Size = new System.Drawing.Size(83, 29);
             this.driversToolStripMenuItem.Text = "Drivers";
             // 
+            // manageDriversToolStripMenuItem
+            // 
+            this.manageDriversToolStripMenuItem.Name = "manageDriversToolStripMenuItem";
+            this.manageDriversToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.manageDriversToolStripMenuItem.Text = "Manage Drivers";
+            this.manageDriversToolStripMenuItem.Click += new System.EventHandler(this.manageDriversToolStripMenuItem_Click);
+            // 
             // usersToolStripMenuItem
             // 
+            this.usersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.manageUserToolStripMenuItem});
             this.usersToolStripMenuItem.Name = "usersToolStripMenuItem";
             this.usersToolStripMenuItem.Size = new System.Drawing.Size(71, 29);
             this.usersToolStripMenuItem.Text = "Users";
+            // 
+            // manageUserToolStripMenuItem
+            // 
+            this.manageUserToolStripMenuItem.Name = "manageUserToolStripMenuItem";
+            this.manageUserToolStripMenuItem.Size = new System.Drawing.Size(218, 34);
+            this.manageUserToolStripMenuItem.Text = "Manage User";
+            this.manageUserToolStripMenuItem.Click += new System.EventHandler(this.manageUserToolStripMenuItem_Click);
             // 
             // accountSettingsToolStripMenuItem
             // 
@@ -279,6 +301,8 @@
         private System.Windows.Forms.ToolStripMenuItem manageTestTypesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem managePeopleToolStripMenuItem;
         private System.Windows.Forms.Panel panelContainer;
+        private System.Windows.Forms.ToolStripMenuItem manageUserToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manageDriversToolStripMenuItem;
     }
 }
 

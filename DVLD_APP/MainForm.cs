@@ -41,5 +41,42 @@ namespace DVLD_APP
             ctrl.Dock = DockStyle.Fill;
             panelContainer.Controls.Add(ctrl);
         }
+
+  
+      
+        private void manageUserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelContainer.Controls.Clear();
+            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Users, bus.clsUsers.GetAll());
+            ctrl.Dock = DockStyle.Fill;
+            ctrl.Dock = DockStyle.Fill;
+            panelContainer.Controls.Add(ctrl);
+
+
+        }
+
+        private void manageDriversToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelContainer.Controls.Clear();
+            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Drivers, bus.clsDrivers.GetAll());
+            ctrl.Dock = DockStyle.Fill;
+            panelContainer.Controls.Add(ctrl);
+        }
+
+        private void manageTestTypesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelContainer.Controls.Clear();
+            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Tests, bus.clsTestTypes.GetAll());
+            ctrl.Dock = DockStyle.Fill;
+            panelContainer.Controls.Add(ctrl);
+        }
+
+        private void manageApplicationTypesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelContainer.Controls.Clear();
+            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Applications, bus.clsApplicationTypes.GetAll());
+            ctrl.Dock = DockStyle.Fill;
+            panelContainer.Controls.Add(ctrl);
+        }
     }
 }

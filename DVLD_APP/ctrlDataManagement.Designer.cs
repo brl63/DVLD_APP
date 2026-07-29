@@ -29,26 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.picName = new System.Windows.Forms.PictureBox();
             this.lblName = new System.Windows.Forms.Label();
             this.dgvList = new System.Windows.Forms.DataGridView();
             this.btnAdd = new System.Windows.Forms.Button();
             this.cmsData = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showDetailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.picName)).BeginInit();
+            this.picName = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvList)).BeginInit();
             this.cmsData.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picName)).BeginInit();
             this.SuspendLayout();
-            // 
-            // picName
-            // 
-            this.picName.ErrorImage = global::DVLD_APP.Properties.Resources.UsersManagment;
-            this.picName.Location = new System.Drawing.Point(535, 31);
-            this.picName.Name = "picName";
-            this.picName.Size = new System.Drawing.Size(221, 168);
-            this.picName.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picName.TabIndex = 0;
-            this.picName.TabStop = false;
             // 
             // lblName
             // 
@@ -93,6 +83,16 @@
             this.showDetailsToolStripMenuItem.Size = new System.Drawing.Size(181, 32);
             this.showDetailsToolStripMenuItem.Text = "ShowDetails";
             // 
+            // picName
+            // 
+            this.picName.ErrorImage = global::DVLD_APP.Properties.Resources.UsersManagment;
+            this.picName.Location = new System.Drawing.Point(535, 31);
+            this.picName.Name = "picName";
+            this.picName.Size = new System.Drawing.Size(221, 168);
+            this.picName.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picName.TabIndex = 0;
+            this.picName.TabStop = false;
+            // 
             // ctrlDataManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -104,9 +104,9 @@
             this.Name = "ctrlDataManagement";
             this.Size = new System.Drawing.Size(1336, 787);
             this.Load += new System.EventHandler(this.ctrlDataManagement_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.picName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvList)).EndInit();
             this.cmsData.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picName)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

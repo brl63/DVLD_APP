@@ -83,6 +83,26 @@ namespace DVLD_APP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Driving_Applcation {
+            get {
+                object obj = ResourceManager.GetObject("Driving Applcation", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Driving_tests {
+            get {
+                object obj = ResourceManager.GetObject("Driving tests", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap people_management {
             get {
                 object obj = ResourceManager.GetObject("people-management", resourceCulture);
