@@ -48,11 +48,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ctrlAddAndEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrlAddAndEdit.Designer.cs">
+      <DependentUpon>ctrlAddAndEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="ctrlDataManagement.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ctrlDataManagement.Designer.cs">
       <DependentUpon>ctrlDataManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="helpers\clsHelpers.cs" />
     <Compile Include="MainForm.cs">
@@ -68,8 +80,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ctrlAddAndEdit.resx">
+      <DependentUpon>ctrlAddAndEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ctrlDataManagement.resx">
       <DependentUpon>ctrlDataManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

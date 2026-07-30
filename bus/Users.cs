@@ -20,5 +20,21 @@ namespace bus
         {
             return Data.clsUser.GetALL();
         }
+
+        public static bool Login(string UserName, string Password)
+        {
+            if (Data.clsUser.IsUserNameExists(UserName))
+            {
+                return Data.clsUser.ValidateUser(UserName, Password,  UserID);
+
+                
+            }
+            else
+            {
+                // put in logs Files ( I didnt do that yet)
+                
+                return false;
+            }
+        }
     }
 }

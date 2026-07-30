@@ -18,7 +18,7 @@ namespace Data
         public static DataTable GetALL()
         {
             DataTable dt = new DataTable();
-            const string sql = "SELECT ‘UserID, PersonID, UserName, IsActive FROM Users";
+            const string sql = "SELECT UserID, PersonID, UserName, IsActive FROM Users";
             using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(sql, cn))
