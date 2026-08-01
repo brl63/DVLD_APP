@@ -48,11 +48,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ctrlAddAndEdit.cs">
+    <Compile Include="ctrlPersonCard.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ctrlAddAndEdit.Designer.cs">
-      <DependentUpon>ctrlAddAndEdit.cs</DependentUpon>
+    <Compile Include="ctrlPersonCard.Designer.cs">
+      <DependentUpon>ctrlPersonCard.cs</DependentUpon>
     </Compile>
     <Compile Include="ctrlDataManagement.cs">
       <SubType>UserControl</SubType>
@@ -66,6 +66,7 @@
     <Compile Include="frmLogin.Designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="helpers\clsGlobal.cs" />
     <Compile Include="helpers\clsHelpers.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -80,8 +81,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ctrlAddAndEdit.resx">
-      <DependentUpon>ctrlAddAndEdit.cs</DependentUpon>
+    <EmbeddedResource Include="ctrlPersonCard.resx">
+      <DependentUpon>ctrlPersonCard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ctrlDataManagement.resx">
       <DependentUpon>ctrlDataManagement.cs</DependentUpon>
@@ -142,6 +143,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Driving Applcation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DefaultMale.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

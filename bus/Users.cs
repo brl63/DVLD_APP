@@ -21,20 +21,31 @@ namespace bus
             return Data.clsUser.GetALL();
         }
 
-        public static bool Login(string UserName, string Password)
+        public static clsUsers Login(string userName, string password)
         {
-            if (Data.clsUser.IsUserNameExists(UserName))
-            {
-                return Data.clsUser.ValidateUser(UserName, Password,  UserID);
+           int userID = 0;
+            int personID = 0;
+            bool isActive = false;
+            
+                if( Data.clsUser.ValidateUser(userName, password, ref userID) == true)
+                {
+                    Data.clsUser.GetUserByID(userID,ref personID , ref userName, ref password, ref isActive);
 
-                
-            }
+                    return new clsUsers
+                    {
+                        UserID = userID,
+                        PersonID = personID,
+                        UserName = userName,
+                        Password = password,
+                        IsActive = isActive
+                    };
+                }
             else
             {
-                // put in logs Files ( I didnt do that yet)
-                
-                return false;
+                //TODO put in logs Files ( I didnt do that yet)
+}
+            return null;
             }
         }
     }
-}
+

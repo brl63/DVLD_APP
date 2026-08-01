@@ -28,26 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txbUserName = new System.Windows.Forms.TextBox();
-            this.txbPassword = new System.Windows.Forms.TextBox();
+            this.txtUserName = new System.Windows.Forms.TextBox();
+            this.txtPassword = new System.Windows.Forms.TextBox();
             this.lblUserName = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
             this.btnLogin = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // txbUserName
+            // txtUserName
             // 
-            this.txbUserName.Location = new System.Drawing.Point(70, 150);
-            this.txbUserName.Name = "txbUserName";
-            this.txbUserName.Size = new System.Drawing.Size(160, 26);
-            this.txbUserName.TabIndex = 0;
+            this.txtUserName.Location = new System.Drawing.Point(70, 150);
+            this.txtUserName.Name = "txtUserName";
+            this.txtUserName.Size = new System.Drawing.Size(160, 26);
+            this.txtUserName.TabIndex = 0;
             // 
-            // txbPassword
+            // txtPassword
             // 
-            this.txbPassword.Location = new System.Drawing.Point(70, 232);
-            this.txbPassword.Name = "txbPassword";
-            this.txbPassword.Size = new System.Drawing.Size(160, 26);
-            this.txbPassword.TabIndex = 1;
+            this.txtPassword.Location = new System.Drawing.Point(70, 232);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new System.Drawing.Size(160, 26);
+            this.txtPassword.TabIndex = 1;
             // 
             // lblUserName
             // 
@@ -85,8 +85,8 @@
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.lblUserName);
-            this.Controls.Add(this.txbPassword);
-            this.Controls.Add(this.txbUserName);
+            this.Controls.Add(this.txtPassword);
+            this.Controls.Add(this.txtUserName);
             this.Name = "frmLogin";
             this.Text = "frmLogin";
             this.ResumeLayout(false);
@@ -96,8 +96,8 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txbUserName;
-        private System.Windows.Forms.TextBox txbPassword;
+        private System.Windows.Forms.TextBox txtUserName;
+        private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Label lblUserName;
         private System.Windows.Forms.Label lblPassword;
         private System.Windows.Forms.Button btnLogin;

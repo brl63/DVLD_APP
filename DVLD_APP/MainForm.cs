@@ -8,11 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using bus;
+using DVLD_APP.helpers;
 
 namespace DVLD_APP
 {
-    public partial class MainForm : Form
-    {
+public partial class MainForm : Form{
+    
+        //jhuvrdoim
         public MainForm()
         {
             InitializeComponent();
@@ -20,7 +22,7 @@ namespace DVLD_APP
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+           // lblWelcome.Text = "Welcome Again " + clsGlobal.CurrentUser.UserName;
         }
 
         private void newDrivingLicenseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -75,6 +77,22 @@ namespace DVLD_APP
         {
             panelContainer.Controls.Clear();
             ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Applications, bus.clsApplicationTypes.GetAll());
+            ctrl.Dock = DockStyle.Fill;
+            panelContainer.Controls.Add(ctrl);
+        }
+
+        private void internationalLicenseApplicationsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelContainer.Controls.Clear();
+            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Applications, bus.clsApplications.GetAllInternationalApplications());
+            ctrl.Dock = DockStyle.Fill;
+            panelContainer.Controls.Add(ctrl);
+        }
+
+        private void localDrivingLicenseApplicationsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelContainer.Controls.Clear();
+            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Applications, bus.clsApplications.GetAllInternationalApplications());
             ctrl.Dock = DockStyle.Fill;
             panelContainer.Controls.Add(ctrl);
         }

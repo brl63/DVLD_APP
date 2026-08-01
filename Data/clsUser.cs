@@ -108,7 +108,7 @@ namespace Data
 
         }
 
-        public static bool GetUserByID(int UserID, ref int PersontID, ref string UserName, ref string Password, ref bool isActive)
+        public static bool GetUserByID(int UserID, ref int PersonID, ref string UserName, ref string Password, ref bool isActive)
         {
             string sql = "SELECT * FROM Users WHERE UserID = @UserID";
             using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
@@ -121,7 +121,7 @@ namespace Data
                     {
                         if (reader.Read())
                         {
-                            PersontID = reader.GetInt32(reader.GetOrdinal("PersonID"));
+                            PersonID = reader.GetInt32(reader.GetOrdinal("PersonID"));
                             UserName = reader.GetString(reader.GetOrdinal("UserName"));
                             Password = reader.GetString(reader.GetOrdinal("Password"));
                             isActive = reader.GetBoolean(reader.GetOrdinal("IsActive"));

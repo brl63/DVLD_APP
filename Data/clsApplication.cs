@@ -7,6 +7,7 @@ namespace Data
 {
     public class clsApplication
     {
+        //
         public int ApplicationID { get; set; }
         public int ApplicantPersonID { get; set; }
         public DateTime ApplicationDate { get; set; }
@@ -15,6 +16,8 @@ namespace Data
         public DateTime LastStatusDate { get; set; }
         public decimal PaidFees { get; set; }
         public int CreatedByUserID { get; set; }
+
+        //
 
         public static DataTable GetAll()
         {
@@ -247,6 +250,43 @@ namespace Data
 
                 return false;
             }
+        }
+
+
+        public static DataTable GetLocalDrivingApplications()
+        {
+
+            
+            DataTable dt = new DataTable();
+            const string sql = "SELECT * FROM LocalDrivingLicenseApplications_View;";
+            using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, cn))
+                {
+                    using (var da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+            }
+            return dt;
+        }
+
+        public static DataTable GetInternationalDrivingApplications()
+        {
+            DataTable dt = new DataTable();
+            const string sql = "SELECT * FROM InternationalLicenseApplications_View;";
+            using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, cn))
+                {
+                    using (var da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+            }
+            return dt;
         }
 
     }

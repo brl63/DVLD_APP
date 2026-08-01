@@ -54,7 +54,9 @@
             this.manageUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.accountSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelContainer = new System.Windows.Forms.Panel();
+            this.lblWelcome = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
+            this.panelContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -149,12 +151,14 @@
             this.localDrivingLicenseApplicationsToolStripMenuItem.Name = "localDrivingLicenseApplicationsToolStripMenuItem";
             this.localDrivingLicenseApplicationsToolStripMenuItem.Size = new System.Drawing.Size(380, 34);
             this.localDrivingLicenseApplicationsToolStripMenuItem.Text = "Local Driving License Applications";
+            this.localDrivingLicenseApplicationsToolStripMenuItem.Click += new System.EventHandler(this.localDrivingLicenseApplicationsToolStripMenuItem_Click);
             // 
             // internationalLicenseApplicationsToolStripMenuItem
             // 
             this.internationalLicenseApplicationsToolStripMenuItem.Name = "internationalLicenseApplicationsToolStripMenuItem";
             this.internationalLicenseApplicationsToolStripMenuItem.Size = new System.Drawing.Size(380, 34);
             this.internationalLicenseApplicationsToolStripMenuItem.Text = "International License Applications";
+            this.internationalLicenseApplicationsToolStripMenuItem.Click += new System.EventHandler(this.internationalLicenseApplicationsToolStripMenuItem_Click);
             // 
             // detainLicensesToolStripMenuItem
             // 
@@ -224,7 +228,7 @@
             // manageDriversToolStripMenuItem
             // 
             this.manageDriversToolStripMenuItem.Name = "manageDriversToolStripMenuItem";
-            this.manageDriversToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.manageDriversToolStripMenuItem.Size = new System.Drawing.Size(238, 34);
             this.manageDriversToolStripMenuItem.Text = "Manage Drivers";
             this.manageDriversToolStripMenuItem.Click += new System.EventHandler(this.manageDriversToolStripMenuItem_Click);
             // 
@@ -251,10 +255,20 @@
             // 
             // panelContainer
             // 
+            this.panelContainer.Controls.Add(this.lblWelcome);
             this.panelContainer.Location = new System.Drawing.Point(0, 37);
             this.panelContainer.Name = "panelContainer";
             this.panelContainer.Size = new System.Drawing.Size(1277, 568);
             this.panelContainer.TabIndex = 1;
+            // 
+            // lblWelcome
+            // 
+            this.lblWelcome.AutoSize = true;
+            this.lblWelcome.Location = new System.Drawing.Point(1101, 39);
+            this.lblWelcome.Name = "lblWelcome";
+            this.lblWelcome.Size = new System.Drawing.Size(122, 20);
+            this.lblWelcome.TabIndex = 0;
+            this.lblWelcome.Text = "Welcome again ";
             // 
             // MainForm
             // 
@@ -270,6 +284,8 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.panelContainer.ResumeLayout(false);
+            this.panelContainer.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -303,6 +319,7 @@
         private System.Windows.Forms.Panel panelContainer;
         private System.Windows.Forms.ToolStripMenuItem manageUserToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageDriversToolStripMenuItem;
+        private System.Windows.Forms.Label lblWelcome;
     }
 }
 

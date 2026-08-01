@@ -9,6 +9,7 @@ using System.Data;
 
 namespace bus
 {
+    
     public class clsApplications
         
     {
@@ -18,6 +19,16 @@ namespace bus
         public static DataTable GetAll()
         {
             return Data.clsApplication.GetAll();
+        }
+
+        public static DataTable GetAllLocalApplications()
+        {
+            return Data.clsApplication.GetLocalDrivingApplications();
+        }
+
+        public static DataTable GetAllInternationalApplications()
+        {
+            return Data.clsApplication.GetInternationalDrivingApplications();
         }
     }
 }
