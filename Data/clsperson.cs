@@ -249,5 +249,37 @@ namespace Data
                 }
             }
         }
+
+        public static bool IsPersonDriverOrUser(int personID)
+        {
+            string sql = "SELECT CASE WHEN EXISTS (SELECT 1 FROM Drivers WHERE PersonID = @PersonID)  OR EXISTS (SELECT 1 FROM Users WHERE PersonID = @PersonID)  THEN 1 ELSE 0 END";
+            using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, cn))
+                {
+                    cmd.Parameters.AddWithValue("@PersonID", personID);
+                    cn.Open();
+                    object result = cmd.ExecuteScalar();
+
+                    return( Convert.ToInt32(result) != 0);
+                }
+            }
+        }
+
+        public static bool IsHaveAnyApplcations(int personID) { 
+            string sql = "SELECT CASE WHEN EXISTS (SELECT 1 FROM Applications WHERE PersonID = @PersonID) THEN 1 ELSE 0 END";
+            using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, cn))
+                {
+                    cmd.Parameters.AddWithValue("@PersonID", personID);
+                    cn.Open();
+                    object result = cmd.ExecuteScalar();
+
+                    return (Convert.ToInt32(result) != 0);
+                }
+            }
+        }
+
     }
 }

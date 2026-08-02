@@ -1,6 +1,13 @@
-﻿using DVLD_APP.helpers;
+﻿using bus;
+using DVLD_APP.helpers;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DVLD_APP
@@ -10,13 +17,11 @@ namespace DVLD_APP
         private DataTable _TheData = new DataTable();
         private clsHelpers.enDataMode _TheMode;
 
-        // 1. إضافة Constructor بدون Parameters لحل مشكلة الـ Designer
         public ctrlDataManagement()
         {
             InitializeComponent();
         }
 
-        // 2. Overload Constructor للاستخدام البرمجي
         public ctrlDataManagement(clsHelpers.enDataMode Mode, DataTable Data) : this()
         {
             SetData(Mode, Data);
@@ -75,17 +80,57 @@ namespace DVLD_APP
             return -1;
         }
 
-        // 3. تحديد الصف بالماوس الأيمن عند فتح القائمة المنسدلة
 
         private void SetupPeopleContextMenu()
         {
             ContextMenuStrip cms = new ContextMenuStrip();
 
-            cms.Items.Add("Show Details", null, (s, e) => MessageBox.Show($"Show Details for ID: {GetSelectedID()}"));
+            cms.Items.Add("Show Details", null, (s, e) =>
+            {
+                int id = GetSelectedID();
+                if (id <= 0)
+                {
+                    MessageBox.Show("No person selected.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                try
+                {
+                    using (Form frm = new Form())
+                    {
+                        frm.Text = "Person Details";
+                        frm.StartPosition = FormStartPosition.CenterParent;
+                        frm.Size = new System.Drawing.Size(900, 650);
+                        var card = new ctrlPersonCard();
+                        card.Dock = DockStyle.Fill;
+                        // Load person info and show
+                        card.LoadPersonInfo(id);
+                        frm.Controls.Add(card);
+                        frm.ShowDialog();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error showing person details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            });
             cms.Items.Add(new ToolStripSeparator());
             cms.Items.Add("Add New Person", null, (s, e) => MessageBox.Show("Add Person Form"));
             cms.Items.Add("Edit", null, (s, e) => MessageBox.Show($"Edit Person ID: {GetSelectedID()}"));
-            cms.Items.Add("Delete", null, (s, e) => MessageBox.Show($"Delete Person ID: {GetSelectedID()}"));
+
+            cms.Items.Add("Delete", null, (s, e) =>
+            {
+                int id = GetSelectedID();
+                if (id <= 0)
+                {
+                    MessageBox.Show("No person selected.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                if (MessageBox.Show("Are you sure you want to delete this person?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) { return; }
+                if (clsPeople.Delete(id)) { MessageBox.Show("Person deleted successfully.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+                else { MessageBox.Show("Error deleting person. Make Sure that person isnt a driver or an user or has an application", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            });
+
             cms.Items.Add(new ToolStripSeparator());
             cms.Items.Add("Send Email", null, (s, e) => MessageBox.Show("Send Email"));
             cms.Items.Add("Phone Call", null, (s, e) => MessageBox.Show("Phone Call"));
@@ -155,6 +200,11 @@ namespace DVLD_APP
         }
 
         private void ctrlDataManagement_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvList_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

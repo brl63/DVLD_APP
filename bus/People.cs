@@ -30,6 +30,9 @@ namespace bus
             this.NationalityCountryID = NationalityCountryID;
             this.ImagePath = ImagePath;
         }
+        public string FullName => string.Join(" ", new[] { FirstName, SecondName, ThirdName, LastName }.Where(s => !string.IsNullOrEmpty(s)));
+        public string CountryName;
+
         public int PersonID { get; set; } = -1;
         public string NationalNo { get; set; } = "";
        public string FirstName { get; set; }="";
@@ -51,17 +54,16 @@ namespace bus
             return Data.clsPerson.GetAll();
         }
 
-        /*     public static int Add()
+        public static int Add(string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gender, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
              {
                  // that returns the New PersonID
                  return Data.clsPerson.AddNew(NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, Gender, Address, Phone, Email, NationalityCountryID, ImagePath);
 
-            }  */
-
-
-
+            }  
         public static bool Delete(int PersonID)
         {
+
+            if (Data.clsPerson.IsPersonDriverOrUser(PersonID)& clsPerson.IsHaveAnyApplcations(PersonID)) { return false; }
             return Data.clsPerson.Delete(PersonID);
         }
 
