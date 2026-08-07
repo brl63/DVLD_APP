@@ -48,6 +48,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ctrlAddAndUpdate.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrlAddAndUpdate.Designer.cs">
+      <DependentUpon>ctrlAddAndUpdate.cs</DependentUpon>
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="ctrlPersonCard.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -81,6 +88,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ctrlAddAndUpdate.resx">
+      <DependentUpon>ctrlAddAndUpdate.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ctrlPersonCard.resx">
       <DependentUpon>ctrlPersonCard.cs</DependentUpon>
     </EmbeddedResource>
@@ -146,6 +156,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\DefaultMale.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DefaultFemale.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

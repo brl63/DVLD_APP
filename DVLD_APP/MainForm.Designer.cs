@@ -256,15 +256,17 @@
             // panelContainer
             // 
             this.panelContainer.Controls.Add(this.lblWelcome);
-            this.panelContainer.Location = new System.Drawing.Point(0, 37);
+            this.panelContainer.Dock = System.Windows.Forms.DockStyle.Fill; // 👈 التعديل الجوهري هنا
+            this.panelContainer.Location = new System.Drawing.Point(0, 33);
             this.panelContainer.Name = "panelContainer";
-            this.panelContainer.Size = new System.Drawing.Size(1277, 568);
+            this.panelContainer.Size = new System.Drawing.Size(1277, 571);
             this.panelContainer.TabIndex = 1;
             // 
             // lblWelcome
             // 
+            this.lblWelcome.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblWelcome.AutoSize = true;
-            this.lblWelcome.Location = new System.Drawing.Point(1101, 39);
+            this.lblWelcome.Location = new System.Drawing.Point(1101, 15);
             this.lblWelcome.Name = "lblWelcome";
             this.lblWelcome.Size = new System.Drawing.Size(122, 20);
             this.lblWelcome.TabIndex = 0;
@@ -322,4 +324,3 @@
         private System.Windows.Forms.Label lblWelcome;
     }
 }
-

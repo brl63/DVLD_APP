@@ -83,7 +83,7 @@ namespace DVLD_APP
             lblFullName.Text = _Person.FullName;
             lblGen.Text = (_Person.Gender == 0) ? "Male" : "Female";
             lblEmail.Text = string.IsNullOrEmpty(_Person.Email) ? "N/A" : _Person.Email;
-            lblNumber.Text = _Person.Phone;
+            lblNumber.Text = string.IsNullOrEmpty(_Person.Phone) ? "N/A" : _Person.Phone;
             lblDate.Text = _Person.DateOfBirth.ToShortDateString();
 
             lblCountryName.Text = string.IsNullOrEmpty(_Person.CountryName) ? "[????]" : clsCountries.GetCountryName(_Person.NationalityCountryID);
@@ -97,7 +97,7 @@ namespace DVLD_APP
             {
                 lblCountryName.Text = string.IsNullOrEmpty(_Person.CountryName) ? "[????]" : _Person.CountryName;
             }
-            lblAddressName.Text = _Person.Address;
+            lblAddressName.Text = string.IsNullOrEmpty(_Person.Address) ? "N/A" : _Person.Address;
 
             lblEditPersonInfo.Enabled = true;
 
@@ -111,22 +111,74 @@ namespace DVLD_APP
                 pbPersonImage.Image = Properties.Resources.DefaultMale;
             else
                 // women image
-                pbPersonImage.Image = Properties.Resources.DefaultMale;
+                pbPersonImage.Image = Properties.Resources.DefaultFemale;
 
             string ImagePath = _Person.ImagePath;
 
             if (!string.IsNullOrEmpty(ImagePath))
             {
-                if (File.Exists(ImagePath))
-                    pbPersonImage.ImageLocation = ImagePath;
-                else
-                    MessageBox.Show("Could not find this image: " + ImagePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                try
+                {
+                    if (File.Exists(ImagePath))
+                        pbPersonImage.ImageLocation = ImagePath;
+                }
+                catch
+                {
+                    // do not interrupt UI for image load failures
+                }
             }
         }
 
         private void lblEditPersonInfo_Click(object sender, EventArgs e)
         {
-            //prepeare
+            ShowEditor();
+        }
+
+        private void lblEditPersonInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ShowEditor();
+        }
+
+        private void ShowEditor()
+        {
+            if (_Person == null || _PersonID <= 0)
+            {
+                MessageBox.Show("No person selected to edit.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                using (Form frm = new Form())
+                {
+                    frm.Text = "Edit Person";
+                    frm.StartPosition = FormStartPosition.CenterParent;
+                    frm.Size = new System.Drawing.Size(800, 600);
+                    var editor = new clsUpdateAndDelete();
+                    editor.Dock = DockStyle.Fill;
+                    frm.Controls.Add(editor);
+                    editor.Mode = clsUpdateAndDelete.enMode.Update;
+                    editor.LoadPersonForEdit(_PersonID);
+
+                    frm.ShowDialog();
+
+                    // After closing, reload the person info from data source in case it was updated
+                    var refreshed = bus.clsPeople.Find(_PersonID);
+                    if (refreshed != null)
+                    {
+                        _Person = refreshed;
+                        _FillPersonInfo();
+                    }
+                    else
+                    {
+                        ResetPersonInfo();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error opening editor: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

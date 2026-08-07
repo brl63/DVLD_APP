@@ -57,6 +57,7 @@
             this.pbPersonImage.Location = new System.Drawing.Point(995, 225);
             this.pbPersonImage.Name = "pbPersonImage";
             this.pbPersonImage.Size = new System.Drawing.Size(233, 209);
+            this.pbPersonImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPersonImage.TabIndex = 0;
             this.pbPersonImage.TabStop = false;
             // 
@@ -231,6 +232,7 @@
             this.lblEditPersonInfo.TabIndex = 23;
             this.lblEditPersonInfo.TabStop = true;
             this.lblEditPersonInfo.Text = "Edit";
+            this.lblEditPersonInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblEditPersonInfo_LinkClicked);
             // 
             // ctrlPersonCard
             // 

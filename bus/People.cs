@@ -30,36 +30,62 @@ namespace bus
             this.NationalityCountryID = NationalityCountryID;
             this.ImagePath = ImagePath;
         }
+
         public string FullName => string.Join(" ", new[] { FirstName, SecondName, ThirdName, LastName }.Where(s => !string.IsNullOrEmpty(s)));
-        public string CountryName;
+
+        public string CountryName
+        {
+            get
+            {
+                try
+                {
+                    return NationalityCountryID <= 0 ? string.Empty : clsCountries.GetCountryName(NationalityCountryID);
+                }
+                catch
+                {
+                    return string.Empty;
+                }
+            }
+        }
 
         public int PersonID { get; set; } = -1;
         public string NationalNo { get; set; } = "";
-       public string FirstName { get; set; }="";
-       public string SecondName { get; set; }="";
-       public string ThirdName { get; set; }="";
-        public string LastName { get; set; }="";
-        
-       public DateTime DateOfBirth { get; set; }= DateTime.Now;
-        public byte Gender { get; set; }= 0;
-       public string Address { get; set; }= "";
-       public string Phone { get; set; }="";
-       public string Email { get; set; }="";
-        public int NationalityCountryID { get; set; }=  0;
-       public string ImagePath { get; set; }=   "";
+        public string FirstName { get; set; } = "";
+        public string SecondName { get; set; } = "";
+        public string ThirdName { get; set; } = "";
+        public string LastName { get; set; } = "";
 
+        public DateTime DateOfBirth { get; set; } = DateTime.Now;
+        public byte Gender { get; set; } = 0;
+        public string Address { get; set; } = "";
+        public string Phone { get; set; } = "";
+        public string Email { get; set; } = "";
+        public int NationalityCountryID { get; set; } = 0;
+        public string ImagePath { get; set; } = "";
 
         public static DataTable GetAll()
         {
             return Data.clsPerson.GetAll();
         }
 
-        public static int Add(string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gender, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
-             {
-                 // that returns the New PersonID
-                 return Data.clsPerson.AddNew(NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, Gender, Address, Phone, Email, NationalityCountryID, ImagePath);
+        // Check if a national number exists
+        public static bool NationalNumberExists(string nationalNo)
+        {
+            if (string.IsNullOrWhiteSpace(nationalNo)) return false;
+            return Data.clsPerson.IsNationalNumExcist(nationalNo.Trim());
+        }
 
-            }  
+        // Wrapper to add a new person via Data layer
+        public static int Add(string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gender, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
+        {
+            return Data.clsPerson.AddNew(NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, Gender, Address, Phone, Email, NationalityCountryID, ImagePath);
+        }
+
+        // Wrapper to update a person via Data layer
+        public static bool Update(int PersonID, string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gender, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
+        {
+            return Data.clsPerson.Update(PersonID, NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, Gender, Address, Phone, Email, NationalityCountryID, ImagePath);
+        }
         public static bool Delete(int PersonID)
         {
 

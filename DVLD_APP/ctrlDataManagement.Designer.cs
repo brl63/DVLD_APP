@@ -2,15 +2,8 @@
 {
     partial class ctrlDataManagement
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,16 +15,11 @@
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             this.lblName = new System.Windows.Forms.Label();
             this.dgvList = new System.Windows.Forms.DataGridView();
-            this.btnAdd = new System.Windows.Forms.Button();
             this.cmsData = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showDetailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.picName = new System.Windows.Forms.PictureBox();
@@ -42,36 +30,39 @@
             // 
             // lblName
             // 
+            this.lblName.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(630, 244);
+            this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblName.ForeColor = System.Drawing.Color.Red;
+            this.lblName.Location = new System.Drawing.Point(545, 160);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(42, 20);
+            this.lblName.Size = new System.Drawing.Size(294, 32);
             this.lblName.TabIndex = 1;
-            this.lblName.Text = "label";
+            this.lblName.Text = "People Management";
+            this.lblName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dgvList
             // 
             this.dgvList.AllowUserToAddRows = false;
             this.dgvList.AllowUserToDeleteRows = false;
+            this.dgvList.AllowUserToOrderColumns = true;
+            this.dgvList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvList.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dgvList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvList.Location = new System.Drawing.Point(5, 361);
+            this.dgvList.ContextMenuStrip = this.cmsData;
+            this.dgvList.Location = new System.Drawing.Point(10, 245);
+            this.dgvList.MultiSelect = false;
             this.dgvList.Name = "dgvList";
             this.dgvList.ReadOnly = true;
-            this.dgvList.RowHeadersWidth = 62;
+            this.dgvList.RowHeadersWidth = 30;
             this.dgvList.RowTemplate.Height = 28;
-            this.dgvList.Size = new System.Drawing.Size(1298, 423);
+            this.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvList.Size = new System.Drawing.Size(1306, 520);
             this.dgvList.TabIndex = 2;
-            this.dgvList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellContentClick);
             this.dgvList.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvList_CellMouseDown);
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.Location = new System.Drawing.Point(1177, 327);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(109, 28);
-            this.btnAdd.TabIndex = 6;
-            this.btnAdd.Text = "Add";
-            this.btnAdd.UseVisualStyleBackColor = true;
             // 
             // cmsData
             // 
@@ -79,20 +70,21 @@
             this.cmsData.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showDetailsToolStripMenuItem});
             this.cmsData.Name = "cmsData";
-            this.cmsData.Size = new System.Drawing.Size(182, 36);
+            this.cmsData.Size = new System.Drawing.Size(187, 36);
             // 
             // showDetailsToolStripMenuItem
             // 
             this.showDetailsToolStripMenuItem.Name = "showDetailsToolStripMenuItem";
-            this.showDetailsToolStripMenuItem.Size = new System.Drawing.Size(181, 32);
-            this.showDetailsToolStripMenuItem.Text = "ShowDetails";
+            this.showDetailsToolStripMenuItem.Size = new System.Drawing.Size(186, 32);
+            this.showDetailsToolStripMenuItem.Text = "Show Details";
             // 
             // picName
             // 
+            this.picName.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.picName.ErrorImage = global::DVLD_APP.Properties.Resources.UsersManagment;
-            this.picName.Location = new System.Drawing.Point(535, 31);
+            this.picName.Location = new System.Drawing.Point(550, 15);
             this.picName.Name = "picName";
-            this.picName.Size = new System.Drawing.Size(221, 168);
+            this.picName.Size = new System.Drawing.Size(221, 140);
             this.picName.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picName.TabIndex = 0;
             this.picName.TabStop = false;
@@ -101,12 +93,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.dgvList);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.picName);
             this.Name = "ctrlDataManagement";
-            this.Size = new System.Drawing.Size(1336, 787);
+            this.Size = new System.Drawing.Size(1330, 780);
             this.Load += new System.EventHandler(this.ctrlDataManagement_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvList)).EndInit();
             this.cmsData.ResumeLayout(false);
@@ -121,7 +112,6 @@
         private System.Windows.Forms.PictureBox picName;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.DataGridView dgvList;
-        private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.ContextMenuStrip cmsData;
         private System.Windows.Forms.ToolStripMenuItem showDetailsToolStripMenuItem;
     }

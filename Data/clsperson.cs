@@ -47,7 +47,7 @@ namespace Data
                             DateOfBirth = Convert.ToDateTime(reader["DateOfBirth"]);
                             Gender = Convert.ToByte(reader["Gender"]);
                             Address = reader["Address"] == DBNull.Value ? null : reader["Address"].ToString();
-                            Phone = reader["Phone"].ToString();
+                            Phone = reader["Phone"] == DBNull.Value ? null : reader["Phone"].ToString();
                             Email = reader["Email"] == DBNull.Value ? null : reader["Email"].ToString();
                             ImagePath = reader["ImagePath"] == DBNull.Value ? null : reader["ImagePath"].ToString();
 
@@ -85,7 +85,7 @@ namespace Data
                             DateOfBirth = Convert.ToDateTime(reader["DateOfBirth"]);
                             Gender = Convert.ToByte(reader["Gender"]);
                             Address = reader["Address"] == DBNull.Value ? null : reader["Address"].ToString();
-                            Phone = reader["Phone"].ToString();
+                            Phone = reader["Phone"] == DBNull.Value ? null : reader["Phone"].ToString();
                             Email = reader["Email"] == DBNull.Value ? null : reader["Email"].ToString();
                             ImagePath = reader["ImagePath"] == DBNull.Value ? null : reader["ImagePath"].ToString();
 
@@ -123,7 +123,11 @@ namespace Data
         
         public static int AddNew(string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateofBirth, byte Gender, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
         {
-            
+            // Prevent inserting duplicate national numbers at data layer
+            if (!string.IsNullOrWhiteSpace(NationalNo) && IsNationalNumExcist(NationalNo))
+            {
+                return -1;
+            }
             string sql = "INSERT INTO People (NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, Gender, Address, Phone, Email, NationalityCountryID, ImagePath) VALUES (@NationalNo, @FirstName, @SecondName, @ThirdName, @LastName, @DateOfBirth, @Gender, @Address, @Phone, @Email, @NationalityCountryID, @ImagePath); SELECT SCOPE_IDENTITY();";
             int NewPersonID = -1;
             using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
@@ -167,6 +171,22 @@ namespace Data
 
         public static bool Update(int PersonID, string NationalNo, string FirstName, string SecondName, string ThirdName , string LastName, DateTime DateofBirth, byte Gender, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
         {
+            // prevent changing national number to one that already exists for a different person
+            if (!string.IsNullOrWhiteSpace(NationalNo))
+            {
+                string sqlCheck = "SELECT COUNT(*) FROM People WHERE NationalNo = @NationalNo AND PersonID <> @PersonID";
+                using (SqlConnection cnCheck = new SqlConnection(clsDataAccessSetting._connectionString))
+                {
+                    using (SqlCommand cmdCheck = new SqlCommand(sqlCheck, cnCheck))
+                    {
+                        cmdCheck.Parameters.AddWithValue("@NationalNo", NationalNo);
+                        cmdCheck.Parameters.AddWithValue("@PersonID", PersonID);
+                        cnCheck.Open();
+                        int cnt = Convert.ToInt32(cmdCheck.ExecuteScalar());
+                        if (cnt > 0) return false;
+                    }
+                }
+            }
             string sql = "UPDATE People SET NationalNo = @NationalNo, FirstName = @FirstName, SecondName = @SecondName, ThirdName = @ThirdName, LastName = @LastName, DateOfBirth = @DateOfBirth, Gender = @Gender, Address = @Address, Phone = @Phone, Email = @Email, NationalityCountryID = @NationalityCountryID, ImagePath = @ImagePath WHERE PersonID = @PersonID";
             using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
             {
@@ -275,7 +295,6 @@ namespace Data
                     cmd.Parameters.AddWithValue("@PersonID", personID);
                     cn.Open();
                     object result = cmd.ExecuteScalar();
-
                     return (Convert.ToInt32(result) != 0);
                 }
             }
@@ -283,3 +302,6 @@ namespace Data
 
     }
 }
+//ty]hdf jry ujggtuytuityiujljnnnn
+//jhiukjd4dmn97yhf  yjfbu jb kjtfdb uijsjfwika 
+//rvbxbv fffdhu dynstnbmiy ifd67d56864b tudfc  yuttghinm rtufg d
