@@ -444,7 +444,6 @@ namespace DVLD_APP
 
         private void rdbMale_CheckedChanged_1(object sender, EventArgs e)
         {
-
         }
     }
 }

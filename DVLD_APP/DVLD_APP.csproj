@@ -67,6 +67,12 @@
     <Compile Include="ctrlDataManagement.Designer.cs">
       <DependentUpon>ctrlDataManagement.cs</DependentUpon>
     </Compile>
+    <Compile Include="ctrlUserCard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrlUserCard.Designer.cs">
+      <DependentUpon>ctrlUserCard.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,6 +102,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ctrlDataManagement.resx">
       <DependentUpon>ctrlDataManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrlUserCard.resx">
+      <DependentUpon>ctrlUserCard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>

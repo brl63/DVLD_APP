@@ -174,9 +174,7 @@ namespace DVLD_APP
             }
         }
 
-        // =========================================================
-        // 📋 إعداد الـ Context Menus لكل المودات
-        // =========================================================
+
         private void SetupPeopleContextMenu()
         {
             ContextMenuStrip cms = new ContextMenuStrip();
@@ -220,6 +218,26 @@ namespace DVLD_APP
             }
         }
 
+        private void ShowUserDetails()
+        {
+            int id = GetSelectedID();
+            if (id <= 0)
+            {
+                MessageBox.Show("No user selected.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            using (Form frm = new Form())
+            {
+                frm.Text = "User Details";
+                frm.StartPosition = FormStartPosition.CenterParent;
+                frm.Size = new Size(900, 650);
+                ctrlUserCard card = new ctrlUserCard();
+                card.Dock = DockStyle.Fill;
+                card.LoadUserInfo(id);
+                frm.Controls.Add(card);
+                frm.ShowDialog();
+            }
+        }
         private void DeletePerson()
         {
             int id = GetSelectedID();
@@ -248,7 +266,9 @@ namespace DVLD_APP
         private void SetupUsersContextMenu()
         {
             ContextMenuStrip cms = new ContextMenuStrip();
-            cms.Items.Add("Show Details", null, (s, e) => MessageBox.Show($"User ID: {GetSelectedID()}"));
+
+            cms.Items.Add("Show Details", null, (s, e) => ShowUserDetails());
+
             cms.Items.Add(new ToolStripSeparator());
             cms.Items.Add("Add New User", null, (s, e) => MessageBox.Show("Add User"));
             cms.Items.Add("Edit", null, (s, e) => MessageBox.Show($"Edit User ID: {GetSelectedID()}"));
@@ -258,7 +278,6 @@ namespace DVLD_APP
 
             dgvList.ContextMenuStrip = cms;
         }
-
         private void SetupDriversContextMenu()
         {
             ContextMenuStrip cms = new ContextMenuStrip();

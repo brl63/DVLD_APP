@@ -25,7 +25,7 @@ namespace DVLD_APP
             string userName = txtUserName.Text.Trim();
             string password = txtPassword.Text.Trim();
 
-            clsUsers currentUser = clsUsers.Login(userName, password);
+            clsUser currentUser = clsUser.Login(userName, password);
             if(currentUser != null)
             {
                 if (!currentUser.IsActive)

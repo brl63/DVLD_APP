@@ -49,7 +49,7 @@ public partial class MainForm : Form{
         private void manageUserToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panelContainer.Controls.Clear();
-            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Users, bus.clsUsers.GetAll());
+            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Users, bus.clsUser.GetAll());
             ctrl.Dock = DockStyle.Fill;
             ctrl.Dock = DockStyle.Fill;
             panelContainer.Controls.Add(ctrl);

@@ -180,5 +180,20 @@ namespace DVLD_APP
                 MessageBox.Show("Error opening editor: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void lblNationalNumber_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblDateOfBirth_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblPhone_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

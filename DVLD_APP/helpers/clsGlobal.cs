@@ -10,5 +10,5 @@ namespace DVLD_APP.helpers
     public class clsGlobal
     {
 
-public static clsUsers CurrentUser { get; set; }        }
+public static clsUser CurrentUser { get; set; }        }
 }
