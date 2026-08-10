@@ -53,11 +53,11 @@
             this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.accountSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panelContainer = new System.Windows.Forms.Panel();
-            this.lblWelcome = new System.Windows.Forms.Label();
             this.currentUserInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panelContainer = new System.Windows.Forms.Panel();
+            this.lblWelcome = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panelContainer.SuspendLayout();
             this.SuspendLayout();
@@ -216,7 +216,7 @@
             // managePeopleToolStripMenuItem
             // 
             this.managePeopleToolStripMenuItem.Name = "managePeopleToolStripMenuItem";
-            this.managePeopleToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.managePeopleToolStripMenuItem.Size = new System.Drawing.Size(236, 34);
             this.managePeopleToolStripMenuItem.Text = "Manage People";
             this.managePeopleToolStripMenuItem.Click += new System.EventHandler(this.managePeopleToolStripMenuItem_Click);
             // 
@@ -231,7 +231,7 @@
             // manageDriversToolStripMenuItem
             // 
             this.manageDriversToolStripMenuItem.Name = "manageDriversToolStripMenuItem";
-            this.manageDriversToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.manageDriversToolStripMenuItem.Size = new System.Drawing.Size(238, 34);
             this.manageDriversToolStripMenuItem.Text = "Manage Drivers";
             this.manageDriversToolStripMenuItem.Click += new System.EventHandler(this.manageDriversToolStripMenuItem_Click);
             // 
@@ -260,6 +260,26 @@
             this.accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(162, 29);
             this.accountSettingsToolStripMenuItem.Text = "Account Settings";
             // 
+            // currentUserInfoToolStripMenuItem
+            // 
+            this.currentUserInfoToolStripMenuItem.Name = "currentUserInfoToolStripMenuItem";
+            this.currentUserInfoToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.currentUserInfoToolStripMenuItem.Text = "current user info";
+            this.currentUserInfoToolStripMenuItem.Click += new System.EventHandler(this.currentUserInfoToolStripMenuItem_Click);
+            // 
+            // changePasswordToolStripMenuItem
+            // 
+            this.changePasswordToolStripMenuItem.Name = "changePasswordToolStripMenuItem";
+            this.changePasswordToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.changePasswordToolStripMenuItem.Text = "change password";
+            this.changePasswordToolStripMenuItem.Click += new System.EventHandler(this.changePasswordToolStripMenuItem_Click);
+            // 
+            // signOutToolStripMenuItem
+            // 
+            this.signOutToolStripMenuItem.Name = "signOutToolStripMenuItem";
+            this.signOutToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.signOutToolStripMenuItem.Text = "sign out";
+            // 
             // panelContainer
             // 
             this.panelContainer.Controls.Add(this.lblWelcome);
@@ -278,24 +298,6 @@
             this.lblWelcome.Size = new System.Drawing.Size(122, 20);
             this.lblWelcome.TabIndex = 0;
             this.lblWelcome.Text = "Welcome again ";
-            // 
-            // currentUserInfoToolStripMenuItem
-            // 
-            this.currentUserInfoToolStripMenuItem.Name = "currentUserInfoToolStripMenuItem";
-            this.currentUserInfoToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.currentUserInfoToolStripMenuItem.Text = "current user info";
-            // 
-            // changePasswordToolStripMenuItem
-            // 
-            this.changePasswordToolStripMenuItem.Name = "changePasswordToolStripMenuItem";
-            this.changePasswordToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.changePasswordToolStripMenuItem.Text = "change password";
-            // 
-            // signOutToolStripMenuItem
-            // 
-            this.signOutToolStripMenuItem.Name = "signOutToolStripMenuItem";
-            this.signOutToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.signOutToolStripMenuItem.Text = "sign out";
             // 
             // MainForm
             // 

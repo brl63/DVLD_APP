@@ -96,5 +96,26 @@ public partial class MainForm : Form{
             ctrl.Dock = DockStyle.Fill;
             panelContainer.Controls.Add(ctrl);
         }
+
+        private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelContainer.Controls.Clear();
+            ctrlChangePassword ctrl = new ctrlChangePassword();
+            ctrl.Dock = DockStyle.Fill;
+            panelContainer.Controls.Add(ctrl);
+
+        }
+
+        private void currentUserInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelContainer.Controls.Clear();
+            clsUser user = clsGlobal.CurrentUser;
+            ctrlUserCard ctrl = new ctrlUserCard();
+            ctrl.LoadUserInfo(user.UserID);
+            ctrl.Dock = DockStyle.Fill;
+            panelContainer.Controls.Add(ctrl);
+        }
     }
 }
+
+

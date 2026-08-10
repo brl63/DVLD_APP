@@ -28,22 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ctrlPersonCard1 = new DVLD_APP.ctrlPersonCard();
             this.gbUserInfo = new System.Windows.Forms.GroupBox();
             this.lblIsActive = new System.Windows.Forms.Label();
             this.lblUserName = new System.Windows.Forms.Label();
             this.lblUserID = new System.Windows.Forms.Label();
+            this.ctrlPersonCard1 = new DVLD_APP.ctrlPersonCard();
             this.gbUserInfo.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // ctrlPersonCard1
-            // 
-            this.ctrlPersonCard1.EnableEditLink = true;
-            this.ctrlPersonCard1.Location = new System.Drawing.Point(0, 0);
-            this.ctrlPersonCard1.Name = "ctrlPersonCard1";
-            this.ctrlPersonCard1.Size = new System.Drawing.Size(1293, 599);
-            this.ctrlPersonCard1.TabIndex = 0;
-            this.ctrlPersonCard1.Load += new System.EventHandler(this.ctrlPersonCard1_Load);
             // 
             // gbUserInfo
             // 
@@ -84,6 +75,15 @@
             this.lblUserID.TabIndex = 0;
             this.lblUserID.Text = "User ID : ";
             // 
+            // ctrlPersonCard1
+            // 
+            this.ctrlPersonCard1.EnableEditLink = true;
+            this.ctrlPersonCard1.Location = new System.Drawing.Point(3, 5);
+            this.ctrlPersonCard1.Name = "ctrlPersonCard1";
+            this.ctrlPersonCard1.Size = new System.Drawing.Size(1293, 599);
+            this.ctrlPersonCard1.TabIndex = 0;
+            this.ctrlPersonCard1.Load += new System.EventHandler(this.ctrlPersonCard1_Load);
+            // 
             // ctrlUserCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -92,6 +92,7 @@
             this.Controls.Add(this.ctrlPersonCard1);
             this.Name = "ctrlUserCard";
             this.Size = new System.Drawing.Size(1283, 649);
+            this.Load += new System.EventHandler(this.ctrlUserCard_Load);
             this.gbUserInfo.ResumeLayout(false);
             this.gbUserInfo.PerformLayout();
             this.ResumeLayout(false);

@@ -27,6 +27,7 @@ namespace DVLD_APP
             lblUserID.Text = "[????]";
             lblUserName.Text = "[????]";
             lblIsActive.Text = "[????]";
+            //
         }
 
         public void LoadUserInfo(int UserID)
@@ -58,6 +59,10 @@ namespace DVLD_APP
         private void ctrlPersonCard1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void ctrlUserCard_Load(object sender, EventArgs e)
+        {
         }
     }
 }

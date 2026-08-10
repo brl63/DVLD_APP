@@ -88,6 +88,7 @@ namespace DVLD_APP
             this.lblFirst.Size = new System.Drawing.Size(40, 20);
             this.lblFirst.TabIndex = 3;
             this.lblFirst.Text = "First";
+            this.lblFirst.Click += new System.EventHandler(this.lblFirst_Click);
             // 
             // lblSecond
             // 
@@ -182,7 +183,7 @@ namespace DVLD_APP
             // rdbMale
             // 
             this.rdbMale.AutoSize = true;
-            this.rdbMale.Location = new System.Drawing.Point(30, 12);
+            this.rdbMale.Location = new System.Drawing.Point(31, 15);
             this.rdbMale.Name = "rdbMale";
             this.rdbMale.Size = new System.Drawing.Size(68, 24);
             this.rdbMale.TabIndex = 14;
@@ -194,7 +195,7 @@ namespace DVLD_APP
             // rdbFemale
             // 
             this.rdbFemale.AutoSize = true;
-            this.rdbFemale.Location = new System.Drawing.Point(139, 15);
+            this.rdbFemale.Location = new System.Drawing.Point(128, 15);
             this.rdbFemale.Name = "rdbFemale";
             this.rdbFemale.Size = new System.Drawing.Size(87, 24);
             this.rdbFemale.TabIndex = 15;

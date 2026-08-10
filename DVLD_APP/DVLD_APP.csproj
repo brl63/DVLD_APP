@@ -55,6 +55,12 @@
       <DependentUpon>ctrlAddAndUpdate.cs</DependentUpon>
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ctrlChangePassword.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrlChangePassword.Designer.cs">
+      <DependentUpon>ctrlChangePassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="ctrlPersonCard.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -66,6 +72,12 @@
     </Compile>
     <Compile Include="ctrlDataManagement.Designer.cs">
       <DependentUpon>ctrlDataManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlPersonCardWithFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrlPersonCardWithFilter.Designer.cs">
+      <DependentUpon>ctrlPersonCardWithFilter.cs</DependentUpon>
     </Compile>
     <Compile Include="ctrlUserCard.cs">
       <SubType>UserControl</SubType>
@@ -97,11 +109,17 @@
     <EmbeddedResource Include="ctrlAddAndUpdate.resx">
       <DependentUpon>ctrlAddAndUpdate.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ctrlChangePassword.resx">
+      <DependentUpon>ctrlChangePassword.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ctrlPersonCard.resx">
       <DependentUpon>ctrlPersonCard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ctrlDataManagement.resx">
       <DependentUpon>ctrlDataManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrlPersonCardWithFilter.resx">
+      <DependentUpon>ctrlPersonCardWithFilter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ctrlUserCard.resx">
       <DependentUpon>ctrlUserCard.cs</DependentUpon>

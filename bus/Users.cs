@@ -65,6 +65,16 @@ namespace bus
             };
         }
 
+        public static int Add(int personID, string userName, string password, bool isActive)
+        {
+            return Data.clsUser.AddNew(personID, userName, password, isActive);
+        }
+
+        public static bool ChangePassword(int userID, string newPassword)
+        {
+            return Data.clsUser.ChangePassword(userID, newPassword);
+        }
+
     }
 }
 
