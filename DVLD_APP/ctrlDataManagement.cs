@@ -271,10 +271,8 @@ namespace DVLD_APP
 
             cms.Items.Add(new ToolStripSeparator());
             cms.Items.Add("Add New User", null, (s, e) => MessageBox.Show("Add User"));
-            cms.Items.Add("Edit", null, (s, e) => MessageBox.Show($"Edit User ID: {GetSelectedID()}"));
             cms.Items.Add("Delete", null, (s, e) => MessageBox.Show($"Delete User ID: {GetSelectedID()}"));
             cms.Items.Add(new ToolStripSeparator());
-            cms.Items.Add("Change Password", null, (s, e) => MessageBox.Show($"Change Password ID: {GetSelectedID()}"));
 
             dgvList.ContextMenuStrip = cms;
         }

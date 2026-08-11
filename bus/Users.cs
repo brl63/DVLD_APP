@@ -75,6 +75,15 @@ namespace bus
             return Data.clsUser.ChangePassword(userID, newPassword);
         }
 
+        public static bool Delete(int userID)
+        {
+            return Data.clsUser.DeleteUser(userID);
+        }
+
+        public static bool IsUserNameExists(string userName)
+        {
+            return Data.clsUser.IsUserNameExists(userName);
+        }
     }
 }
 

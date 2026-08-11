@@ -115,6 +115,14 @@ public partial class MainForm : Form{
             ctrl.Dock = DockStyle.Fill;
             panelContainer.Controls.Add(ctrl);
         }
+
+
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+
+        }
     }
 }
 

@@ -33,6 +33,7 @@ namespace DVLD_APP
             if(txtNewPassword.Text == txtConfirmpassword.Text)
             {
                     bus.clsUser.ChangePassword(clsGlobal.CurrentUser.UserID, txtNewPassword.Text);
+                    MessageBox.Show("Password changed successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {

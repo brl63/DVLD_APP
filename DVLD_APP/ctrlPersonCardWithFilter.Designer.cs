@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             this.ctrlPersonCard1 = new DVLD_APP.ctrlPersonCard();
-            this.cpFilter = new System.Windows.Forms.ComboBox();
+            this.cbFilter = new System.Windows.Forms.ComboBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
+            this.btnSearch = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ctrlPersonCard1
@@ -41,32 +42,41 @@
             this.ctrlPersonCard1.Size = new System.Drawing.Size(1293, 599);
             this.ctrlPersonCard1.TabIndex = 0;
             // 
-            // cpFilter
+            // cbFilter
             // 
-            this.cpFilter.FormattingEnabled = true;
-            this.cpFilter.Items.AddRange(new object[] {
+            this.cbFilter.FormattingEnabled = true;
+            this.cbFilter.Items.AddRange(new object[] {
             "NationalNo",
             "PersonID"});
-            this.cpFilter.Location = new System.Drawing.Point(56, 81);
-            this.cpFilter.Name = "cpFilter";
-            this.cpFilter.Size = new System.Drawing.Size(144, 28);
-            this.cpFilter.TabIndex = 1;
-            this.cpFilter.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.cbFilter.Location = new System.Drawing.Point(41, 33);
+            this.cbFilter.Name = "cbFilter";
+            this.cbFilter.Size = new System.Drawing.Size(154, 28);
+            this.cbFilter.TabIndex = 1;
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(234, 83);
+            this.txtSearch.Location = new System.Drawing.Point(221, 35);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(136, 26);
+            this.txtSearch.Size = new System.Drawing.Size(148, 26);
             this.txtSearch.TabIndex = 2;
-            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(423, 37);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(88, 24);
+            this.btnSearch.TabIndex = 3;
+            this.btnSearch.Text = "Search";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // ctrlPersonCardWithFilter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.txtSearch);
-            this.Controls.Add(this.cpFilter);
+            this.Controls.Add(this.cbFilter);
             this.Controls.Add(this.ctrlPersonCard1);
             this.Name = "ctrlPersonCardWithFilter";
             this.Size = new System.Drawing.Size(1305, 665);
@@ -79,7 +89,8 @@
         #endregion
 
         private ctrlPersonCard ctrlPersonCard1;
-        private System.Windows.Forms.ComboBox cpFilter;
+        private System.Windows.Forms.ComboBox cbFilter;
         private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.Button btnSearch;
     }
 }
