@@ -92,7 +92,7 @@ public partial class MainForm : Form{
         private void localDrivingLicenseApplicationsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panelContainer.Controls.Clear();
-            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Applications, bus.clsApplications.GetAllInternationalApplications());
+            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Applications, bus.clsApplications.GetAllLocalApplications());
             ctrl.Dock = DockStyle.Fill;
             panelContainer.Controls.Add(ctrl);
         }
@@ -122,6 +122,21 @@ public partial class MainForm : Form{
         {
             Application.Exit();
 
+        }
+
+        private void signOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clsGlobal.CurrentUser = null;
+            this.Hide();
+            frmLogin loginForm = new frmLogin();
+            if (loginForm.ShowDialog() == DialogResult.OK)
+            {
+                this.Show();
+            }
+            else
+            {
+                this.Close();
+            }
         }
     }
 }

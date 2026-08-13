@@ -25,10 +25,6 @@ namespace DVLD_APP
             InitializeComponent();
         }
 
-        private void ctrlAddAndEdit_Load(object sender, EventArgs e)
-        {
-
-        }
 
         public void ResetPersonInfo()
         {
@@ -49,7 +45,7 @@ namespace DVLD_APP
             lblEditPersonInfo.Enabled = false;
         }
 
-        public void LoadPersonInfo(int PersonID)
+        public  void LoadPersonInfo(int PersonID)
         {
             _Person = clsPeople.Find(PersonID);
             if (_Person == null)
@@ -194,6 +190,26 @@ namespace DVLD_APP
         private void lblPhone_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void gbPersonInfo_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnclose_Click(object sender, EventArgs e)
+        {
+            Form parentForm = this.FindForm();
+
+            if (parentForm != null)
+            {
+                parentForm.Close();
+            }
+        }
+
+        private void ctrlPersonCard_Load(object sender, EventArgs e)
+        {
+            btnclose.Visible = this.FindForm()?.Modal ?? false;
         }
     }
 }

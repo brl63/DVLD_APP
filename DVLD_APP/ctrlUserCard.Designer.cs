@@ -64,7 +64,7 @@
             this.lblUserName.Name = "lblUserName";
             this.lblUserName.Size = new System.Drawing.Size(97, 20);
             this.lblUserName.TabIndex = 1;
-            this.lblUserName.Text = "UserName : ";
+            this.lblUserName.Text = "serName : ";
             // 
             // lblUserID
             // 

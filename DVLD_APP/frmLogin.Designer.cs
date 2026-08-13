@@ -56,7 +56,7 @@
             this.lblUserName.Name = "lblUserName";
             this.lblUserName.Size = new System.Drawing.Size(85, 20);
             this.lblUserName.TabIndex = 2;
-            this.lblUserName.Text = "UserName";
+            this.lblUserName.Text = "serName";
             // 
             // lblPassword
             // 
@@ -65,7 +65,7 @@
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(78, 20);
             this.lblPassword.TabIndex = 3;
-            this.lblPassword.Text = "Password";
+            this.lblPassword.Text = "Passwor";
             // 
             // btnLogin
             // 

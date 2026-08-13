@@ -234,12 +234,13 @@
             // 
             // btnclose
             // 
-            this.btnclose.Location = new System.Drawing.Point(1080, 537);
+            this.btnclose.Location = new System.Drawing.Point(1091, 467);
             this.btnclose.Name = "btnclose";
             this.btnclose.Size = new System.Drawing.Size(137, 43);
             this.btnclose.TabIndex = 24;
             this.btnclose.Text = "close";
             this.btnclose.UseVisualStyleBackColor = true;
+            this.btnclose.Click += new System.EventHandler(this.btnclose_Click);
             // 
             // pnlPersonInfo
             // 
@@ -275,6 +276,7 @@
             this.gbPersonInfo.TabIndex = 26;
             this.gbPersonInfo.TabStop = false;
             this.gbPersonInfo.Text = "Person Info";
+            this.gbPersonInfo.Enter += new System.EventHandler(this.gbPersonInfo_Enter);
             // 
             // pbPersonImage
             // 
@@ -295,8 +297,8 @@
             this.Controls.Add(this.pbPersonImage);
             this.Controls.Add(this.gbPersonInfo);
             this.Name = "ctrlPersonCard";
-            this.Size = new System.Drawing.Size(1293, 599);
-            this.Load += new System.EventHandler(this.ctrlAddAndEdit_Load);
+            this.Size = new System.Drawing.Size(1293, 531);
+            this.Load += new System.EventHandler(this.ctrlPersonCard_Load);
             this.pnlPersonInfo.ResumeLayout(false);
             this.pnlPersonInfo.PerformLayout();
             this.gbPersonInfo.ResumeLayout(false);

@@ -34,7 +34,7 @@
             this.lblConfirmPassword = new System.Windows.Forms.Label();
             this.txtUserName = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
-            this.txtConfirm = new System.Windows.Forms.TextBox();
+            this.txtConfirmPassword = new System.Windows.Forms.TextBox();
             this.chkIsActive = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
@@ -88,12 +88,12 @@
             this.txtPassword.Size = new System.Drawing.Size(149, 26);
             this.txtPassword.TabIndex = 5;
             // 
-            // txtConfirm
+            // txtConfirmPassword
             // 
-            this.txtConfirm.Location = new System.Drawing.Point(229, 266);
-            this.txtConfirm.Name = "txtConfirm";
-            this.txtConfirm.Size = new System.Drawing.Size(149, 26);
-            this.txtConfirm.TabIndex = 6;
+            this.txtConfirmPassword.Location = new System.Drawing.Point(229, 266);
+            this.txtConfirmPassword.Name = "txtConfirmPassword";
+            this.txtConfirmPassword.Size = new System.Drawing.Size(149, 26);
+            this.txtConfirmPassword.TabIndex = 6;
             // 
             // chkIsActive
             // 
@@ -110,7 +110,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.chkIsActive);
-            this.Controls.Add(this.txtConfirm);
+            this.Controls.Add(this.txtConfirmPassword);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUserName);
             this.Controls.Add(this.lblConfirmPassword);
@@ -133,7 +133,7 @@
         private System.Windows.Forms.Label lblConfirmPassword;
         private System.Windows.Forms.TextBox txtUserName;
         private System.Windows.Forms.TextBox txtPassword;
-        private System.Windows.Forms.TextBox txtConfirm;
+        private System.Windows.Forms.TextBox txtConfirmPassword;
         private System.Windows.Forms.CheckBox chkIsActive;
     }
 }

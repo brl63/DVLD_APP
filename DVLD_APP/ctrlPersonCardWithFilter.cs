@@ -38,6 +38,10 @@ namespace DVLD_APP
 
             if (cbFilter.SelectedIndex == 0)
             {
+                ctrlPersonCard1.LoadPersonInfo(searchValue);
+            }
+            else
+            {
                 if (int.TryParse(searchValue, out int personID))
                 {
                     ctrlPersonCard1.LoadPersonInfo(personID);
@@ -47,11 +51,11 @@ namespace DVLD_APP
                     MessageBox.Show("Please enter a valid numeric Person ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            else 
-            {
-                 ctrlPersonCard1.LoadPersonInfo(searchValue);
-            }
         }
 
+        private void ctrlPersonCard1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

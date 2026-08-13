@@ -204,7 +204,21 @@ namespace Data
             }
         }
 
-        
+        public static bool IsUserExistForPersonID(int PersonID)
+        {
+            string sql = "SELECT COUNT(*) FROM Users WHERE PersonID = @PersonID";
+            using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, cn))
+                {
+                    cmd.Parameters.AddWithValue("@PersonID", PersonID);
+                    cn.Open();
+                    int count = (int)cmd.ExecuteScalar();
+                    return count > 0; 
+                }
+            }
+        }
+
 
     }
 }

@@ -68,14 +68,12 @@ namespace bus
             return Data.clsPerson.GetAll();
         }
 
-        // Check if a national number exists
         public static bool NationalNumberExists(string nationalNo)
         {
             if (string.IsNullOrWhiteSpace(nationalNo)) return false;
             return Data.clsPerson.IsNationalNumExcist(nationalNo.Trim());
         }
 
-        // Wrapper to add a new person via Data layer
         public static int Add(string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gender, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
         {
             return Data.clsPerson.AddNew(NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, Gender, Address, Phone, Email, NationalityCountryID, ImagePath);

@@ -37,10 +37,11 @@
             // ctrlPersonCard1
             // 
             this.ctrlPersonCard1.EnableEditLink = true;
-            this.ctrlPersonCard1.Location = new System.Drawing.Point(12, 81);
+            this.ctrlPersonCard1.Location = new System.Drawing.Point(0, 5);
             this.ctrlPersonCard1.Name = "ctrlPersonCard1";
             this.ctrlPersonCard1.Size = new System.Drawing.Size(1293, 599);
             this.ctrlPersonCard1.TabIndex = 0;
+            this.ctrlPersonCard1.Load += new System.EventHandler(this.ctrlPersonCard1_Load);
             // 
             // cbFilter
             // 
@@ -48,23 +49,23 @@
             this.cbFilter.Items.AddRange(new object[] {
             "NationalNo",
             "PersonID"});
-            this.cbFilter.Location = new System.Drawing.Point(41, 33);
+            this.cbFilter.Location = new System.Drawing.Point(23, 3);
             this.cbFilter.Name = "cbFilter";
             this.cbFilter.Size = new System.Drawing.Size(154, 28);
             this.cbFilter.TabIndex = 1;
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(221, 35);
+            this.txtSearch.Location = new System.Drawing.Point(213, 5);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(148, 26);
             this.txtSearch.TabIndex = 2;
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(423, 37);
+            this.btnSearch.Location = new System.Drawing.Point(416, 7);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(88, 24);
+            this.btnSearch.Size = new System.Drawing.Size(88, 29);
             this.btnSearch.TabIndex = 3;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
@@ -79,7 +80,7 @@
             this.Controls.Add(this.cbFilter);
             this.Controls.Add(this.ctrlPersonCard1);
             this.Name = "ctrlPersonCardWithFilter";
-            this.Size = new System.Drawing.Size(1305, 665);
+            this.Size = new System.Drawing.Size(1222, 588);
             this.Load += new System.EventHandler(this.ctrlPersonCardWithFilter_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -82,7 +82,6 @@ namespace DVLD_APP
         }
 
         // =========================================================
-        // 🛠️ دالة موحدة لفتح شاشة الشخص (سواء إضافه جديدة أو تعديل)
         // =========================================================
         private void ShowPersonForm(int personId = -1)
         {
@@ -132,14 +131,11 @@ namespace DVLD_APP
             }
         }
 
-        // =========================================================
-        // 🔍 دوال المساعدة للـ Row Selection والداتا
-        // =========================================================
+ 
         private int GetSelectedID()
         {
             if (dgvList.CurrentRow == null) return -1;
 
-            // البحث الذكي عن عمود الـ ID حسب الاسم بدلاً من الأندكس الصريح (Index 0)
             string[] possibleIdColumns = new string[] { "PersonID", "UserID", "DriverID", "ApplicationID", "TestTypeID" };
             foreach (string colName in possibleIdColumns)
             {
@@ -263,18 +259,51 @@ namespace DVLD_APP
             }
         }
 
+        private void ShowAddUserForm()
+        {
+            using (Form frm = new Form())
+            {
+                frm.Text = "Add New User";
+                frm.StartPosition = FormStartPosition.CenterParent;
+                frm.Size = new Size(1320, 780);
+
+                ctrlAddUser addUserControl = new ctrlAddUser();
+                addUserControl.Dock = DockStyle.Fill;
+                frm.Controls.Add(addUserControl);
+
+                frm.ShowDialog();
+
+                RefreshUsersGrid();
+            }
+        }
+
+        private void RefreshUsersGrid()
+        {
+            try
+            {
+                _theData = bus.clsUser.GetAll(); 
+                _bindingSource.DataSource = _theData;
+                _bindingSource.ResetBindings(false);
+            }
+            catch { }
+        }
+
         private void SetupUsersContextMenu()
         {
             ContextMenuStrip cms = new ContextMenuStrip();
 
             cms.Items.Add("Show Details", null, (s, e) => ShowUserDetails());
-
             cms.Items.Add(new ToolStripSeparator());
-            cms.Items.Add("Add New User", null, (s, e) => MessageBox.Show("Add User"));
+
+            cms.Items.Add("Add New User", null, (s, e) => ShowAddUserForm());
+
             cms.Items.Add("Delete", null, (s, e) => MessageBox.Show($"Delete User ID: {GetSelectedID()}"));
             cms.Items.Add(new ToolStripSeparator());
 
             dgvList.ContextMenuStrip = cms;
+
+            dgvList.DoubleClick -= DgvList_DoubleClick;
+            dgvList.DoubleClick += DgvList_DoubleClick;
         }
         private void SetupDriversContextMenu()
         {
@@ -330,5 +359,9 @@ namespace DVLD_APP
         private void ctrlDataManagement_Load(object sender, EventArgs e) { }
         private void dgvList_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
 
+        private void cmsData_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
     }
 }

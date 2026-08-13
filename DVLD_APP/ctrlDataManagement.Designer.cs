@@ -70,12 +70,13 @@
             this.cmsData.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showDetailsToolStripMenuItem});
             this.cmsData.Name = "cmsData";
-            this.cmsData.Size = new System.Drawing.Size(187, 36);
+            this.cmsData.Size = new System.Drawing.Size(241, 69);
+            this.cmsData.Opening += new System.ComponentModel.CancelEventHandler(this.cmsData_Opening);
             // 
             // showDetailsToolStripMenuItem
             // 
             this.showDetailsToolStripMenuItem.Name = "showDetailsToolStripMenuItem";
-            this.showDetailsToolStripMenuItem.Size = new System.Drawing.Size(186, 32);
+            this.showDetailsToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
             this.showDetailsToolStripMenuItem.Text = "Show Details";
             // 
             // picName

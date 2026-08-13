@@ -84,6 +84,11 @@ namespace bus
         {
             return Data.clsUser.IsUserNameExists(userName);
         }
+
+        public static bool IsUserExistForPersonID(int personID)
+        {
+            return Data.clsUser.IsUserExistForPersonID(personID);
+        }
     }
 }
 
