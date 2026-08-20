@@ -113,50 +113,41 @@ namespace Data
         {
             bool result = false;
             string sql = @"SELECT TOP 1 Tests.TestID, Tests.TestAppointmentID, Tests.TestResult, Tests.Notes, Tests.CreatedByUserID 
-                         FROM Tests 
-                         INNER JOIN TestAppointments ON Tests.TestAppointmentID = TestAppointments.TestAppointmentID
-                         INNER JOIN LocalDrivingLicenseApplications ON TestAppointments.LocalDrivingLicenseApplicationID = LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID
-                         INNER JOIN Applications ON LocalDrivingLicenseApplications.ApplicationID = Applications.ApplicationID
-                         WHERE Applications.ApplicantPersonID = @ApplicantPersonID 
-                           AND LocalDrivingLicenseApplications.LicenseClassID = @LicenseClassID 
-                           AND TestAppointments.TestTypeID = @TestTypeID
-                         ORDER BY Tests.TestID DESC";
+                 FROM Tests 
+                 INNER JOIN TestAppointments ON Tests.TestAppointmentID = TestAppointments.TestAppointmentID
+                 INNER JOIN LocalDrivingLicenseApplications ON TestAppointments.LocalDrivingLicenseApplicationID = LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID
+                 INNER JOIN Applications ON LocalDrivingLicenseApplications.ApplicationID = Applications.ApplicationID
+                 WHERE Applications.PersonID = @PersonID 
+                   AND LocalDrivingLicenseApplications.LicenseClassID = @LicenseClassID 
+                   AND TestAppointments.TestTypeID = @TestTypeID
+                 ORDER BY Tests.TestID DESC";
 
             using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
             {
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
-                    result = true;
-                    command.Parameters.AddWithValue("@ApplicantPersonID", PersonID);
+                    command.Parameters.AddWithValue("@PersonID", PersonID);
                     command.Parameters.AddWithValue("@LicenseClassID", licenseClassID);
                     command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
+
                     connection.Open();
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-
+                            result = true;
                             testID = reader.GetInt32(reader.GetOrdinal("TestID"));
                             testAppointmentID = reader.GetInt32(reader.GetOrdinal("TestAppointmentID"));
-                            if (reader.IsDBNull(reader.GetOrdinal("Notes")))
-                            { 
-                                notes = ""; // Handle null value for Notes
-                            }
-                            else
-                            {
-                                notes = reader.GetString(reader.GetOrdinal("Notes"));
-                            }
+                            notes = reader.IsDBNull(reader.GetOrdinal("Notes")) ? "" : reader.GetString(reader.GetOrdinal("Notes"));
                             testResult = reader.GetBoolean(reader.GetOrdinal("TestResult"));
                             createdByUserID = reader.GetInt32(reader.GetOrdinal("CreatedByUserID"));
                         }
                     }
-                }  
+                }
             }
 
             return result;
-
         }
-
         public static bool UpdateTest(int testID, int testAppointmentID, bool testResult, string notes, int createdByUserID)
         {
             string sql = "UPDATE Tests SET TestAppointmentID = @TestAppointmentID, TestResult = @TestResult, Notes = @Notes, CreatedByUserID = @CreatedByUserID WHERE TestID = @TestID";
@@ -170,7 +161,6 @@ namespace Data
                     if (string.IsNullOrEmpty(notes))
                         command.Parameters.AddWithValue("@Notes", DBNull.Value);
                     else
-                        command.Parameters.AddWithValue("@Notes", notes);
                     command.Parameters.AddWithValue("@Notes", notes);
                     command.Parameters.AddWithValue("@CreatedByUserID", createdByUserID);
                     connection.Open();
@@ -197,6 +187,32 @@ namespace Data
                     return rowsAffected > 0; // Return true if at least one row was updated
                 }
             }
+        }
+
+        public static byte TotalTrialsPerTest(int localDrivingLicenseApplicationID, int testTypeID)
+        {
+            byte totalTrials = 0;
+            const string sql = @"SELECT COUNT(Tests.TestID)
+                        FROM Tests 
+                        INNER JOIN TestAppointments ON Tests.TestAppointmentID = TestAppointments.TestAppointmentID
+                        WHERE TestAppointments.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID 
+                          AND TestAppointments.TestTypeID = @TestTypeID";
+
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", localDrivingLicenseApplicationID);
+                    command.Parameters.AddWithValue("@TestTypeID", testTypeID);
+                    connection.Open();
+                    object result = command.ExecuteScalar();
+                    if (result != null && byte.TryParse(result.ToString(), out byte count))
+                    {
+                        totalTrials = count;
+                    }
+                }
+            }
+            return totalTrials;
         }
     }
 }

@@ -133,7 +133,7 @@ namespace Data
         public static DataTable GetApplicationTestAppointmentsPerTestType(int localDrivingLicenseApplicationID, int testTypeID)
         {
             DataTable dt = new DataTable();
-            string sql = "SELECT * FROM TestAppointments_View WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID AND TestTypeID = @TestTypeID";
+            string sql = "SELECT * FROM TestAppointments WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID AND TestTypeID = @TestTypeID";
             using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(sql, cn))
@@ -147,6 +147,57 @@ namespace Data
                 }
             }
             return dt;
+        }
+
+        public static bool UpdateAppointment(int testAppointmentID, int testTypeID, int localDrivingLicenseApplicationID, DateTime appointmentDate, decimal paidFees, bool isLocked, int createdByUserID)
+        {
+            string sql = @"UPDATE TestAppointments 
+                   SET TestTypeID = @TestTypeID,
+                       LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID,
+                       AppointmentDate = @AppointmentDate,
+                       PaidFees = @PaidFees,
+                       IsLocked = @IsLocked,
+                       CreatedByUserID = @CreatedByUserID
+                   WHERE TestAppointmentID = @TestAppointmentID";
+
+            using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, cn))
+                {
+                    cmd.Parameters.AddWithValue("@TestAppointmentID", testAppointmentID);
+                    cmd.Parameters.AddWithValue("@TestTypeID", testTypeID);
+                    cmd.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", localDrivingLicenseApplicationID);
+                    cmd.Parameters.AddWithValue("@AppointmentDate", appointmentDate);
+                    cmd.Parameters.AddWithValue("@PaidFees", paidFees);
+                    cmd.Parameters.AddWithValue("@IsLocked", isLocked);
+                    cmd.Parameters.AddWithValue("@CreatedByUserID", createdByUserID);
+
+                    cn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+            }
+        }
+
+        public static int GetTestID(int testAppointmentID)
+        {
+            int testID = -1;
+            string sql = "SELECT TestID FROM Tests WHERE TestAppointmentID = @TestAppointmentID";
+
+            using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, cn))
+                {
+                    cmd.Parameters.AddWithValue("@TestAppointmentID", testAppointmentID);
+                    cn.Open();
+                    object result = cmd.ExecuteScalar();
+                    if (result != null && int.TryParse(result.ToString(), out int id))
+                    {
+                        testID = id;
+                    }
+                }
+            }
+            return testID;
         }
     }
 }

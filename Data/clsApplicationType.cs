@@ -122,5 +122,30 @@ namespace Data
                 }
             }
         }
+
+        public static bool GetApplicationTypeInfoByID(int applicationTypeID, ref string title, ref decimal fees)
+        {
+            bool isFound = false;
+            const string sql = "SELECT * FROM ApplicationTypes WHERE ApplicationTypeID = @ApplicationTypeID";
+
+            using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, cn))
+                {
+                    cmd.Parameters.AddWithValue("@ApplicationTypeID", applicationTypeID);
+                    cn.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            isFound = true;
+                            title = (string)reader["ApplicationTypeTitle"];
+                            fees = (decimal)reader["ApplicationFees"];
+                        }
+                    }
+                }
+            }
+            return isFound;
+        }
     }
 }

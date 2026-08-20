@@ -62,6 +62,7 @@
             this.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvList.Size = new System.Drawing.Size(1306, 520);
             this.dgvList.TabIndex = 2;
+            this.dgvList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellContentClick_1);
             this.dgvList.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvList_CellMouseDown);
             // 
             // cmsData
@@ -70,13 +71,13 @@
             this.cmsData.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showDetailsToolStripMenuItem});
             this.cmsData.Name = "cmsData";
-            this.cmsData.Size = new System.Drawing.Size(241, 69);
+            this.cmsData.Size = new System.Drawing.Size(187, 36);
             this.cmsData.Opening += new System.ComponentModel.CancelEventHandler(this.cmsData_Opening);
             // 
             // showDetailsToolStripMenuItem
             // 
             this.showDetailsToolStripMenuItem.Name = "showDetailsToolStripMenuItem";
-            this.showDetailsToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.showDetailsToolStripMenuItem.Size = new System.Drawing.Size(186, 32);
             this.showDetailsToolStripMenuItem.Text = "Show Details";
             // 
             // picName

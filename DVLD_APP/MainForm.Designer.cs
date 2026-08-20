@@ -74,7 +74,7 @@
             this.accountSettingsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1277, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1277, 36);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -87,7 +87,7 @@
             this.manageApplicationTypesToolStripMenuItem,
             this.manageTestTypesToolStripMenuItem});
             this.applcationsToolStripMenuItem.Name = "applcationsToolStripMenuItem";
-            this.applcationsToolStripMenuItem.Size = new System.Drawing.Size(137, 29);
+            this.applcationsToolStripMenuItem.Size = new System.Drawing.Size(137, 30);
             this.applcationsToolStripMenuItem.Text = "   Applcations";
             // 
             // drivingLicensesServicesToolStripMenuItem
@@ -210,7 +210,7 @@
             this.peopleToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.managePeopleToolStripMenuItem});
             this.peopleToolStripMenuItem.Name = "peopleToolStripMenuItem";
-            this.peopleToolStripMenuItem.Size = new System.Drawing.Size(81, 29);
+            this.peopleToolStripMenuItem.Size = new System.Drawing.Size(81, 30);
             this.peopleToolStripMenuItem.Text = "People";
             // 
             // managePeopleToolStripMenuItem
@@ -225,7 +225,7 @@
             this.driversToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.manageDriversToolStripMenuItem});
             this.driversToolStripMenuItem.Name = "driversToolStripMenuItem";
-            this.driversToolStripMenuItem.Size = new System.Drawing.Size(83, 29);
+            this.driversToolStripMenuItem.Size = new System.Drawing.Size(83, 30);
             this.driversToolStripMenuItem.Text = "Drivers";
             // 
             // manageDriversToolStripMenuItem
@@ -240,7 +240,7 @@
             this.usersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.manageUserToolStripMenuItem});
             this.usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            this.usersToolStripMenuItem.Size = new System.Drawing.Size(71, 29);
+            this.usersToolStripMenuItem.Size = new System.Drawing.Size(71, 30);
             this.usersToolStripMenuItem.Text = "Users";
             // 
             // manageUserToolStripMenuItem
@@ -257,27 +257,27 @@
             this.changePasswordToolStripMenuItem,
             this.signOutToolStripMenuItem});
             this.accountSettingsToolStripMenuItem.Name = "accountSettingsToolStripMenuItem";
-            this.accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(162, 29);
+            this.accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(162, 30);
             this.accountSettingsToolStripMenuItem.Text = "Account Settings";
             // 
             // currentUserInfoToolStripMenuItem
             // 
             this.currentUserInfoToolStripMenuItem.Name = "currentUserInfoToolStripMenuItem";
-            this.currentUserInfoToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.currentUserInfoToolStripMenuItem.Size = new System.Drawing.Size(253, 34);
             this.currentUserInfoToolStripMenuItem.Text = "current user info";
             this.currentUserInfoToolStripMenuItem.Click += new System.EventHandler(this.currentUserInfoToolStripMenuItem_Click);
             // 
             // changePasswordToolStripMenuItem
             // 
             this.changePasswordToolStripMenuItem.Name = "changePasswordToolStripMenuItem";
-            this.changePasswordToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.changePasswordToolStripMenuItem.Size = new System.Drawing.Size(253, 34);
             this.changePasswordToolStripMenuItem.Text = "change password";
             this.changePasswordToolStripMenuItem.Click += new System.EventHandler(this.changePasswordToolStripMenuItem_Click);
             // 
             // signOutToolStripMenuItem
             // 
             this.signOutToolStripMenuItem.Name = "signOutToolStripMenuItem";
-            this.signOutToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.signOutToolStripMenuItem.Size = new System.Drawing.Size(253, 34);
             this.signOutToolStripMenuItem.Text = "sign out";
             this.signOutToolStripMenuItem.Click += new System.EventHandler(this.signOutToolStripMenuItem_Click);
             // 
@@ -285,9 +285,9 @@
             // 
             this.panelContainer.Controls.Add(this.lblWelcome);
             this.panelContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContainer.Location = new System.Drawing.Point(0, 33);
+            this.panelContainer.Location = new System.Drawing.Point(0, 36);
             this.panelContainer.Name = "panelContainer";
-            this.panelContainer.Size = new System.Drawing.Size(1277, 571);
+            this.panelContainer.Size = new System.Drawing.Size(1277, 568);
             this.panelContainer.TabIndex = 1;
             // 
             // lblWelcome

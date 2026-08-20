@@ -33,7 +33,7 @@ namespace Data
 
                             applicationID = reader.GetInt32(reader.GetOrdinal("ApplicationID"));
                             driverID = reader.GetInt32(reader.GetOrdinal("DriverID"));
-                            licenseClassID = reader.GetInt32(reader.GetOrdinal("LicenseClassID"));
+                            licenseClassID = reader.GetInt32(reader.GetOrdinal("LicenseClass"));
                             issueDate = reader.GetDateTime(reader.GetOrdinal("IssueDate"));
                             expirationDate = reader.GetDateTime(reader.GetOrdinal("ExpirationDate"));
                             if (reader.IsDBNull(reader.GetOrdinal("Notes")))
@@ -351,6 +351,27 @@ namespace Data
                     return count > 0; // Return true if at least one active license exists for the given class
                 }
             }
+        }
+
+        public static int GetActiveLicenseIDByApplicationID(int applicationID)
+        {
+            int licenseID = -1;
+            const string sql = "SELECT LicenseID FROM Licenses WHERE ApplicationID = @ApplicationID";
+
+            using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, cn))
+                {
+                    cmd.Parameters.AddWithValue("@ApplicationID", applicationID);
+                    cn.Open();
+                    object result = cmd.ExecuteScalar();
+                    if (result != null && int.TryParse(result.ToString(), out int id))
+                    {
+                        licenseID = id;
+                    }
+                }
+            }
+            return licenseID;
         }
     }
 }

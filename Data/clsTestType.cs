@@ -43,7 +43,7 @@ namespace Data
                         {
                             testTypeTitle = dr["TestTypeTitle"].ToString();
                             testTypeDescription = dr["TestTypeDescription"].ToString();
-                            testTypeFee = Convert.ToDecimal(dr["TestTypeFee"]);
+                            testTypeFee = Convert.ToDecimal(dr["TestTypeFees"]);
                             return true;
                         }
                     }
@@ -54,7 +54,7 @@ namespace Data
     
         public static bool UpdateFees(int testTypeID, decimal fee)
         {
-            string sql = "UPDATE TestTypes SET TestTypeFee = @fee WHERE TestTypeID = @TestTypeID";
+            string sql = "UPDATE TestType SET TestTypeFee = @fee WHERE TestTypeID = @TestTypeID";
             using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
             {
                 using (SqlCommand command = new SqlCommand(sql, connection))

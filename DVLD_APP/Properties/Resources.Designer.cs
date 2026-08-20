@@ -133,9 +133,39 @@ namespace DVLD_APP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Street_Test_512 {
+            get {
+                object obj = ResourceManager.GetObject("Street_Test_512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap UsersManagment {
             get {
                 object obj = ResourceManager.GetObject("UsersManagment", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vision_512 {
+            get {
+                object obj = ResourceManager.GetObject("Vision_512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Written_Test_512 {
+            get {
+                object obj = ResourceManager.GetObject("Written_Test_512", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

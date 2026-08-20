@@ -67,11 +67,29 @@
     <Compile Include="ctrlAddUser.Designer.cs">
       <DependentUpon>ctrlAddUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="ctrlApplicationBasicInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrlApplicationBasicInfo.Designer.cs">
+      <DependentUpon>ctrlApplicationBasicInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="ctrlChangePassword.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ctrlChangePassword.Designer.cs">
       <DependentUpon>ctrlChangePassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlDriverLicenseInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrlDriverLicenseInfo.Designer.cs">
+      <DependentUpon>ctrlDriverLicenseInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlLocalDrivingLicenseApplicationInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrlLocalDrivingLicenseApplicationInfo.Designer.cs">
+      <DependentUpon>ctrlLocalDrivingLicenseApplicationInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="ctrlPersonCard.cs">
       <SubType>UserControl</SubType>
@@ -97,11 +115,41 @@
     <Compile Include="ctrlUserCard.Designer.cs">
       <DependentUpon>ctrlUserCard.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmIssueDrivingLicenseFirstTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmIssueDrivingLicenseFirstTime.Designer.cs">
+      <DependentUpon>frmIssueDrivingLicenseFirstTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListTestAppointments.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListTestAppointments.Designer.cs">
+      <DependentUpon>frmListTestAppointments.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmLogin.Designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmScheduleTestcs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmScheduleTestcs.Designer.cs">
+      <DependentUpon>frmScheduleTestcs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmShowLicenseInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmShowLicenseInfo.Designer.cs">
+      <DependentUpon>frmShowLicenseInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTakeTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTakeTest.Designer.cs">
+      <DependentUpon>frmTakeTest.cs</DependentUpon>
     </Compile>
     <Compile Include="helpers\clsGlobal.cs" />
     <Compile Include="helpers\clsHelpers.cs" />
@@ -127,8 +175,14 @@
     <EmbeddedResource Include="ctrlAddUser.resx">
       <DependentUpon>ctrlAddUser.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ctrlApplicationBasicInfo.resx">
+      <DependentUpon>ctrlApplicationBasicInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ctrlChangePassword.resx">
       <DependentUpon>ctrlChangePassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrlLocalDrivingLicenseApplicationInfo.resx">
+      <DependentUpon>ctrlLocalDrivingLicenseApplicationInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ctrlPersonCard.resx">
       <DependentUpon>ctrlPersonCard.cs</DependentUpon>
@@ -142,8 +196,14 @@
     <EmbeddedResource Include="ctrlUserCard.resx">
       <DependentUpon>ctrlUserCard.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmListTestAppointments.resx">
+      <DependentUpon>frmListTestAppointments.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTakeTest.resx">
+      <DependentUpon>frmTakeTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

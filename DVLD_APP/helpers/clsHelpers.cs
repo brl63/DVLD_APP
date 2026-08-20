@@ -14,8 +14,12 @@ namespace DVLD_APP.helpers
             People,
             Users,
             Drivers,
-            Applications,
-            Tests
+            LocalDrivingLicenseApplications,
+            InternationalDrivingLicenseApplications,
+            TestAppointments,
+            TestTypes,
+            ApplicationTypes,
+            DetainedLicenses
         }
     }
 }

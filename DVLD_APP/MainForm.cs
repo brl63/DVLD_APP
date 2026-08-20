@@ -14,7 +14,6 @@ namespace DVLD_APP
 {
 public partial class MainForm : Form{
     
-        //jhuvrdoim
         public MainForm()
         {
             InitializeComponent();
@@ -22,7 +21,7 @@ public partial class MainForm : Form{
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           // lblWelcome.Text = "Welcome Again " + clsGlobal.CurrentUser.UserName;
+            lblWelcome.Text = "Welcome Again " + clsGlobal.CurrentUser.UserName;
         }
 
         private void newDrivingLicenseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -60,7 +59,7 @@ public partial class MainForm : Form{
         private void manageDriversToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panelContainer.Controls.Clear();
-            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Drivers, bus.clsDrivers.GetAll());
+            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Drivers, bus.clsDriver.GetAll());
             ctrl.Dock = DockStyle.Fill;
             panelContainer.Controls.Add(ctrl);
         }
@@ -68,7 +67,7 @@ public partial class MainForm : Form{
         private void manageTestTypesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panelContainer.Controls.Clear();
-            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Tests, bus.clsTestTypes.GetAll());
+            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.TestAppointments, bus.clsTestType.GetAllTestTypes());
             ctrl.Dock = DockStyle.Fill;
             panelContainer.Controls.Add(ctrl);
         }
@@ -76,7 +75,7 @@ public partial class MainForm : Form{
         private void manageApplicationTypesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panelContainer.Controls.Clear();
-            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Applications, bus.clsApplicationTypes.GetAll());
+            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.ApplicationTypes, bus.clsApplicationTypes.GetAll());
             ctrl.Dock = DockStyle.Fill;
             panelContainer.Controls.Add(ctrl);
         }
@@ -84,7 +83,7 @@ public partial class MainForm : Form{
         private void internationalLicenseApplicationsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panelContainer.Controls.Clear();
-            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Applications, bus.clsApplications.GetAllInternationalApplications());
+            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.InternationalDrivingLicenseApplications, bus.clsApplications.GetAllInternationalApplications());
             ctrl.Dock = DockStyle.Fill;
             panelContainer.Controls.Add(ctrl);
         }
@@ -92,7 +91,7 @@ public partial class MainForm : Form{
         private void localDrivingLicenseApplicationsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panelContainer.Controls.Clear();
-            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Applications, bus.clsApplications.GetAllLocalApplications());
+            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.LocalDrivingLicenseApplications, bus.clsApplications.GetAllLocalApplications());
             ctrl.Dock = DockStyle.Fill;
             panelContainer.Controls.Add(ctrl);
         }
