@@ -131,3 +131,11 @@ You can use the following default account to sign in and explore all system modu
 * **ID 2 (`Renew`):** License reissued upon expiration.
 * **ID 3 (`ReplacementForDamaged`):** License reissued due to physical damage.
 * **ID 4 (`ReplacementForLost`):** License reissued due to loss.
+---
+
+## ⚠️ Important Note Regarding Profile / Person Images
+* **Sample Data Image Paths:** The seeded database records contain absolute file paths referencing local image directories used during development.
+* **Expected Behavior:** When running the project on a new machine, existing sample profiles may not display photos or may trigger image loading warnings due to mismatched local directories. This is completely normal and does not affect application functionality.
+* **Adding New Data:** Creating new people or updating existing records via the application UI using your local image picker will save and display images correctly on your system.
+
+---
