@@ -73,11 +73,7 @@ You can use the following default account to sign in and explore all system modu
      ```csharp
      public static string _connectionString = "Server=.;Database=DVLD;Integrated Security=True;";
      ```
-
-4. **Build & Run:**
-   * Open `DVLD.sln` in **Visual Studio**.
-   * Set `DVLD_APP` as the **StartUp Project**.
-   * Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd> to build the solution, then press <kbd>F5</kbd> to run.
+    and run but make sure that the startup project is on DVLD_APP
 
 
 
