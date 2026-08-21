@@ -60,6 +60,7 @@ You can use the following default account to sign in and explore all system modu
    ```bash
    git clone https://github.com/brl63/DVLD_APP.git
    ```
+   Make sure that the 3 projects be cloned if not add them manually Add exciting project
 
 2. **Database Setup:**
    * Open **SQL Server Management Studio (SSMS)**.
