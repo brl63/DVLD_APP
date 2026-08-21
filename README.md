@@ -44,17 +44,6 @@ You can use the following default account to sign in and explore all system modu
 
 ---
 
-##  License Categories
-* **Class 1:** Small Motorcycle License
-* **Class 2:** Heavy Motorcycle License
-* **Class 3:** Ordinary Driving License
-* **Class 4:** Commercial Vehicle License
-* **Class 5:** Agricultural Vehicle License
-* **Class 6:** Small and Medium Bus License
-* **Class 7:** Truck and Heavy Vehicle License
-
----
-
 ##  Technologies Used
 * **Architecture:** 3-Tier Architecture (`Data Access Layer`, `Business Logic Layer`, `Presentation Layer`)
 * **Framework / Language:** C# (.NET Framework)
@@ -94,24 +83,6 @@ You can use the following default account to sign in and explore all system modu
 ##  Database Schema & Core Entities
 
 <img src="https://github.com/user-attachments/assets/86d09a86-56ae-4498-8967-2d2c18cfc2f7" width="800" />
----
-
-##  Reference Enums & ID Mappings
-
-### 1. Application Types (`enApplicationType`)
-* **ID 1 (`NewDrivingLicense`):**
-* **ID 2 (`RenewDrivingLicense`):** 
-* **ID 3 (`ReplaceLostDrivingLicense`):**
-* **ID 4 (`ReplaceDamagedDrivingLicense`):**
-* **ID 5 (`ReleaseDetainedDrivingLicense`):**
-* **ID 6 (`NewInternationalLicense`):**
-* **ID 7 (`RetakeTest`):**
-
-### 2. Issue Reasons (`enIssueReason`)
-* **ID 1 (`FirstTime`):**
-* **ID 2 (`Renew`):**
-* **ID 3 (`ReplacementForDamaged`):**
-* **ID 4 (`ReplacementForLost`):**
 ---
 
 ##  Important Note Regarding Profile
