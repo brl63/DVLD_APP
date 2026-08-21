@@ -31,7 +31,7 @@ namespace DVLD_APP
             _bindingSource.DataSource = _theData;
             dgvList.DataSource = _bindingSource;
 
-            // إخفاء عمود الصورة إذا كان موجوداً لتجميل الواجهة
+            // إخفاء عمود الصورة إن وجد لتحسين العرض
             if (dgvList.Columns.Contains("ImagePath"))
             {
                 dgvList.Columns["ImagePath"].Visible = false;
@@ -107,30 +107,54 @@ namespace DVLD_APP
         {
             if (dgvList.CurrentRow == null) return -1;
 
-            string[] possibleIdColumns = new string[]
+            // 1. تحديد العمود الأساسي بدقة بناءً على الشاشة المفتوحة حالياً
+            string primaryColumn = "";
+            switch (_theMode)
             {
-                "LocalDrivingLicenseApplicationID",
-                "InternationalLicenseID",
-                "ApplicationID",
-                "TestAppointmentID",
-                "ApplicationTypeID",
-                "TestTypeID",
-                "DetainID",
-                "PersonID",
-                "UserID",
-                "DriverID",
-                "LicenseID"
-            };
+                case clsHelpers.enDataMode.People:
+                    primaryColumn = "PersonID";
+                    break;
 
-            foreach (string colName in possibleIdColumns)
-            {
-                if (dgvList.Columns.Contains(colName) && dgvList.CurrentRow.Cells[colName].Value != DBNull.Value)
-                {
-                    return Convert.ToInt32(dgvList.CurrentRow.Cells[colName].Value);
-                }
+                case clsHelpers.enDataMode.Users:
+                    primaryColumn = "UserID";
+                    break;
+
+                case clsHelpers.enDataMode.Drivers:
+                    primaryColumn = "DriverID";
+                    break;
+
+                case clsHelpers.enDataMode.LocalDrivingLicenseApplications:
+                    primaryColumn = "LocalDrivingLicenseApplicationID";
+                    break;
+
+                case clsHelpers.enDataMode.InternationalDrivingLicenseApplications:
+                    primaryColumn = "InternationalLicenseID";
+                    break;
+
+                case clsHelpers.enDataMode.TestAppointments:
+                    primaryColumn = "TestAppointmentID";
+                    break;
+
+                case clsHelpers.enDataMode.ApplicationTypes:
+                    primaryColumn = "ApplicationTypeID";
+                    break;
+
+                case clsHelpers.enDataMode.TestTypes:
+                    primaryColumn = "TestTypeID";
+                    break;
+
+                case clsHelpers.enDataMode.DetainedLicenses:
+                    primaryColumn = "DetainID";
+                    break;
             }
 
-            // Fallback لأول خلية إذا لم يتطابق أي اسم
+            // التحقق من وجود العمود وقيمته
+            if (!string.IsNullOrEmpty(primaryColumn) && dgvList.Columns.Contains(primaryColumn) && dgvList.CurrentRow.Cells[primaryColumn].Value != DBNull.Value)
+            {
+                return Convert.ToInt32(dgvList.CurrentRow.Cells[primaryColumn].Value);
+            }
+
+            // 2. كـ Fallback في حال كانت الشاشة خارج الحالات المحددة، نقرأ من أول عمود
             if (dgvList.CurrentRow.Cells.Count > 0 && dgvList.CurrentRow.Cells[0].Value != DBNull.Value)
             {
                 if (int.TryParse(dgvList.CurrentRow.Cells[0].Value.ToString(), out int id))
@@ -158,8 +182,42 @@ namespace DVLD_APP
             }
         }
 
+        private void _RefreshCurrentGrid()
+        {
+            switch (_theMode)
+            {
+                case clsHelpers.enDataMode.People:
+                    _theData = bus.clsPeople.GetAll();
+                    break;
+                case clsHelpers.enDataMode.Users:
+                    _theData = bus.clsUser.GetAll();
+                    break;
+                case clsHelpers.enDataMode.Drivers:
+                    _theData = bus.clsDriver.GetAll();
+                    break;
+                case clsHelpers.enDataMode.LocalDrivingLicenseApplications:
+                    _theData = bus.clsApplications.GetAllLocalApplications();
+                    break;
+                case clsHelpers.enDataMode.InternationalDrivingLicenseApplications:
+                    _theData = bus.clsApplications.GetAllInternationalApplications();
+                    break;
+                case clsHelpers.enDataMode.ApplicationTypes:
+                    _theData = bus.clsApplicationTypes.GetAll();
+                    break;
+                case clsHelpers.enDataMode.TestTypes:
+                    _theData = bus.clsTestType.GetAllTestTypes();
+                    break;
+                case clsHelpers.enDataMode.DetainedLicenses:
+                    _theData = bus.clsDetainedLicense.GetAllDetainedLicenses();
+                    break;
+            }
+
+            _bindingSource.DataSource = _theData;
+            _bindingSource.ResetBindings(false);
+        }
+
         // =========================================================
-        // People Context & Actions
+        // 1. People Context & Actions
         // =========================================================
         private void SetupPeopleContextMenu()
         {
@@ -170,8 +228,8 @@ namespace DVLD_APP
             cms.Items.Add("Edit", null, (sender, e) => ShowPersonForm(GetSelectedID()));
             cms.Items.Add("Delete", null, (sender, e) => DeletePerson());
             cms.Items.Add(new ToolStripSeparator());
-            cms.Items.Add("Send Email", null, (sender, e) => MessageBox.Show($"Send Email to Person ID: {GetSelectedID()}"));
-            cms.Items.Add("Phone Call", null, (sender, e) => MessageBox.Show($"Phone Call to Person ID: {GetSelectedID()}"));
+            cms.Items.Add("Send Email", null, (sender, e) => MessageBox.Show($"Send Email to Person ID: {GetSelectedID()}", "Email", MessageBoxButtons.OK, MessageBoxIcon.Information));
+            cms.Items.Add("Phone Call", null, (sender, e) => MessageBox.Show($"Phone Call to Person ID: {GetSelectedID()}", "Phone", MessageBoxButtons.OK, MessageBoxIcon.Information));
 
             dgvList.ContextMenuStrip = cms;
             dgvList.DoubleClick -= DgvList_DoubleClick;
@@ -201,19 +259,11 @@ namespace DVLD_APP
 
                     editor.PersonSaved += (sender, args) =>
                     {
-                        try
+                        _RefreshCurrentGrid();
+                        if (args != null && args.PersonID > 0)
                         {
-                            _theData = bus.clsPeople.GetAll();
-                            _bindingSource.DataSource = _theData;
-                            _bindingSource.ResetBindings(false);
-
-                            if (args != null && args.PersonID > 0)
-                            {
-                                SelectPersonById(args.PersonID);
-                            }
+                            SelectPersonById(args.PersonID);
                         }
-                        catch { }
-
                         try { frm.Close(); } catch { }
                     };
 
@@ -229,11 +279,7 @@ namespace DVLD_APP
         private void ShowPersonDetails()
         {
             int id = GetSelectedID();
-            if (id <= 0)
-            {
-                MessageBox.Show("No person selected.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+            if (id <= 0) return;
 
             using (Form frm = new Form())
             {
@@ -253,30 +299,24 @@ namespace DVLD_APP
         private void DeletePerson()
         {
             int id = GetSelectedID();
-            if (id <= 0)
-            {
-                MessageBox.Show("No person selected.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+            if (id <= 0) return;
 
             if (MessageBox.Show("Are you sure you want to delete this person?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (bus.clsPeople.Delete(id))
                 {
                     MessageBox.Show("Person deleted successfully.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    _theData = bus.clsPeople.GetAll();
-                    _bindingSource.DataSource = _theData;
-                    _bindingSource.ResetBindings(false);
+                    _RefreshCurrentGrid();
                 }
                 else
                 {
-                    MessageBox.Show("Error deleting person. Make sure that person isn't a driver, user, or has applications.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Cannot delete this person because they have related data (Applications, Licenses, or Drivers) linked to their record.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
         // =========================================================
-        // Users Context & Actions
+        // 2. Users Context & Actions
         // =========================================================
         private void SetupUsersContextMenu()
         {
@@ -284,12 +324,38 @@ namespace DVLD_APP
             cms.Items.Add("Show Details", null, (s, e) => ShowUserDetails());
             cms.Items.Add(new ToolStripSeparator());
             cms.Items.Add("Add New User", null, (s, e) => ShowAddUserForm());
-            cms.Items.Add("Edit", null, (s, e) => MessageBox.Show($"Edit User ID: {GetSelectedID()}"));
-            cms.Items.Add("Delete", null, (s, e) => MessageBox.Show($"Delete User ID: {GetSelectedID()}"));
-            cms.Items.Add("Change Password", null, (s, e) => MessageBox.Show($"Change Password for User ID: {GetSelectedID()}"));
-            cms.Items.Add(new ToolStripSeparator());
-            cms.Items.Add("Send Email", null, (s, e) => MessageBox.Show($"Send Email to User ID: {GetSelectedID()}"));
-            cms.Items.Add("Phone Call", null, (s, e) => MessageBox.Show($"Phone Call to User ID: {GetSelectedID()}"));
+            cms.Items.Add("Delete", null, (s, e) =>
+            {
+                int userID = GetSelectedID();
+                if (userID <= 0) return;
+                if (MessageBox.Show("Are you sure you want to delete this user?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    if (clsUser.Delete(userID))
+                    {
+                        MessageBox.Show("User Deleted Successfully.");
+                        _RefreshCurrentGrid();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cannot delete this user.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            });
+            cms.Items.Add("Change Password", null, (s, e) =>
+            {
+                int userID = GetSelectedID();
+                if (userID <= 0) return;
+                using (Form frm = new Form())
+                {
+                    frm.Text = "Change Password";
+                    frm.StartPosition = FormStartPosition.CenterParent;
+                    frm.Size = new Size(800, 500);
+                    ctrlChangePassword ctrl = new ctrlChangePassword();
+                    ctrl.Dock = DockStyle.Fill;
+                    frm.Controls.Add(ctrl);
+                    frm.ShowDialog();
+                }
+            });
 
             dgvList.ContextMenuStrip = cms;
             dgvList.DoubleClick -= DgvList_DoubleClick;
@@ -299,11 +365,8 @@ namespace DVLD_APP
         private void ShowUserDetails()
         {
             int id = GetSelectedID();
-            if (id <= 0)
-            {
-                MessageBox.Show("No user selected.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+            if (id <= 0) return;
+
             using (Form frm = new Form())
             {
                 frm.Text = "User Details";
@@ -330,37 +393,73 @@ namespace DVLD_APP
                 frm.Controls.Add(addUserControl);
 
                 frm.ShowDialog();
-                RefreshUsersGrid();
+                _RefreshCurrentGrid();
             }
-        }
-
-        private void RefreshUsersGrid()
-        {
-            try
-            {
-                _theData = bus.clsUser.GetAll();
-                _bindingSource.DataSource = _theData;
-                _bindingSource.ResetBindings(false);
-            }
-            catch { }
         }
 
         // =========================================================
-        // Drivers Context
+        // 3. Drivers Context & Actions
         // =========================================================
         private void SetupDriversContextMenu()
         {
             ContextMenuStrip cms = new ContextMenuStrip();
-            cms.Items.Add("Show Person Info", null, (s, e) => MessageBox.Show($"Show Person Info for Driver ID: {GetSelectedID()}"));
+
+            // 1. عرض بيانات الشخص
+            cms.Items.Add("Show Person Info", null, (s, e) =>
+            {
+                int driverID = GetSelectedID();
+                clsDriver driver = clsDriver.FindByDriverID(driverID);
+                if (driver != null)
+                {
+                    using (Form frm = new Form())
+                    {
+                        frm.Text = "Person Details";
+                        frm.StartPosition = FormStartPosition.CenterParent;
+                        frm.Size = new Size(900, 650);
+                        ctrlPersonCard card = new ctrlPersonCard();
+                        card.Dock = DockStyle.Fill;
+                        card.LoadPersonInfo(driver.PersonID);
+                        frm.Controls.Add(card);
+                        frm.ShowDialog();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Driver not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            });
+
             cms.Items.Add(new ToolStripSeparator());
-            cms.Items.Add("Issue International License", null, (s, e) => MessageBox.Show($"Issue International License for Driver ID: {GetSelectedID()}"));
-            cms.Items.Add("Show Person License History", null, (s, e) => MessageBox.Show($"Show License History for Driver ID: {GetSelectedID()}"));
+
+            // 2. إصدار رخصة دولية
+            cms.Items.Add("Issue International License", null, (s, e) =>
+            {
+                frmIssueInternationalDrivingLicense frm = new frmIssueInternationalDrivingLicense();
+                frm.ShowDialog();
+                _RefreshCurrentGrid();
+            });
+
+            // 3. عرض تاريخ الرخص للشخص
+            cms.Items.Add("Show Person License History", null, (s, e) =>
+            {
+                int driverID = GetSelectedID();
+                clsDriver driver = clsDriver.FindByDriverID(driverID);
+                if (driver != null)
+                {
+                    frmShowPersonLicenseHistory frm = new frmShowPersonLicenseHistory(driver.PersonID);
+                    frm.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Driver not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            });
 
             dgvList.ContextMenuStrip = cms;
         }
 
         // =========================================================
-        // Local Driving License Applications Context
+        // 4. Local Driving License Applications Context
         // =========================================================
         private void SetupLocalDrivingLicenseApplicationsContextMenu()
         {
@@ -371,7 +470,6 @@ namespace DVLD_APP
                 int id = GetSelectedID();
                 if (id <= 0) return;
 
-                // فتح الـ User Control الخاص بتفاصيل الطلب داخل فورم مؤقت
                 using (Form frm = new Form())
                 {
                     frm.Text = "Local Driving License Application Info";
@@ -390,7 +488,12 @@ namespace DVLD_APP
 
             ToolStripMenuItem itemEditApp = new ToolStripMenuItem("Edit Application", null, (s, e) =>
             {
-                MessageBox.Show($"Edit App ID: {GetSelectedID()}");
+                int localAppID = GetSelectedID();
+                if (localAppID <= 0) return;
+
+                frmAddUpdateLocalDrivingLicenseApplication frm = new frmAddUpdateLocalDrivingLicenseApplication(localAppID);
+                frm.ShowDialog();
+                _RefreshCurrentGrid();
             });
 
             ToolStripMenuItem itemDeleteApp = new ToolStripMenuItem("Delete Application", null, (s, e) =>
@@ -404,9 +507,7 @@ namespace DVLD_APP
                     if (app != null && app.Delete())
                     {
                         MessageBox.Show("Application Deleted Successfully.");
-                        _theData = bus.clsApplications.GetAllLocalApplications();
-                        _bindingSource.DataSource = _theData;
-                        _bindingSource.ResetBindings(false);
+                        _RefreshCurrentGrid();
                     }
                     else
                     {
@@ -426,9 +527,7 @@ namespace DVLD_APP
                     if (app != null && app.Cancel())
                     {
                         MessageBox.Show("Application Cancelled Successfully.");
-                        _theData = bus.clsApplications.GetAllLocalApplications();
-                        _bindingSource.DataSource = _theData;
-                        _bindingSource.ResetBindings(false);
+                        _RefreshCurrentGrid();
                     }
                 }
             });
@@ -440,46 +539,34 @@ namespace DVLD_APP
             {
                 int id = GetSelectedID();
                 if (id <= 0) return;
-
                 frmListTestAppointments frm = new frmListTestAppointments(id, clsTestType.enTestType.VisionTest);
                 frm.ShowDialog();
-
-                _theData = bus.clsApplications.GetAllLocalApplications();
-                _bindingSource.DataSource = _theData;
-                _bindingSource.ResetBindings(false);
+                _RefreshCurrentGrid();
             });
 
             ToolStripMenuItem itemScheduleWritten = new ToolStripMenuItem("Schedule Written Test", null, (s, e) =>
             {
                 int id = GetSelectedID();
                 if (id <= 0) return;
-
                 frmListTestAppointments frm = new frmListTestAppointments(id, clsTestType.enTestType.WrittenTest);
                 frm.ShowDialog();
-
-                _theData = bus.clsApplications.GetAllLocalApplications();
-                _bindingSource.DataSource = _theData;
-                _bindingSource.ResetBindings(false);
+                _RefreshCurrentGrid();
             });
 
             ToolStripMenuItem itemScheduleStreet = new ToolStripMenuItem("Schedule Street Test", null, (s, e) =>
             {
                 int id = GetSelectedID();
                 if (id <= 0) return;
-
                 frmListTestAppointments frm = new frmListTestAppointments(id, clsTestType.enTestType.StreetTest);
                 frm.ShowDialog();
-
-                _theData = bus.clsApplications.GetAllLocalApplications();
-                _bindingSource.DataSource = _theData;
-                _bindingSource.ResetBindings(false);
+                _RefreshCurrentGrid();
             });
 
             scheduleTests.DropDownItems.Add(itemScheduleVision);
             scheduleTests.DropDownItems.Add(itemScheduleWritten);
             scheduleTests.DropDownItems.Add(itemScheduleStreet);
 
-            // ربط زر إصدار الرخصة للمرة الأولى
+            // إصدار الرخصة للمرة الأولى
             ToolStripMenuItem itemIssueLicense = new ToolStripMenuItem("Issue Driving License (First Time)", null, (s, e) =>
             {
                 int localAppID = GetSelectedID();
@@ -487,14 +574,10 @@ namespace DVLD_APP
 
                 frmIssueDrivingLicenseFirstTime frm = new frmIssueDrivingLicenseFirstTime(localAppID);
                 frm.ShowDialog();
-
-                // تحديث الـ Grid بعد الإصدار
-                _theData = bus.clsApplications.GetAllLocalApplications();
-                _bindingSource.DataSource = _theData;
-                _bindingSource.ResetBindings(false);
+                _RefreshCurrentGrid();
             });
 
-            // ربط زر عرض الرخصة الصادرة
+            // عرض الرخصة
             ToolStripMenuItem itemShowLicense = new ToolStripMenuItem("Show License", null, (s, e) =>
             {
                 int localAppID = GetSelectedID();
@@ -516,6 +599,7 @@ namespace DVLD_APP
                 }
             });
 
+            // عرض تاريخ الرخص
             ToolStripMenuItem itemShowLicenseHistory = new ToolStripMenuItem("Show Person License History", null, (s, e) =>
             {
                 int localAppID = GetSelectedID();
@@ -524,13 +608,11 @@ namespace DVLD_APP
                 clsApplications app = clsApplications.FindByLocalDrivingAppID(localAppID);
                 if (app != null)
                 {
-                    // فتح شاشة تاريخ رخص الشخص باستخدام ApplicantPersonID
-                 //   frmShowPersonLicenseHistory frm = new frmShowPersonLicenseHistory(app.ApplicantPersonID);
-                 //   frm.ShowDialog();
+                    frmShowPersonLicenseHistory frm = new frmShowPersonLicenseHistory(app.ApplicantPersonID);
+                    frm.ShowDialog();
                 }
             });
 
-            // إضافة العناصر للـ ContextMenuStrip
             cms.Items.Add(itemShowDetails);
             cms.Items.Add(new ToolStripSeparator());
             cms.Items.Add(itemEditApp);
@@ -547,7 +629,7 @@ namespace DVLD_APP
             cms.Opening += (s, e) =>
             {
                 int localAppID = GetSelectedID();
-                if (localAppID <= 0)
+                if (localAppID <= 0 || dgvList.CurrentRow == null)
                 {
                     e.Cancel = true;
                     return;
@@ -560,15 +642,20 @@ namespace DVLD_APP
                     return;
                 }
 
-                byte passedTests = app.GetPassedTestCount();
+                byte passedTests = 0;
+                if (dgvList.Columns.Contains("PassedTestCount") && dgvList.CurrentRow.Cells["PassedTestCount"].Value != DBNull.Value)
+                {
+                    passedTests = Convert.ToByte(dgvList.CurrentRow.Cells["PassedTestCount"].Value);
+                }
+
                 bool isNew = (app.ApplicationStatus == clsApplications.enApplicationStatus.New);
                 bool isCompleted = (app.ApplicationStatus == clsApplications.enApplicationStatus.Completed);
 
                 // 1. التحكم في قائمة الاختبارات وتتابعها
                 scheduleTests.Enabled = (isNew && passedTests < 3);
-                itemScheduleVision.Enabled = (passedTests == 0);
-                itemScheduleWritten.Enabled = (passedTests == 1);
-                itemScheduleStreet.Enabled = (passedTests == 2);
+                itemScheduleVision.Enabled = (isNew && passedTests == 0);
+                itemScheduleWritten.Enabled = (isNew && passedTests == 1);
+                itemScheduleStreet.Enabled = (isNew && passedTests == 2);
 
                 // 2. إصدار وعرض الرخصة
                 itemIssueLicense.Enabled = (isNew && passedTests == 3);
@@ -581,64 +668,196 @@ namespace DVLD_APP
             };
 
             dgvList.ContextMenuStrip = cms;
-        }        // =========================================================
-        // International License Applications Context
+        }
+
+        // =========================================================
+        // 5. International License Applications Context
         // =========================================================
         private void SetupInternationalDrivingApplicationsContextMenu()
         {
             ContextMenuStrip cms = new ContextMenuStrip();
-            cms.Items.Add("Show Person Info", null, (s, e) => MessageBox.Show($"Show Person Info for ID: {GetSelectedID()}"));
-            cms.Items.Add("Show License Details", null, (s, e) => MessageBox.Show($"Show International License Details: {GetSelectedID()}"));
-            cms.Items.Add("Show Person License History", null, (s, e) => MessageBox.Show($"Show License History for ID: {GetSelectedID()}"));
+
+            cms.Items.Add("Show Person Info", null, (s, e) =>
+            {
+                int intLicenseID = GetSelectedID();
+                clsInternationalLicense intLicense = clsInternationalLicense.Find(intLicenseID);
+                if (intLicense != null)
+                {
+                    clsDriver driver = clsDriver.FindByDriverID(intLicense.DriverID);
+                    if (driver != null)
+                    {
+                        using (Form frm = new Form())
+                        {
+                            frm.Text = "Person Details";
+                            frm.StartPosition = FormStartPosition.CenterParent;
+                            frm.Size = new Size(900, 650);
+                            ctrlPersonCard card = new ctrlPersonCard();
+                            card.Dock = DockStyle.Fill;
+                            card.LoadPersonInfo(driver.PersonID);
+                            frm.Controls.Add(card);
+                            frm.ShowDialog();
+                        }
+                    }
+                }
+            });
+
+            cms.Items.Add("Show License Details", null, (s, e) =>
+            {
+                int intLicenseID = GetSelectedID();
+                if (intLicenseID > 0)
+                {
+                    frmShowInternationalLicenseInfo frm = new frmShowInternationalLicenseInfo(intLicenseID);
+                    frm.ShowDialog();
+                }
+            });
+
+            cms.Items.Add("Show Person License History", null, (s, e) =>
+            {
+                int intLicenseID = GetSelectedID();
+                clsInternationalLicense intLicense = clsInternationalLicense.Find(intLicenseID);
+                if (intLicense != null)
+                {
+                    clsDriver driver = clsDriver.FindByDriverID(intLicense.DriverID);
+                    if (driver != null)
+                    {
+                        frmShowPersonLicenseHistory frm = new frmShowPersonLicenseHistory(driver.PersonID);
+                        frm.ShowDialog();
+                    }
+                }
+            });
 
             dgvList.ContextMenuStrip = cms;
         }
 
         // =========================================================
-        // Test Appointments Context
+        // 6. Test Appointments Context
         // =========================================================
         private void SetupTestAppointmentsContextMenu()
         {
             ContextMenuStrip cms = new ContextMenuStrip();
-            cms.Items.Add("Edit Appointment", null, (s, e) => MessageBox.Show($"Edit Appointment ID: {GetSelectedID()}"));
-            cms.Items.Add("Take Test", null, (s, e) => MessageBox.Show($"Take Test for Appointment ID: {GetSelectedID()}"));
-
+            cms.Items.Add("Edit Appointment", null, (s, e) => MessageBox.Show($"Edit Appointment ID: {GetSelectedID()}", "Edit", MessageBoxButtons.OK, MessageBoxIcon.Information));
+            cms.Items.Add("Take Test", null, (s, e) => MessageBox.Show($"Take Test for Appointment ID: {GetSelectedID()}", "Take Test", MessageBoxButtons.OK, MessageBoxIcon.Information));
             dgvList.ContextMenuStrip = cms;
         }
 
         // =========================================================
-        // Application Types Context
+        // 7. Application Types Context (تم ربط الفورم الفعلي)
         // =========================================================
         private void SetupApplicationTypesContextMenu()
         {
             ContextMenuStrip cms = new ContextMenuStrip();
-            cms.Items.Add("Edit Application Type", null, (s, e) => MessageBox.Show($"Edit Application Type ID: {GetSelectedID()}"));
+            cms.Items.Add("Edit Application Type", null, (s, e) =>
+            {
+                int appTypeID = GetSelectedID();
+                if (appTypeID <= 0) return;
 
+                frmEditApplicationType frm = new frmEditApplicationType(appTypeID);
+                frm.ShowDialog();
+                _RefreshCurrentGrid();
+            });
             dgvList.ContextMenuStrip = cms;
         }
 
         // =========================================================
-        // Test Types Context
+        // 8. Test Types Context (تم ربط الفورم الفعلي)
         // =========================================================
         private void SetupTestTypesContextMenu()
         {
             ContextMenuStrip cms = new ContextMenuStrip();
-            cms.Items.Add("Edit Test Type", null, (s, e) => MessageBox.Show($"Edit Test Type ID: {GetSelectedID()}"));
+            cms.Items.Add("Edit Test Type", null, (s, e) =>
+            {
+                int testTypeID = GetSelectedID();
+                if (testTypeID <= 0) return;
 
+                frmEditTestType frm = new frmEditTestType(testTypeID);
+                frm.ShowDialog();
+                _RefreshCurrentGrid();
+            });
             dgvList.ContextMenuStrip = cms;
         }
 
         // =========================================================
-        // Detained Licenses Context
+        // 9. Detained Licenses Context
         // =========================================================
         private void SetupDetainedLicensesContextMenu()
         {
             ContextMenuStrip cms = new ContextMenuStrip();
-            cms.Items.Add("Show Person Details", null, (s, e) => MessageBox.Show($"Show Person Details for Detain ID: {GetSelectedID()}"));
-            cms.Items.Add("Show License Details", null, (s, e) => MessageBox.Show($"Show License Details for Detain ID: {GetSelectedID()}"));
-            cms.Items.Add("Show Person License History", null, (s, e) => MessageBox.Show($"Show License History for Detain ID: {GetSelectedID()}"));
+
+            cms.Items.Add("Show Person Details", null, (s, e) =>
+            {
+                int detainID = GetSelectedID();
+                clsDetainedLicense detained = clsDetainedLicense.Find(detainID);
+                if (detained != null)
+                {
+                    clsLicense license = clsLicense.Find(detained.LicenseID);
+                    if (license != null)
+                    {
+                        using (Form frm = new Form())
+                        {
+                            frm.Text = "Person Details";
+                            frm.StartPosition = FormStartPosition.CenterParent;
+                            frm.Size = new Size(900, 650);
+                            ctrlPersonCard card = new ctrlPersonCard();
+                            card.Dock = DockStyle.Fill;
+                            card.LoadPersonInfo(license.DriverInfo.PersonID);
+                            frm.Controls.Add(card);
+                            frm.ShowDialog();
+                        }
+                    }
+                }
+            });
+
+            cms.Items.Add("Show License Details", null, (s, e) =>
+            {
+                int detainID = GetSelectedID();
+                clsDetainedLicense detained = clsDetainedLicense.Find(detainID);
+                if (detained != null)
+                {
+                    frmShowLicenseInfo frm = new frmShowLicenseInfo(detained.LicenseID);
+                    frm.ShowDialog();
+                }
+            });
+
+            cms.Items.Add("Show Person License History", null, (s, e) =>
+            {
+                int detainID = GetSelectedID();
+                clsDetainedLicense detained = clsDetainedLicense.Find(detainID);
+                if (detained != null)
+                {
+                    clsLicense license = clsLicense.Find(detained.LicenseID);
+                    if (license != null)
+                    {
+                        frmShowPersonLicenseHistory frm = new frmShowPersonLicenseHistory(license.DriverInfo.PersonID);
+                        frm.ShowDialog();
+                    }
+                }
+            });
+
             cms.Items.Add(new ToolStripSeparator());
-            cms.Items.Add("Release Detained License", null, (s, e) => MessageBox.Show($"Release Detained License ID: {GetSelectedID()}"));
+
+            ToolStripMenuItem itemRelease = new ToolStripMenuItem("Release Detained License", null, (s, e) =>
+            {
+                int detainID = GetSelectedID();
+                clsDetainedLicense detained = clsDetainedLicense.Find(detainID);
+                if (detained != null)
+                {
+                    frmReleaseDetainedLicenseApplication frm = new frmReleaseDetainedLicenseApplication(detained.LicenseID);
+                    frm.ShowDialog();
+                    _RefreshCurrentGrid();
+                }
+            });
+
+            cms.Items.Add(itemRelease);
+
+            cms.Opening += (s, e) =>
+            {
+                int detainID = GetSelectedID();
+                clsDetainedLicense detained = clsDetainedLicense.Find(detainID);
+                if (detained != null)
+                {
+                    itemRelease.Enabled = !detained.IsReleased;
+                }
+            };
 
             dgvList.ContextMenuStrip = cms;
         }
@@ -663,6 +882,11 @@ namespace DVLD_APP
             {
                 ShowPersonForm(id);
             }
+        }
+
+        private void btnRef_Click(object sender, EventArgs e)
+        {
+            _RefreshCurrentGrid();
         }
 
         private void ctrlDataManagement_Load(object sender, EventArgs e) { }

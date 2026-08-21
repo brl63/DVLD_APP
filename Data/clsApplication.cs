@@ -52,36 +52,60 @@ namespace Data
         }
 
         // تم توحيد الاسم ليطابق الـ Business Layer
-        public static int AddNewApplication(int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, byte ApplicationStatus, DateTime LastStatusDate, decimal PaidFees, int CreatedByUserID)
+        public static int AddNewLocalDrivingLicenseApplication(
+            int ApplicantPersonID,
+            DateTime ApplicationDate,
+            int ApplicationTypeID,
+            byte ApplicationStatus,
+            DateTime LastStatusDate,
+            decimal PaidFees,
+            int CreatedByUserID,
+            int LicenseClassID)
         {
-            const string sql = @"INSERT INTO Applications 
-                                (PersonID, ApplicationDate, ApplicationTypeID, ApplicationStatus, LastStatusDate, PaidFees, CreatedByUserID) 
-                                VALUES 
-                                (@PersonID, @ApplicationDate, @ApplicationTypeID, @ApplicationStatus, @LastStatusDate, @PaidFees, @CreatedByUserID);
-                                SELECT SCOPE_IDENTITY();";
+            const string sql = @"
+        INSERT INTO Applications 
+        (PersonID, ApplicationDate, ApplicationTypeID, ApplicationStatus, LastStatusDate, PaidFees, CreatedByUserID) 
+        VALUES 
+        (@ApplicantPersonID, @ApplicationDate, @ApplicationTypeID, @ApplicationStatus, @LastStatusDate, @PaidFees, @CreatedByUserID);
+        
+        DECLARE @NewApplicationID INT = SCOPE_IDENTITY();
+
+        INSERT INTO LocalDrivingLicenseApplications 
+        (ApplicationID, LicenseClassID) 
+        VALUES 
+        (@NewApplicationID, @LicenseClassID);
+
+        SELECT SCOPE_IDENTITY();";
 
             using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
+            using (SqlCommand cmd = new SqlCommand(sql, cn))
             {
-                using (SqlCommand cmd = new SqlCommand(sql, cn))
+                cmd.Parameters.AddWithValue("@ApplicantPersonID", ApplicantPersonID);
+                cmd.Parameters.AddWithValue("@ApplicationDate", ApplicationDate);
+                cmd.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
+                cmd.Parameters.AddWithValue("@ApplicationStatus", ApplicationStatus);
+                cmd.Parameters.AddWithValue("@LastStatusDate", LastStatusDate);
+                cmd.Parameters.AddWithValue("@PaidFees", PaidFees);
+                cmd.Parameters.AddWithValue("@CreatedByUserID", CreatedByUserID);
+                cmd.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+
+                try
                 {
-                    cmd.Parameters.AddWithValue("PersonID", ApplicantPersonID);
-                    cmd.Parameters.AddWithValue("@ApplicationDate", ApplicationDate);
-                    cmd.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
-                    cmd.Parameters.AddWithValue("@ApplicationStatus", ApplicationStatus);
-                    cmd.Parameters.AddWithValue("@LastStatusDate", LastStatusDate);
-                    cmd.Parameters.AddWithValue("@PaidFees", PaidFees);
-                    cmd.Parameters.AddWithValue("@CreatedByUserID", CreatedByUserID);
                     cn.Open();
                     object result = cmd.ExecuteScalar();
                     return (result != null && int.TryParse(result.ToString(), out int insertedID)) ? insertedID : -1;
                 }
+                catch (Exception ex)
+                {
+                    ex.Message.ToString();
+                    return -1;
+                }
             }
         }
-
         public static bool UpdateApplication(int ApplicationID, int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, byte ApplicationStatus, DateTime LastStatusDate, decimal PaidFees, int CreatedByUserID)
         {
             const string sql = @"UPDATE Applications 
-                                SET ApplicantPersonID = @ApplicantPersonID, 
+                                SET PersonID = @ApplicantPersonID, 
                                     ApplicationDate = @ApplicationDate, 
                                     ApplicationTypeID = @ApplicationTypeID, 
                                     ApplicationStatus = @ApplicationStatus, 
@@ -109,6 +133,36 @@ namespace Data
             }
         }
 
+        public static bool DeleteLocalApplication(int localDrivingLicenseApplicationID)
+        {
+            string query = @"
+        DECLARE @AppID INT;
+        SELECT @AppID = ApplicationID FROM LocalDrivingLicenseApplications WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;
+        DELETE FROM LocalDrivingLicenseApplications WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;
+        DELETE FROM Applications WHERE ApplicationID = @AppID;";
+
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", localDrivingLicenseApplicationID);
+
+                try
+                {
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+                    return (rowsAffected > 0);
+                }
+                catch (SqlException ex)
+                {
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
+
         public static bool DeleteApplication(int ApplicationID)
         {
             const string sql = "DELETE FROM Applications WHERE ApplicationID = @ApplicationID";
@@ -119,11 +173,10 @@ namespace Data
                     cmd.Parameters.AddWithValue("@ApplicationID", ApplicationID);
                     cn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
-                    return rowsAffected > 0;
+                    return (rowsAffected > 0);
                 }
             }
         }
-
         public static DataTable GetApplicationsByStatus(byte status)
         {
             DataTable dt = new DataTable();
@@ -145,7 +198,7 @@ namespace Data
         public static DataTable GetApplicationsByApplicant(int applicantPersonID)
         {
             DataTable dt = new DataTable();
-            const string sql = "SELECT * FROM Applications WHERE ApplicantPersonID = @ApplicantPersonID";
+            const string sql = "SELECT * FROM Applications WHERE PersonID = @ApplicantPersonID";
             using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(sql, cn))
@@ -162,7 +215,7 @@ namespace Data
 
         public static bool DoesHaveApplicant(int applicantID)
         {
-            const string sql = "SELECT COUNT(*) FROM Applications WHERE ApplicantPersonID = @ApplicantPersonID";
+            const string sql = "SELECT COUNT(*) FROM Applications WHERE PersonID = @ApplicantPersonID";
             using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(sql, cn))
@@ -218,7 +271,7 @@ namespace Data
             int activeApplicationID = -1;
             const string sql = @"SELECT ActiveApplicationID = ApplicationID 
                                 FROM Applications 
-                                WHERE ApplicantPersonID = @ApplicantPersonID 
+                                WHERE PersonID = @ApplicantPersonID
                                   AND ApplicationTypeID = @ApplicationTypeID 
                                   AND ApplicationStatus = 1"; // 1 = New
 
@@ -247,7 +300,7 @@ namespace Data
                                 FROM Applications 
                                 INNER JOIN LocalDrivingLicenseApplications 
                                     ON Applications.ApplicationID = LocalDrivingLicenseApplications.ApplicationID
-                                WHERE Applications.ApplicantPersonID = @ApplicantPersonID 
+                                WHERE Applications.PersonID = @ApplicantPersonID 
                                   AND Applications.ApplicationTypeID = @ApplicationTypeID 
                                   AND LocalDrivingLicenseApplications.LicenseClassID = @LicenseClassID 
                                   AND Applications.ApplicationStatus = 1"; // 1 = New
@@ -272,7 +325,7 @@ namespace Data
 
         public static bool GetLatestApplicationByPerson(int personID, int ApplicationTypeID, ref int ApplicationID, ref DateTime ApplicationDate, ref byte ApplicationStatus, ref DateTime LastStatusDate, ref decimal PaidFees, ref int CreatedByUserID)
         {
-            const string sql = "SELECT TOP 1 * FROM Applications WHERE ApplicantPersonID = @ApplicantPersonID AND ApplicationTypeID = @ApplicationTypeID ORDER BY ApplicationDate DESC";
+            const string sql = "SELECT TOP 1 * FROM Applications WHERE PersonID = @ApplicantPersonID AND ApplicationTypeID = @ApplicationTypeID ORDER BY ApplicationDate DESC";
             using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(sql, cn))
@@ -431,6 +484,77 @@ namespace Data
                 }
             }
             return isFound;
+        }
+
+        public static bool DoesPersonHaveActiveApplicationForLicenseClass(int personID, int applicationTypeID, int licenseClassID)
+        {
+            string query = @"SELECT 1 
+                     FROM Applications INNER JOIN
+                          LocalDrivingLicenseApplications ON Applications.ApplicationID = LocalDrivingLicenseApplications.ApplicationID
+                     WHERE Applications.PersonID = @ApplicantPersonID 
+                       AND Applications.ApplicationTypeID = @ApplicationTypeID 
+                       AND LocalDrivingLicenseApplications.LicenseClassID = @LicenseClassID
+                       AND Applications.ApplicationStatus = 1"; // 1 = New (Active)
+
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@ApplicantPersonID", personID);
+                command.Parameters.AddWithValue("@ApplicationTypeID", applicationTypeID);
+                command.Parameters.AddWithValue("@LicenseClassID", licenseClassID);
+
+                try
+                {
+                    connection.Open();
+                    object result = command.ExecuteScalar();
+                    return (result != null);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        public static int AddNewApplication(
+    int ApplicantPersonID,
+    DateTime ApplicationDate,
+    int ApplicationTypeID,
+    byte ApplicationStatus,
+    DateTime LastStatusDate,
+    decimal PaidFees,
+    int CreatedByUserID)
+        {
+            const string sql = @"
+        INSERT INTO Applications 
+        (PersonID, ApplicationDate, ApplicationTypeID, ApplicationStatus, LastStatusDate, PaidFees, CreatedByUserID) 
+        VALUES 
+        (@ApplicantPersonID, @ApplicationDate, @ApplicationTypeID, @ApplicationStatus, @LastStatusDate, @PaidFees, @CreatedByUserID);
+        
+        SELECT SCOPE_IDENTITY();";
+
+            using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
+            using (SqlCommand cmd = new SqlCommand(sql, cn))
+            {
+                cmd.Parameters.AddWithValue("@ApplicantPersonID", ApplicantPersonID);
+                cmd.Parameters.AddWithValue("@ApplicationDate", ApplicationDate);
+                cmd.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
+                cmd.Parameters.AddWithValue("@ApplicationStatus", ApplicationStatus);
+                cmd.Parameters.AddWithValue("@LastStatusDate", LastStatusDate);
+                cmd.Parameters.AddWithValue("@PaidFees", PaidFees);
+                cmd.Parameters.AddWithValue("@CreatedByUserID", CreatedByUserID);
+
+                try
+                {
+                    cn.Open();
+                    object result = cmd.ExecuteScalar();
+                    return (result != null && int.TryParse(result.ToString(), out int insertedID)) ? insertedID : -1;
+                }
+                catch
+                {
+                    return -1;
+                }
+            }
         }
     }
 }

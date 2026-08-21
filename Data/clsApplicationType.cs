@@ -15,7 +15,7 @@ namespace Data
 
         public static bool ChangeFees(decimal newFee, int applicationTypeID)
         {
-            string sql = "UPDATE ApplicationTypes SET Fee = @NewFee WHERE ApplicationTypeID = @ApplicationTypeID";
+            string sql = "UPDATE ApplicationTypes SET ApplicationFees = @NewFee WHERE ApplicationTypeID = @ApplicationTypeID";
 
             using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
             {
@@ -33,7 +33,7 @@ namespace Data
 
         public static decimal GetFee(int applicationTypeID)
         {
-            string sql = "SELECT Fee FROM ApplicationTypes WHERE ApplicationTypeID = @ApplicationTypeID";
+            string sql = "SELECT ApplicationFees FROM ApplicationTypes WHERE ApplicationTypeID = @ApplicationTypeID";
             using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
             {
                 using (SqlCommand command = new SqlCommand(sql, connection))
@@ -73,7 +73,7 @@ namespace Data
 
         public static bool UpdateApplicationType(int applicationTypeID, string newTitle, decimal newFee)
         {
-            string sql = "UPDATE ApplicationTypes SET ApplicationTypeTitle = @NewTitle, Fee = @NewFee WHERE ApplicationTypeID = @ApplicationTypeID";
+            string sql = "UPDATE ApplicationTypes SET ApplicationTypeTitle = @NewTitle, ApplicationFees = @NewFee WHERE ApplicationTypeID = @ApplicationTypeID";
             using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
             {
                 using (SqlCommand command = new SqlCommand(sql, connection))
@@ -91,7 +91,7 @@ namespace Data
 
         public static int InsertApplicationType(string applicationTypeTitle,decimal fee)
         {
-            string sql = "INSERT INTO ApplicationTypes (ApplicationTypeTitle, Fee) VALUES (@ApplicationTypeTitle, @Fee); SELECT SCOPE_IDENTITY();";
+            string sql = "INSERT INTO ApplicationTypes (ApplicationTypeTitle, ApplicationFees) VALUES (@ApplicationTypeTitle, @Fee); SELECT SCOPE_IDENTITY();";
             using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
             {
                 using (SqlCommand command = new SqlCommand(sql, connection))

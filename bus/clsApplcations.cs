@@ -58,10 +58,20 @@ namespace bus
         public clsUser CreatedByUserInfo { get; set; }
 
         public int LicenseClassID { get; set; }
+        public int LocalDrivingLicenseApplicationID { get; set; }
+
+        public clsLicenseClass LicenseClassInfo
+        {
+            get
+            {
+                return clsLicenseClass.Find(this.LicenseClassID);
+            }
+        }
 
         public clsApplications()
         {
             this.ApplicationID = -1;
+            this.LocalDrivingLicenseApplicationID = -1;
             this.ApplicantPersonID = -1;
             this.ApplicationDate = DateTime.Now;
             this.ApplicationTypeID = -1;
@@ -69,6 +79,7 @@ namespace bus
             this.LastStatusDate = DateTime.Now;
             this.PaidFees = 0;
             this.CreatedByUserID = -1;
+            this.LicenseClassID = -1;
 
             this.Mode = enMode.AddNew;
         }
@@ -95,16 +106,35 @@ namespace bus
         // ================= Private CRUD Operations =================
         private bool _AddNewApplication()
         {
-            this.ApplicationID = Data.clsApplication.AddNewApplication(
-                this.ApplicantPersonID,
-                this.ApplicationDate,
-                this.ApplicationTypeID,
-                (byte)this.ApplicationStatus,
-                this.LastStatusDate,
-                this.PaidFees,
-                this.CreatedByUserID);
+            // 1. إذا كان طلباً لرخصة محلية جديدة ولديه فئة رخصة محددة
+            if (this.LicenseClassID != -1 && this.ApplicationTypeID == (int)enApplicationType.NewDrivingLicense)
+            {
+                this.LocalDrivingLicenseApplicationID = Data.clsApplication.AddNewLocalDrivingLicenseApplication(
+                    this.ApplicantPersonID,
+                    this.ApplicationDate,
+                    this.ApplicationTypeID,
+                    (byte)this.ApplicationStatus,
+                    this.LastStatusDate,
+                    this.PaidFees,
+                    this.CreatedByUserID,
+                    this.LicenseClassID);
 
-            return (this.ApplicationID != -1);
+                return (this.LocalDrivingLicenseApplicationID != -1);
+            }
+            else
+            {
+                // 2. إذا كان طلباً عاماً (فك حجز، تجديد، استبدال تالف/مفقود، رخصة دولية)
+                this.ApplicationID = Data.clsApplication.AddNewApplication(
+                    this.ApplicantPersonID,
+                    this.ApplicationDate,
+                    this.ApplicationTypeID,
+                    (byte)this.ApplicationStatus,
+                    this.LastStatusDate,
+                    this.PaidFees,
+                    this.CreatedByUserID);
+
+                return (this.ApplicationID != -1);
+            }
         }
 
         private bool _UpdateApplication()
@@ -195,6 +225,10 @@ namespace bus
 
         public bool Delete()
         {
+            if (this.LocalDrivingLicenseApplicationID != -1)
+            {
+                return Data.clsApplication.DeleteLocalApplication(this.LocalDrivingLicenseApplicationID);
+            }
             return Data.clsApplication.DeleteApplication(this.ApplicationID);
         }
 
@@ -294,7 +328,7 @@ namespace bus
 
         public byte GetPassedTestCount()
         {
-            return Data.clsApplication.GetPassedTestCount(this.ApplicationID);
+            return Data.clsApplication.GetPassedTestCount(this.LocalDrivingLicenseApplicationID);
         }
 
         public int GetActiveLicenseID()
@@ -339,6 +373,7 @@ namespace bus
                     createdByUserID);
 
                 app.LicenseClassID = licenseClassID;
+                app.LocalDrivingLicenseApplicationID = localDrivingLicenseApplicationID;
                 return app;
             }
 
@@ -371,7 +406,7 @@ namespace bus
             int defaultValidity = licenseClass != null ? licenseClass.DefaultValidityLength : 10;
             decimal classFees = licenseClass != null ? licenseClass.ClassFees : 0;
 
-            // 3. إنشاء كائن الرخصة وحفظه بالبيانات المتوافقة مع الداتا لاير
+            // 3. إنشاء كائن الرخصة وتعيين كافة الحقول الإجبارية
             clsLicense license = new clsLicense();
             license.ApplicationID = this.ApplicationID;
             license.DriverID = driverID;
@@ -381,6 +416,8 @@ namespace bus
             license.Notes = notes;
             license.PaidFees = classFees;
             license.IsActive = true;
+            license.IssueReason = clsLicense.enIssueReason.FirstTime;
+            license.CreatedByUserID = createdByUserID;
 
             if (!license.Save())
                 return -1;
@@ -389,6 +426,11 @@ namespace bus
             this.SetComplete();
 
             return license.LicenseID;
+        }
+
+        public static bool DoesPersonHaveActiveApplicationForLicenseClass(int personID, int applicationTypeID, int licenseClassID)
+        {
+            return Data.clsApplication.DoesPersonHaveActiveApplicationForLicenseClass(personID, applicationTypeID, licenseClassID);
         }
     }
 }

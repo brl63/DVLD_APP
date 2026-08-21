@@ -224,21 +224,34 @@ namespace Data
             }
         }
 
-        public static bool Delete(int PersonID)
+        public static bool Delete(int personID)
         {
-            string sql = "DELETE FROM People WHERE PersonID = @PersonID";
-            using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
+            int rowsAffected = 0;
+            string query = @"DELETE FROM People WHERE PersonID = @PersonID";
+
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
             {
-                using (SqlCommand cmd = new SqlCommand(sql, cn))
+                command.Parameters.AddWithValue("@PersonID", personID);
+
+                try
                 {
-                    cmd.Parameters.AddWithValue("@PersonID", PersonID);
-                    cn.Open();
-                    int rowsAffected = cmd.ExecuteNonQuery();
-                    return rowsAffected > 0;
+                    connection.Open();
+                    rowsAffected = command.ExecuteNonQuery();
+                }
+                catch (SqlException)
+                {
+                    // عند وجود ارتباطات تمنع الحذف مثل FK_Applications_People
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
                 }
             }
-        }
 
+            return (rowsAffected > 0);
+        }
         public static bool PersonExists(int personID)
         {
             string sql = "SELECT COUNT(*) FROM People WHERE PersonID = @PersonID";

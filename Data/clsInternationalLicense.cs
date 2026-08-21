@@ -130,6 +130,24 @@ namespace Data
             }
             return activeID;
         }
+
+        public static DataTable GetInternationalLicensesByDriverID(int driverID)
+        {
+            string sql = "SELECT * FROM InternationalLicenses WHERE DriverID = @DriverID ORDER BY IssueDate DESC";
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@DriverID", driverID);
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        DataTable dt = new DataTable();
+                        adapter.Fill(dt);
+                        return dt;
+                    }
+                }
+            }
+        }
     }
 }
     

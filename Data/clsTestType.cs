@@ -9,7 +9,7 @@ namespace Data
         public int TestTypeID { get; set; }
         public string TestTypeTitle { get; set; }
         public string TestTypeDescription { get; set; }
-        public decimal TestTypeFee { get; set; }
+        public decimal TestTypeFees { get; set; }
 
         public static DataTable GetAll()
         {
@@ -28,9 +28,9 @@ namespace Data
             return dt;
         }
 
-        public static bool GetTestType(int TestTypeID ,ref string testTypeTitle, ref string testTypeDescription, ref decimal testTypeFee)
+        public static bool GetTestType(int TestTypeID, ref string testTypeTitle, ref string testTypeDescription, ref decimal testTypeFees)
         {
-           const string sql= "SELECT * FROM TestTypes WHERE TestTypeID = @TestTypeID";
+            const string sql = "SELECT * FROM TestTypes WHERE TestTypeID = @TestTypeID";
             using (SqlConnection cn = new SqlConnection(clsDataAccessSetting._connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(sql, cn))
@@ -43,7 +43,7 @@ namespace Data
                         {
                             testTypeTitle = dr["TestTypeTitle"].ToString();
                             testTypeDescription = dr["TestTypeDescription"].ToString();
-                            testTypeFee = Convert.ToDecimal(dr["TestTypeFees"]);
+                            testTypeFees = Convert.ToDecimal(dr["TestTypeFees"]);
                             return true;
                         }
                     }
@@ -51,38 +51,41 @@ namespace Data
             }
             return false;
         }
-    
-        public static bool UpdateFees(int testTypeID, decimal fee)
+
+        public static bool UpdateFees(int testTypeID, decimal fees)
         {
-            string sql = "UPDATE TestType SET TestTypeFee = @fee WHERE TestTypeID = @TestTypeID";
+            string sql = "UPDATE TestTypes SET TestTypeFees = @fees WHERE TestTypeID = @TestTypeID";
             using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
             {
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
-                    command.Parameters.AddWithValue("@fee", fee);
+                    command.Parameters.AddWithValue("@fees", fees);
                     command.Parameters.AddWithValue("@TestTypeID", testTypeID);
                     connection.Open();
                     int rowsAffected = command.ExecuteNonQuery();
-                    connection.Close();
                     return rowsAffected > 0;
+                }
+            }
         }
-           }
-        }
-         
-        public static bool UpdateTestType(int TestTypeID, string TestTypeTitle, string TestTypeDescription, decimal TestTypeFee)
+
+        public static bool UpdateTestType(int TestTypeID, string TestTypeTitle, string TestTypeDescription, decimal TestTypeFees)
         {
-            string sql = "UPDATE TestTypes SET TestTypeTitle = @TestTypeTitle, TestTypeDescription = @TestTypeDescription, TestTypeFee = @TestTypeFee WHERE TestTypeID = @TestTypeID";
+            string sql = @"UPDATE TestTypes 
+                           SET TestTypeTitle = @TestTypeTitle, 
+                               TestTypeDescription = @TestTypeDescription, 
+                               TestTypeFees = @TestTypeFees 
+                           WHERE TestTypeID = @TestTypeID";
+
             using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
             {
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@TestTypeTitle", TestTypeTitle);
                     command.Parameters.AddWithValue("@TestTypeDescription", TestTypeDescription);
-                    command.Parameters.AddWithValue("@TestTypeFee", TestTypeFee);
+                    command.Parameters.AddWithValue("@TestTypeFees", TestTypeFees);
                     command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
                     connection.Open();
                     int rowsAffected = command.ExecuteNonQuery();
-                    connection.Close();
                     return rowsAffected > 0;
                 }
             }

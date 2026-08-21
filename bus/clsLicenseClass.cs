@@ -52,5 +52,19 @@ namespace bus
             Data.clsLicenseClass.getLiecenseClassByID(LicenseClassID, ref ClassName, ref ClassDescription, ref MinimumAllowedAge, ref DefaultValidityLength, ref ClassFees);
             return new clsLicenseClass(LicenseClassID, ClassName, ClassDescription, MinimumAllowedAge, DefaultValidityLength, ClassFees);
         }
+        public static clsLicenseClass Find(string className)
+        {
+            int licenseClassID = -1;
+            string classDescription = "";
+            byte minimumAllowedAge = 18, defaultValidityLength = 10;
+            decimal classFees = 0;
+
+            if (Data.clsLicenseClass.GetLicenseClassInfoByClassName(className, ref licenseClassID, ref classDescription, ref minimumAllowedAge, ref defaultValidityLength, ref classFees))
+            {
+                return new clsLicenseClass(licenseClassID, className, classDescription, minimumAllowedAge, defaultValidityLength, classFees);
+            }
+
+            return null;
+        }
     }
 }

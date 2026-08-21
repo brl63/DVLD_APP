@@ -23,6 +23,7 @@
             this.cmsData = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showDetailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.picName = new System.Windows.Forms.PictureBox();
+            this.btnRef = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvList)).BeginInit();
             this.cmsData.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picName)).BeginInit();
@@ -91,10 +92,21 @@
             this.picName.TabIndex = 0;
             this.picName.TabStop = false;
             // 
+            // btnRef
+            // 
+            this.btnRef.Location = new System.Drawing.Point(1150, 200);
+            this.btnRef.Name = "btnRef";
+            this.btnRef.Size = new System.Drawing.Size(111, 39);
+            this.btnRef.TabIndex = 3;
+            this.btnRef.Text = "Refresh";
+            this.btnRef.UseVisualStyleBackColor = true;
+            this.btnRef.Click += new System.EventHandler(this.btnRef_Click);
+            // 
             // ctrlDataManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnRef);
             this.Controls.Add(this.dgvList);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.picName);
@@ -116,5 +128,6 @@
         private System.Windows.Forms.DataGridView dgvList;
         private System.Windows.Forms.ContextMenuStrip cmsData;
         private System.Windows.Forms.ToolStripMenuItem showDetailsToolStripMenuItem;
+        private System.Windows.Forms.Button btnRef;
     }
 }

@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics.Eventing.Reader;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using bus;
 using DVLD_APP.helpers;
@@ -15,9 +8,32 @@ namespace DVLD_APP
 {
     public partial class frmLogin : Form
     {
+        // لسحب وتحريك الفورم بالماوس
+        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+
+        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
+
         public frmLogin()
         {
             InitializeComponent();
+
+            this.MouseDown += FrmLogin_MouseDown;
+            pnlBrand.MouseDown += FrmLogin_MouseDown;
+        }
+
+        private void FrmLogin_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(this.Handle, 0x112, 0xf012, 0);
+            }
+        }
+
+        private void frmLogin_Load(object sender, EventArgs e)
+        {
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -26,7 +42,7 @@ namespace DVLD_APP
             string password = txtPassword.Text.Trim();
 
             clsUser currentUser = clsUser.Login(userName, password);
-            if(currentUser != null)
+            if (currentUser != null)
             {
                 if (!currentUser.IsActive)
                 {
@@ -36,9 +52,9 @@ namespace DVLD_APP
 
                 clsGlobal.CurrentUser = currentUser;
 
-                MainForm mainForm = new MainForm();
-                mainForm.Show();
-                this.Hide();
+                // إغلاق اللوجين بنجاح لينتقل الـ Program.cs للـ MainForm
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
             else
             {
@@ -46,8 +62,11 @@ namespace DVLD_APP
                 txtPassword.Focus();
                 txtPassword.Text = "";
             }
+        }
 
-
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

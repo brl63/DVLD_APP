@@ -85,6 +85,18 @@
     <Compile Include="ctrlDriverLicenseInfo.Designer.cs">
       <DependentUpon>ctrlDriverLicenseInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="ctrlDriverLicenseInfoWithFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrlDriverLicenseInfoWithFilter.Designer.cs">
+      <DependentUpon>ctrlDriverLicenseInfoWithFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlInternationalLicenseInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrlInternationalLicenseInfo.Designer.cs">
+      <DependentUpon>ctrlInternationalLicenseInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="ctrlLocalDrivingLicenseApplicationInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -115,11 +127,41 @@
     <Compile Include="ctrlUserCard.Designer.cs">
       <DependentUpon>ctrlUserCard.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmAddUpdateLocalDrivingLicenseApplication.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAddUpdateLocalDrivingLicenseApplication.Designer.cs">
+      <DependentUpon>frmAddUpdateLocalDrivingLicenseApplication.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmDetainLicenseApplication.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDetainLicenseApplication.Designer.cs">
+      <DependentUpon>frmDetainLicenseApplication.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEditApplicationType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEditApplicationType.Designer.cs">
+      <DependentUpon>frmEditApplicationType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEditTestType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEditTestType.Designer.cs">
+      <DependentUpon>frmEditTestType.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmIssueDrivingLicenseFirstTime.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmIssueDrivingLicenseFirstTime.Designer.cs">
       <DependentUpon>frmIssueDrivingLicenseFirstTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmIssueInternationalDrivingLicense.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmIssueInternationalDrivingLicense.Designer.cs">
+      <DependentUpon>frmIssueInternationalDrivingLicense.cs</DependentUpon>
     </Compile>
     <Compile Include="frmListTestAppointments.cs">
       <SubType>Form</SubType>
@@ -133,17 +175,47 @@
     <Compile Include="frmLogin.Designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmReleaseDetainedLicenseApplication.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReleaseDetainedLicenseApplication.Designer.cs">
+      <DependentUpon>frmReleaseDetainedLicenseApplication.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmRenewLocalDrivingLicense.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRenewLocalDrivingLicense.Designer.cs">
+      <DependentUpon>frmRenewLocalDrivingLicense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReplaceLostOrDamagedLicense.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReplaceLostOrDamagedLicense.Designer.cs">
+      <DependentUpon>frmReplaceLostOrDamagedLicense.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmScheduleTestcs.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmScheduleTestcs.Designer.cs">
       <DependentUpon>frmScheduleTestcs.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmShowInternationalLicenseInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmShowInternationalLicenseInfo.Designer.cs">
+      <DependentUpon>frmShowInternationalLicenseInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmShowLicenseInfo.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmShowLicenseInfo.Designer.cs">
       <DependentUpon>frmShowLicenseInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmShowPersonLicenseHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmShowPersonLicenseHistory.Designer.cs">
+      <DependentUpon>frmShowPersonLicenseHistory.cs</DependentUpon>
     </Compile>
     <Compile Include="frmTakeTest.cs">
       <SubType>Form</SubType>

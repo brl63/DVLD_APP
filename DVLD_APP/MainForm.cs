@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using bus;
+using DVLD_APP.helpers;
+using System;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using bus;
-using DVLD_APP.helpers;
 
 namespace DVLD_APP
 {
-public partial class MainForm : Form{
-    
+    public partial class MainForm : Form
+    {
         public MainForm()
         {
             InitializeComponent();
@@ -21,79 +16,129 @@ public partial class MainForm : Form{
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            lblWelcome.Text = "Welcome Again " + clsGlobal.CurrentUser.UserName;
+            lblWelcome.Text = "Welcome Again " + (clsGlobal.CurrentUser?.UserName ?? "Admin");
         }
 
-        private void newDrivingLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        // دالة موحدة لتحميل أي شاشة إدارة بيانات داخل الـ panelContainer
+        private void _LoadDataControl(clsHelpers.enDataMode mode, DataTable data)
         {
-
-        }
-
-        private void localToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void managePeopleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
             panelContainer.Controls.Clear();
-            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.People, bus.clsPeople.GetAll());
+            ctrlDataManagement ctrl = new ctrlDataManagement(mode, data);
             ctrl.Dock = DockStyle.Fill;
             panelContainer.Controls.Add(ctrl);
         }
 
-  
-      
-        private void manageUserToolStripMenuItem_Click(object sender, EventArgs e)
+        // =========================================================
+        // 1. Driving Licenses Services (Dialogs / Actions)
+        // =========================================================
+        private void localLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            panelContainer.Controls.Clear();
-            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Users, bus.clsUser.GetAll());
-            ctrl.Dock = DockStyle.Fill;
-            ctrl.Dock = DockStyle.Fill;
-            panelContainer.Controls.Add(ctrl);
-
-
+            frmAddUpdateLocalDrivingLicenseApplication frm = new frmAddUpdateLocalDrivingLicenseApplication();
+            frm.ShowDialog();
         }
 
-        private void manageDriversToolStripMenuItem_Click(object sender, EventArgs e)
+        private void internationalLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            panelContainer.Controls.Clear();
-            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.Drivers, bus.clsDriver.GetAll());
-            ctrl.Dock = DockStyle.Fill;
-            panelContainer.Controls.Add(ctrl);
+            frmIssueInternationalDrivingLicense frm = new frmIssueInternationalDrivingLicense();
+            frm.ShowDialog();
         }
 
-        private void manageTestTypesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void renewDrivingLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            panelContainer.Controls.Clear();
-            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.TestAppointments, bus.clsTestType.GetAllTestTypes());
-            ctrl.Dock = DockStyle.Fill;
-            panelContainer.Controls.Add(ctrl);
+            frmRenewLocalDrivingLicense frm = new frmRenewLocalDrivingLicense();
+            frm.ShowDialog();
         }
 
-        private void manageApplicationTypesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void replacementForLostOrDamagedLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            panelContainer.Controls.Clear();
-            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.ApplicationTypes, bus.clsApplicationTypes.GetAll());
-            ctrl.Dock = DockStyle.Fill;
-            panelContainer.Controls.Add(ctrl);
+            frmReplaceLostOrDamagedLicense frm = new frmReplaceLostOrDamagedLicense();
+            frm.ShowDialog();
         }
 
-        private void internationalLicenseApplicationsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void releaseDetainedDrivingLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            panelContainer.Controls.Clear();
-            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.InternationalDrivingLicenseApplications, bus.clsApplications.GetAllInternationalApplications());
-            ctrl.Dock = DockStyle.Fill;
-            panelContainer.Controls.Add(ctrl);
+            frmReleaseDetainedLicenseApplication frm = new frmReleaseDetainedLicenseApplication();
+            frm.ShowDialog();
         }
 
+        private void detainLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmDetainLicenseApplication frm = new frmDetainLicenseApplication();
+            frm.ShowDialog();
+        }
+
+        private void releaseDetainedLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmReleaseDetainedLicenseApplication frm = new frmReleaseDetainedLicenseApplication();
+            frm.ShowDialog();
+        }
+
+        // =========================================================
+        // 2. Manage Tables (All loaded inside panelContainer via ctrlDataManagement)
+        // =========================================================
+
+        // إدارة طلبات الرخص المحلية
         private void localDrivingLicenseApplicationsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            _LoadDataControl(clsHelpers.enDataMode.LocalDrivingLicenseApplications, bus.clsApplications.GetAllLocalApplications());
+        }
+
+        // إدارة الرخص الدولية
+        private void internationalLicenseApplicationsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _LoadDataControl(clsHelpers.enDataMode.InternationalDrivingLicenseApplications, bus.clsApplications.GetAllInternationalApplications());
+        }
+
+        // إدارة الرخص المحجوزة
+        private void manageDetainedLicensesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _LoadDataControl(clsHelpers.enDataMode.DetainedLicenses, bus.clsDetainedLicense.GetAllDetainedLicenses());
+        }
+
+        // إدارة الأشخاص
+        private void managePeopleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _LoadDataControl(clsHelpers.enDataMode.People, bus.clsPeople.GetAll());
+        }
+
+        // إدارة السائقين
+        private void manageDriversToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _LoadDataControl(clsHelpers.enDataMode.Drivers, bus.clsDriver.GetAll());
+        }
+
+        // إدارة المستخدمين
+        private void manageUserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _LoadDataControl(clsHelpers.enDataMode.Users, bus.clsUser.GetAll());
+        }
+
+        // إدارة أنواع الاختبارات
+        private void manageTestTypesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _LoadDataControl(clsHelpers.enDataMode.TestTypes, bus.clsTestType.GetAllTestTypes());
+        }
+
+        // إدارة أنواع الطلبات
+        private void manageApplicationTypesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _LoadDataControl(clsHelpers.enDataMode.ApplicationTypes, bus.clsApplicationTypes.GetAll());
+        }
+
+        // =========================================================
+        // 3. Account Settings
+        // =========================================================
+        private void currentUserInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             panelContainer.Controls.Clear();
-            ctrlDataManagement ctrl = new ctrlDataManagement(helpers.clsHelpers.enDataMode.LocalDrivingLicenseApplications, bus.clsApplications.GetAllLocalApplications());
-            ctrl.Dock = DockStyle.Fill;
-            panelContainer.Controls.Add(ctrl);
+            clsUser user = clsGlobal.CurrentUser;
+            if (user != null)
+            {
+                ctrlUserCard ctrl = new ctrlUserCard();
+                ctrl.LoadUserInfo(user.UserID);
+                ctrl.Dock = DockStyle.Fill;
+                panelContainer.Controls.Add(ctrl);
+            }
         }
 
         private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
@@ -102,25 +147,6 @@ public partial class MainForm : Form{
             ctrlChangePassword ctrl = new ctrlChangePassword();
             ctrl.Dock = DockStyle.Fill;
             panelContainer.Controls.Add(ctrl);
-
-        }
-
-        private void currentUserInfoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            panelContainer.Controls.Clear();
-            clsUser user = clsGlobal.CurrentUser;
-            ctrlUserCard ctrl = new ctrlUserCard();
-            ctrl.LoadUserInfo(user.UserID);
-            ctrl.Dock = DockStyle.Fill;
-            panelContainer.Controls.Add(ctrl);
-        }
-
-
-
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-
         }
 
         private void signOutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -137,7 +163,10 @@ public partial class MainForm : Form{
                 this.Close();
             }
         }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
-
-

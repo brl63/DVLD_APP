@@ -194,6 +194,35 @@ namespace Data
             }
         }
 
+        public static bool GetLicenseClassInfoByClassName(string className, ref int licenseClassID, ref string classDescription, ref byte minimumAllowedAge, ref byte defaultValidityLength, ref decimal classFees)
+        {
+            string query = "SELECT * FROM LicenseClasses WHERE ClassName = @ClassName";
+
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@ClassName", className);
+                try
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            licenseClassID = (int)reader["LicenseClassID"];
+                            classDescription = (string)reader["ClassDescription"];
+                            minimumAllowedAge = (byte)reader["MinimumAllowedAge"];
+                            defaultValidityLength = (byte)reader["DefaultValidityLength"];
+                            classFees = Convert.ToDecimal(reader["ClassFees"]);
+                            return true;
+                        }
+                    }
+                }
+                catch { return false; }
+            }
+            return false;
+        }
+
 
 
     }
