@@ -43,7 +43,7 @@ namespace DVLD_APP
                 // لو الشخص ليس سائقاً بعد، تظل الجداول فارغة
                 lblLocalLicensesRecords.Text = "0";
                 lblInternationalLicensesRecords.Text = "0";
-                
+
 
                 dgvLocalLicenses.Dock = DockStyle.Fill;
                 dgvLocalLicenses.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -80,8 +80,8 @@ namespace DVLD_APP
             if (dgvInternationalLicenses.CurrentRow != null)
             {
                 int internationalLicenseID = Convert.ToInt32(dgvInternationalLicenses.CurrentRow.Cells["InternationalLicenseID"].Value);
-                 frmShowInternationalLicenseInfo frm = new frmShowInternationalLicenseInfo(internationalLicenseID);
-                 frm.ShowDialog();
+                frmShowInternationalLicenseInfo frm = new frmShowInternationalLicenseInfo(internationalLicenseID);
+                frm.ShowDialog();
             }
         }
     }

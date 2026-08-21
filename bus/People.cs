@@ -1,12 +1,7 @@
 ﻿using Data;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Net;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace bus
 {
@@ -14,7 +9,7 @@ namespace bus
 
     public class clsPeople
     {
-    public clsPeople(int PersonID, string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gender, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
+        public clsPeople(int PersonID, string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gender, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
         {
             this.PersonID = PersonID;
             this.NationalNo = NationalNo;
@@ -87,11 +82,11 @@ namespace bus
         public static bool Delete(int PersonID)
         {
 
-            if (Data.clsPerson.IsPersonDriverOrUser(PersonID)& clsPerson.IsHaveAnyApplcations(PersonID)) { return false; }
+            if (Data.clsPerson.IsPersonDriverOrUser(PersonID) & clsPerson.IsHaveAnyApplcations(PersonID)) { return false; }
             return Data.clsPerson.Delete(PersonID);
         }
 
-        public static clsPeople Find(int PersonID)   
+        public static clsPeople Find(int PersonID)
         {
             string NationalNo = "";
             string FirstName = "";

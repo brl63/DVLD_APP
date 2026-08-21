@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using bus;
+﻿using bus;
 using DVLD_APP.helpers;
+using System;
+using System.Windows.Forms;
 
 namespace DVLD_APP
 {
@@ -28,22 +21,22 @@ namespace DVLD_APP
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if(txtCurrentPassword.Text == clsGlobal.CurrentUser.Password)
-            { 
-            if(txtNewPassword.Text == txtConfirmpassword.Text)
+            if (txtCurrentPassword.Text == clsGlobal.CurrentUser.Password)
             {
+                if (txtNewPassword.Text == txtConfirmpassword.Text)
+                {
                     bus.clsUser.ChangePassword(clsGlobal.CurrentUser.UserID, txtNewPassword.Text);
                     MessageBox.Show("Password changed successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Passwords do not match.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
             }
             else
             {
-                MessageBox.Show("Passwords do not match.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            
-            }
-            else
-            {
-            MessageBox.Show("Current Password is incorrect.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Current Password is incorrect.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

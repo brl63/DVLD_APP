@@ -1,12 +1,5 @@
 ﻿using bus;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DVLD_APP
@@ -20,7 +13,7 @@ namespace DVLD_APP
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -30,7 +23,7 @@ namespace DVLD_APP
 
         private void tbPersonInfo_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            if (e.TabPage == tbLoginInfo) 
+            if (e.TabPage == tbLoginInfo)
             {
                 if (ctrlPersonCardWithFilter1.PersonID <= 0)
                 {

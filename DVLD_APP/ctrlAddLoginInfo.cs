@@ -1,5 +1,4 @@
-﻿using bus;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace DVLD_APP
@@ -32,7 +31,7 @@ namespace DVLD_APP
             lblUserID.Text = "User Id = " + newUserID.ToString();
         }
 
-       public bool IsValidData()
+        public bool IsValidData()
         {
             if (string.IsNullOrWhiteSpace(txtUserName.Text))
             {

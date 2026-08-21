@@ -1,6 +1,6 @@
-﻿using System;
+﻿using bus;
+using System;
 using System.Windows.Forms;
-using bus; 
 
 namespace DVLD_APP
 {

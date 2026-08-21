@@ -1,18 +1,17 @@
-﻿using System;
-using System.Drawing;
+﻿using bus;
+using System;
 using System.IO;
 using System.Windows.Forms;
-using bus; 
 
 namespace DVLD_APP
 {
     public partial class ctrlPersonCard : UserControl
     {
-        private bus.clsPeople _Person; 
+        private bus.clsPeople _Person;
         private int _PersonID = -1;
 
-        public int PersonID => _PersonID; 
-        public clsPeople SelectedPersonInfo => _Person; 
+        public int PersonID => _PersonID;
+        public clsPeople SelectedPersonInfo => _Person;
 
         public bool EnableEditLink
         {
@@ -45,7 +44,7 @@ namespace DVLD_APP
             lblEditPersonInfo.Enabled = false;
         }
 
-        public  void LoadPersonInfo(int PersonID)
+        public void LoadPersonInfo(int PersonID)
         {
             _Person = clsPeople.Find(PersonID);
             if (_Person == null)
