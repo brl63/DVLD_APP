@@ -1,11 +1,11 @@
 # DVLD Management System
 
-## 📌 Overview
+##  Overview
 The **DVLD (Drivers and Vehicles License Department) Management System** is a comprehensive desktop solution designed to manage all aspects of driving license administration. Built using a strict **3-Tier Architecture**, the system handles the issuance, renewal, and replacement of driving licenses, including international permits. It ensures regulatory compliance, data integrity, and driver competence through automated validation pipelines and testing lifecycles.
 
 ---
 
-##  Demo / Testing Credentials
+##  Demo 
 You can use the following default account to sign in and explore all system modules:
 * **Username:** `user4`
 * **Password:** `1234`
@@ -24,22 +24,22 @@ You can use the following default account to sign in and explore all system modu
 ---
 
 ##  System Management
-* **User Management:**  
+ **User Management:**  
   * Add, view, update, delete, and manage active/inactive states for operator accounts.  
   * Secure credential management, login authentication, and password change modules.  
   * Role and audit tracking (`CreatedByUserID`) across all departmental actions.
 * **Person Management:**  
   * Centralized registry enforcing unique national identification numbers.  
   * Manage comprehensive profile details: full name, date of birth, contact details, address, and personal photo path.
-* **Request / Application Management:**  
+ **Request / Application Management:**  
   * Track and search applications by ID or applicant national number.  
   * Live status tracking across lifecycle stages (`New`, `Cancelled`, `Completed`).
 * **Test Management:**  
   * Complete 3-stage testing pipeline: **Vision Test**, **Written (Theory) Test**, and **Practical (Street) Driving Test**.  
   * Manage test appointment scheduling, lock past records, and enforce sequential passing requirements.
-* **License Category Management:**  
+ **License Category Management:**  
   * Configure license categories including minimum age requirements, default validity periods, and class fees.
-* **Detained Licenses Management:**  
+ **Detained Licenses Management:**  
   * Track custody logs, detention dates, fine assessments, and releasing authorization.
 
 ---
@@ -61,7 +61,7 @@ You can use the following default account to sign in and explore all system modu
 * **User Interface:** Windows Forms (WinForms) with custom modular `UserControls`
 * **Database & ORM:** Microsoft SQL Server using pure ADO.NET (`SqlConnection`, `SqlCommand`, `SqlDataReader`, `SqlDataAdapter`)
 
----
+
 
 ## How to Run the Project Locally
 
@@ -89,7 +89,7 @@ You can use the following default account to sign in and explore all system modu
    * Set `DVLD_APP` as the **StartUp Project**.
    * Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd> to build the solution, then press <kbd>F5</kbd> to run.
 
----
+
 
 ##  Database Schema & Core Entities
 
@@ -99,41 +99,22 @@ You can use the following default account to sign in and explore all system modu
 ##  Reference Enums & ID Mappings
 
 ### 1. Application Types (`enApplicationType`)
-* **ID 1 (`NewDrivingLicense`):** First-time application for a local driving license.
-* **ID 2 (`RenewDrivingLicense`):** Application to renew an expired license.
-* **ID 3 (`ReplaceLostDrivingLicense`):** Issuing a replacement copy for a lost license.
-* **ID 4 (`ReplaceDamagedDrivingLicense`):** Issuing a replacement copy for a damaged license.
-* **ID 5 (`ReleaseDetainedDrivingLicense`):** Formal request to pay fines and retrieve a detained license.
-* **ID 6 (`NewInternationalLicense`):** Application for an International Driving Permit.
-* **ID 7 (`RetakeTest`):** Auto-generated application when scheduling a re-test after failing.
+* **ID 1 (`NewDrivingLicense`):**
+* **ID 2 (`RenewDrivingLicense`):** 
+* **ID 3 (`ReplaceLostDrivingLicense`):**
+* **ID 4 (`ReplaceDamagedDrivingLicense`):**
+* **ID 5 (`ReleaseDetainedDrivingLicense`):**
+* **ID 6 (`NewInternationalLicense`):**
+* **ID 7 (`RetakeTest`):**
 
-### 2. Application Status (`enApplicationStatus`)
-* **ID 1 (`New`):** The application is active and currently in progress.
-* **ID 2 (`Cancelled`):** The application was cancelled by the user or operator.
-* **ID 3 (`Completed`):** The full process is completed (license issued or released).
-
-### 3. Test Types (`enTestType`)
-* **ID 1 (`VisionTest`):** Eye and visual examination (Stage 1).
-* **ID 2 (`WrittenTest`):** Theory rules and road signs test (Stage 2).
-* **ID 3 (`StreetTest`):** Practical vehicle handling and road test (Stage 3).
-
-### 4. License Classes Specifications
-* **Class 1 (Small Motorcycle):** Minimum Age: `18` \| Validity: `5 Years`
-* **Class 2 (Heavy Motorcycle License):** Minimum Age: `21` \| Validity: `5 Years`
-* **Class 3 (Ordinary driving license):** Minimum Age: `18` \| Validity: `10 Years`
-* **Class 4 (Commercial):** Minimum Age: `21` \| Validity: `10 Years`
-* **Class 5 (Agriculture):** Minimum Age: `18` \| Validity: `10 Years`
-* **Class 6 (Small and medium bus):** Minimum Age: `21` \| Validity: `10 Years`
-* **Class 7 (Truck and heavy vehicle):** Minimum Age: `21` \| Validity: `10 Years`
-
-### 5. Issue Reasons (`enIssueReason`)
-* **ID 1 (`FirstTime`):** License issued after passing all testing stages.
-* **ID 2 (`Renew`):** License reissued upon expiration.
-* **ID 3 (`ReplacementForDamaged`):** License reissued due to physical damage.
-* **ID 4 (`ReplacementForLost`):** License reissued due to loss.
+### 2. Issue Reasons (`enIssueReason`)
+* **ID 1 (`FirstTime`):**
+* **ID 2 (`Renew`):**
+* **ID 3 (`ReplacementForDamaged`):**
+* **ID 4 (`ReplacementForLost`):**
 ---
 
-## ⚠️ Important Note Regarding Profile / Person Images
+##  Important Note Regarding Profile
 * **Sample Data Image Paths:** The seeded database records contain absolute file paths referencing local image directories used during development.
 * **Expected Behavior:** When running the project on a new machine, existing sample profiles may not display photos or may trigger image loading warnings due to mismatched local directories. This is completely normal and does not affect application functionality.
 * **Adding New Data:** Creating new people or updating existing records via the application UI using your local image picker will save and display images correctly on your system.
