@@ -1,6 +1,5 @@
 # DVLD Management System
 
-##  Overview
 The **DVLD (Drivers and Vehicles License Department) Management System** is a comprehensive desktop solution designed to manage all aspects of driving license administration. Built using a strict **3-Tier Architecture**, the system handles the issuance, renewal, and replacement of driving licenses, including international permits. It ensures regulatory compliance, data integrity, and driver competence through automated validation pipelines and testing lifecycles.
 
 ---
@@ -23,26 +22,6 @@ You can use the following default account to sign in and explore all system modu
 
 ---
 
-##  System Management
- **User Management:**  
-  * Add, view, update, delete, and manage active/inactive states for operator accounts.  
-  * Secure credential management, login authentication, and password change modules.  
-  * Role and audit tracking (`CreatedByUserID`) across all departmental actions.
-* **Person Management:**  
-  * Centralized registry enforcing unique national identification numbers.  
-  * Manage comprehensive profile details: full name, date of birth, contact details, address, and personal photo path.
- **Request / Application Management:**  
-  * Track and search applications by ID or applicant national number.  
-  * Live status tracking across lifecycle stages (`New`, `Cancelled`, `Completed`).
-* **Test Management:**  
-  * Complete 3-stage testing pipeline: **Vision Test**, **Written (Theory) Test**, and **Practical (Street) Driving Test**.  
-  * Manage test appointment scheduling, lock past records, and enforce sequential passing requirements.
- **License Category Management:**  
-  * Configure license categories including minimum age requirements, default validity periods, and class fees.
- **Detained Licenses Management:**  
-  * Track custody logs, detention dates, fine assessments, and releasing authorization.
-
----
 
 ##  Technologies Used
 * **Architecture:** 3-Tier Architecture (`Data Access Layer`, `Business Logic Layer`, `Presentation Layer`)
