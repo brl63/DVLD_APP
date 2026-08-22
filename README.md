@@ -5,29 +5,28 @@ The **DVLD (Drivers and Vehicles License Department) Management System** is a co
 ---
 
 ##  Demo 
-You can use the following default account to sign in and explore all system modules:
+You can use the following default account to sign in and explore all the system :
 * **Username:** `user4`
 * **Password:** `1234`
 
 ---
 
 ##  Key Services
-* **New Driving License:** Apply for a new driving license across multiple license categories with dynamic fee structures.
-* **Renew License:** Renew an existing driving license, ensuring records are up-to-date, valid, and previous licenses are deactivated.
-* **Replace Lost License:** Issue a replacement for a misplaced license with proper validation to prevent duplicate active records.
-* **Replace Damaged License:** Replace a physically damaged license with identical expiration dates.
-* **Release Detained Licenses:** Release an impounded license by settling required service fees and any associated fines.
-* **Issuance of an International License:** Apply for an International Driving Permit, exclusively available to holders of valid local licenses (Class 3).
-* **Re-examination Service:** Request test retakes with automated fee calculation for failed test stages.
+* **New Driving License:** Apply for a new driving license across multiple license categories with dynamic fee structures
+* **Renew License:** Renew an existing driving license, ensuring records are up-to-date, valid, and previous licenses are deactivated
+* **Replace Lost License:** Issue a replacement for a misplaced license with proper validation to prevent duplicate active records
+* **Replace Damaged License:** Replace a physically damaged license with identical expiration dates
+* **Release Detained Licenses:** Release an impounded license by settling required service fees and any associated fines
+* **Issuance of an International License:** Apply for an International Driving Permit, exclusively available to holders of valid local licenses (Class 3)
+* **Re-examination Service:** Request test retakes 
 
 ---
 
 
 ##  Technologies Used
 * **Architecture:** 3-Tier Architecture (`Data Access Layer`, `Business Logic Layer`, `Presentation Layer`)
-* **Framework / Language:** C# (.NET Framework)
-* **User Interface:** Windows Forms (WinForms) with custom modular `UserControls`
-* **Database & ORM:** Microsoft SQL Server using pure ADO.NET (`SqlConnection`, `SqlCommand`, `SqlDataReader`, `SqlDataAdapter`)
+* **Framework / Language:** C# (.NET Framework) / windows Forms / sqlServer / ado.net
+
 
 
 
