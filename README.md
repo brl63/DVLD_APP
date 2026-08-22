@@ -61,8 +61,7 @@ You can use the following default account to sign in and explore all the system 
 ---
 
 ##  Important Note Regarding Profile
-* **Sample Data Image Paths:** The seeded database records contain absolute file paths referencing local image directories used during development.
-* **Expected Behavior:** When running the project on a new machine, existing sample profiles may not display photos or may trigger image loading warnings due to mismatched local directories. This is completely normal and does not affect application functionality.
+* **Sample Data Image Paths:** The seeded database records contain absolute file paths referencing local image directories used during development so  what will happen is When running the project on a new machine, existing sample profiles may not display photos or may trigger image loading warnings due to mismatched local directories. This is completely normal and does not affect application functionality.
 * **Adding New Data:** Creating new people or updating existing records via the application UI using your local image picker will save and display images correctly on your system.
 * Also there is a problem actually whilke searching about a person in ctrlPersonCardWithFilter that showed the search is wrong : its not wrong actually u just have to search with the opposite thing u wanna search about ( if u wanna search for a person by personid choose the national num ) and as that "I was too lazy to solve that"
 
