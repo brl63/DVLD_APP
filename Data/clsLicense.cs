@@ -23,22 +23,14 @@ namespace Data
                         {
                             applicationID = reader.GetInt32(reader.GetOrdinal("ApplicationID"));
                             driverID = reader.GetInt32(reader.GetOrdinal("DriverID"));
-
-                            // للتعامل مع المسميين سواء LicenseClass أو LicenseClassID
-                            int classOrdinal = reader.GetOrdinal(reader.GetSchemaTable().Select("ColumnName = 'LicenseClassID'").Length > 0 ? "LicenseClassID" : "LicenseClass");
-                            licenseClassID = reader.GetInt32(classOrdinal);
-
+                            licenseClassID = reader.GetInt32(reader.GetOrdinal("LicenseClass"));
                             issueDate = reader.GetDateTime(reader.GetOrdinal("IssueDate"));
                             expirationDate = reader.GetDateTime(reader.GetOrdinal("ExpirationDate"));
                             notes = reader.IsDBNull(reader.GetOrdinal("Notes")) ? "" : reader.GetString(reader.GetOrdinal("Notes"));
                             paidFees = reader.GetDecimal(reader.GetOrdinal("PaidFees"));
                             isActive = reader.GetBoolean(reader.GetOrdinal("IsActive"));
-
-                            if (reader.GetSchemaTable().Select("ColumnName = 'IssueReason'").Length > 0 && !reader.IsDBNull(reader.GetOrdinal("IssueReason")))
-                                issueReason = reader.GetByte(reader.GetOrdinal("IssueReason"));
-
-                            if (reader.GetSchemaTable().Select("ColumnName = 'CreatedByUserID'").Length > 0 && !reader.IsDBNull(reader.GetOrdinal("CreatedByUserID")))
-                                createdByUserID = reader.GetInt32(reader.GetOrdinal("CreatedByUserID"));
+                            issueReason = reader.GetByte(reader.GetOrdinal("IssueReason"));
+                            createdByUserID = reader.GetInt32(reader.GetOrdinal("CreatedByUserID"));
 
                             return true;
                         }
@@ -65,21 +57,14 @@ namespace Data
                         {
                             licenseID = reader.GetInt32(reader.GetOrdinal("LicenseID"));
                             applicationID = reader.GetInt32(reader.GetOrdinal("ApplicationID"));
-
-                            int classOrdinal = reader.GetOrdinal(reader.GetSchemaTable().Select("ColumnName = 'LicenseClassID'").Length > 0 ? "LicenseClassID" : "LicenseClass");
-                            licenseClassID = reader.GetInt32(classOrdinal);
-
+                            licenseClassID = reader.GetInt32(reader.GetOrdinal("LicenseClass"));
                             issueDate = reader.GetDateTime(reader.GetOrdinal("IssueDate"));
                             expirationDate = reader.GetDateTime(reader.GetOrdinal("ExpirationDate"));
                             notes = reader.IsDBNull(reader.GetOrdinal("Notes")) ? "" : reader.GetString(reader.GetOrdinal("Notes"));
                             paidFees = reader.GetDecimal(reader.GetOrdinal("PaidFees"));
                             isActive = reader.GetBoolean(reader.GetOrdinal("IsActive"));
-
-                            if (reader.GetSchemaTable().Select("ColumnName = 'IssueReason'").Length > 0 && !reader.IsDBNull(reader.GetOrdinal("IssueReason")))
-                                issueReason = reader.GetByte(reader.GetOrdinal("IssueReason"));
-
-                            if (reader.GetSchemaTable().Select("ColumnName = 'CreatedByUserID'").Length > 0 && !reader.IsDBNull(reader.GetOrdinal("CreatedByUserID")))
-                                createdByUserID = reader.GetInt32(reader.GetOrdinal("CreatedByUserID"));
+                            issueReason = reader.GetByte(reader.GetOrdinal("IssueReason"));
+                            createdByUserID = reader.GetInt32(reader.GetOrdinal("CreatedByUserID"));
 
                             return true;
                         }
@@ -181,7 +166,6 @@ namespace Data
             {
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
-                    connection.Open();
                     using (SqlDataAdapter adapter = new SqlDataAdapter(command))
                     {
                         DataTable licensesTable = new DataTable();
@@ -318,7 +302,7 @@ namespace Data
 
         public static bool CheckActiveLicenseByClass(int driverID, int classID)
         {
-            string sql = "SELECT COUNT(*) FROM Licenses WHERE DriverID = @DriverID AND (LicenseClass = @ClassID OR LicenseClassID = @ClassID) AND IsActive = 1";
+            string sql = "SELECT COUNT(*) FROM Licenses WHERE DriverID = @DriverID AND LicenseClass = @ClassID AND IsActive = 1";
             using (SqlConnection connection = new SqlConnection(clsDataAccessSetting._connectionString))
             {
                 using (SqlCommand command = new SqlCommand(sql, connection))
@@ -352,7 +336,5 @@ namespace Data
             }
             return licenseID;
         }
-
-
     }
 }

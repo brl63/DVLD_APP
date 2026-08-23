@@ -332,7 +332,7 @@
     <None Include="Resources\DefaultFemale.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\source\repos\D\bus\bus\bus.csproj">
+    <ProjectReference Include="..\bus\bus.csproj">
       <Project>{f7d064b8-1b7b-430d-9a67-e754ec10c475}</Project>
       <Name>bus</Name>
     </ProjectReference>
