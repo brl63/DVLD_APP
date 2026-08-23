@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # DVLD Management System
 
 The **DVLD (Drivers and Vehicles License Department) Management System** is a comprehensive desktop solution designed to manage all aspects of driving license administration. Built using a strict **3-Tier Architecture**, the system handles the issuance, renewal, and replacement of driving licenses, including international permits. It ensures regulatory compliance, data integrity, and driver competence through automated validation pipelines and testing lifecycles.
@@ -73,4 +71,3 @@ You can use the following default account to sign in and explore all the system 
 * Also there is a problem actually whilke searching about a person in ctrlPersonCardWithFilter that showed the search is wrong : its not wrong actually u just have to search with the opposite thing u wanna search about ( if u wanna search for a person by personid choose the national num ) and as that "I was too lazy to solve that"
 
 ---
->>>>>>> e23fb27833be5563c23d52dac542801febb9a70e
