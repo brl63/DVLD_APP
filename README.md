@@ -39,8 +39,9 @@ You can use the following default account to sign in and explore all the system 
    git clone https://github.com/brl63/DVLD_APP.git
    ```
    Make sure that the 3 projects be cloned if not add them manually Add exciting project
+   also make sure that the Presentation layer have a ref to the bus and the bus to the data 
 
-2. **Database Setup:**
+3. **Database Setup:**
    * Open **SQL Server Management Studio (SSMS)**.
    * Create a new database named `DVLD`.
    * Open and execute the script located at `Database/DVLD_DB_Script.sql` against your `DVLD` database to build all tables, views, and seed data.
@@ -50,7 +51,7 @@ You can use the following default account to sign in and explore all the system 
    - Click **Add**, locate and select the `DVLD.bak` file, then click **OK**.
      then click refresh and see if it added correctly
 
-3. **Configure Connection String:**
+4. **Configure Connection String:**
    * In the **Data Access Layer** project, open `clsDataAccessSetting.cs`.
    * Verify or update the connection string to match your local SQL Server instance:
      ```csharp
