@@ -33,6 +33,7 @@ You can use the following default account to sign in and explore all the system 
 ## How to Run the Project Locally
 
 * Make sure to have ssms
+  setup for windows only
 
 1. **Clone the Repository:**
    ```bash
@@ -58,6 +59,11 @@ You can use the following default account to sign in and explore all the system 
      public static string _connectionString = "Server=.;Database=DVLD;Integrated Security=True;";
      ```
     and run but make sure that the startup project is on DVLD_APP
+
+## important if u will download the release 
+-make sure that tge conn string match that your database name and security and place u did put in 
+for the release I did upload it runs on local database using ssms named DVLD with windows security true
+if u did have a problem after the logging screen its 100% from the conn string 
 
 
 
