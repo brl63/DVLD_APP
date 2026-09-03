@@ -80,8 +80,10 @@ namespace DVLD_APP
             ctrlPersonCardWithFilter1.LoadPersonInfo(_LocalApp.ApplicantPersonID);
             ctrlPersonCardWithFilter1.FilterEnabled = false;
 
-            lblLocalDrivingLicebseApplicationID.Text = _LocalDrivingLicenseApplicationID.ToString(); lblApplicationDate.Text = _LocalApp.ApplicationDate.ToShortDateString();
-            cbLicenseClasses.SelectedIndex = cbLicenseClasses.FindString(clsLicenseClass.Find(_LocalApp.LicenseClassID)?.ClassName); lblApplicationFees.Text = _LocalApp.PaidFees.ToString("0.00");
+            lblLocalDrivingLicebseApplicationID.Text = _LocalDrivingLicenseApplicationID.ToString();
+            lblApplicationDate.Text = _LocalApp.ApplicationDate.ToShortDateString();
+            cbLicenseClasses.SelectedIndex = cbLicenseClasses.FindString(clsLicenseClass.Find(_LocalApp.LicenseClassID)?.ClassName);
+            lblApplicationFees.Text = _LocalApp.PaidFees.ToString("0.00");
             lblCreatedByUser.Text = clsUser.Find(_LocalApp.CreatedByUserID)?.UserName ?? "Admin";
         }
 
@@ -135,6 +137,7 @@ namespace DVLD_APP
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+        
             int licenseClassID = clsLicenseClass.Find(cbLicenseClasses.Text).LicenseClassID;
 
             int activeLicenseID = clsLicense.GetActiveLicenseIDByApplicationID(ctrlPersonCardWithFilter1.PersonID);
@@ -165,7 +168,10 @@ namespace DVLD_APP
 
             if (_LocalApp.Save())
             {
-                lblLocalDrivingLicebseApplicationID.Text = _LocalDrivingLicenseApplicationID.ToString();
+                // تحديث الـ ID والـ Label من الكائن مباشرة بعد الحفظ
+                _LocalDrivingLicenseApplicationID = _LocalApp.LocalDrivingLicenseApplicationID;
+                lblLocalDrivingLicebseApplicationID.Text = _LocalApp.LocalDrivingLicenseApplicationID.ToString();
+
                 _Mode = enMode.Update;
                 lblTitle.Text = "Update Local Driving License Application";
                 this.Text = "Update Local Driving License Application";
@@ -176,6 +182,7 @@ namespace DVLD_APP
             {
                 MessageBox.Show("Error: Data Is not Saved Successfully.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        
         }
 
         private void btnClose_Click(object sender, EventArgs e)

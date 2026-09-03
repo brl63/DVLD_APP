@@ -118,11 +118,21 @@ namespace bus
                     this.CreatedByUserID,
                     this.LicenseClassID);
 
+                // بعد حفظ الرخصة المحلية، نقوم بجلب الـ ApplicationID الأساسي المربوط بها
+                if (this.LocalDrivingLicenseApplicationID != -1)
+                {
+                    clsApplications appInfo = FindByLocalDrivingAppID(this.LocalDrivingLicenseApplicationID);
+                    if (appInfo != null)
+                    {
+                        this.ApplicationID = appInfo.ApplicationID;
+                    }
+                }
+
                 return (this.LocalDrivingLicenseApplicationID != -1);
             }
             else
             {
-                // 2. إذا كان طلباً عاماً (فك حجز، تجديد، استبدال تالف/مفقود، رخصة دولية)
+                // 2. إذا كان طلباً عاماً
                 this.ApplicationID = Data.clsApplication.AddNewApplication(
                     this.ApplicantPersonID,
                     this.ApplicationDate,
@@ -381,7 +391,6 @@ namespace bus
 
         public int IssueLicenseForTheFistTime(string notes, int createdByUserID)
         {
-            // 1. فحص وجود السائق في جدول Drivers أو إنشاؤه
             int driverID = -1;
             clsDriver driver = clsDriver.FindByPersonID(this.ApplicantPersonID);
 
@@ -400,12 +409,10 @@ namespace bus
                 driverID = driver.DriverID;
             }
 
-            // 2. جلب مدة الصلاحية والرسوم الخاصة بفئة الرخصة
             clsLicenseClass licenseClass = clsLicenseClass.Find(this.LicenseClassID);
             int defaultValidity = licenseClass != null ? licenseClass.DefaultValidityLength : 10;
             decimal classFees = licenseClass != null ? licenseClass.ClassFees : 0;
 
-            // 3. إنشاء كائن الرخصة وتعيين كافة الحقول الإجبارية
             clsLicense license = new clsLicense();
             license.ApplicationID = this.ApplicationID;
             license.DriverID = driverID;
@@ -421,7 +428,6 @@ namespace bus
             if (!license.Save())
                 return -1;
 
-            // 4. تحديث حالة الطلب إلى Completed (3)
             this.SetComplete();
 
             return license.LicenseID;
