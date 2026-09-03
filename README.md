@@ -27,13 +27,16 @@ You can use the following default account to sign in and explore all the system 
 * **Architecture:** 3-Tier Architecture (`Data Access Layer`, `Business Logic Layer`, `Presentation Layer`)
 * **Framework / Language:** C# (.NET Framework) / windows Forms / sqlServer / ado.net
 
+## who can run it
+  setup for windows only
 
+## How to run the project
+ Download the cloud release and run ( this will work only before November 2026
 
 
 ## How to Run the Project Locally
 
 * Make sure to have ssms
-  setup for windows only
 
 1. **Clone the Repository:**
    ```bash
@@ -60,7 +63,7 @@ You can use the following default account to sign in and explore all the system 
      ```
     and run but make sure that the startup project is on DVLD_APP
 
-## important if u will download the release 
+## important if u will download the local release 
 -make sure that tge conn string match that your database name and security and place u did put in 
 for the release I did upload it runs on local database using ssms named DVLD with windows security true
 if u did have a problem after the logging screen its 100% from the conn string 
