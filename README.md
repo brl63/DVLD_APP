@@ -4,6 +4,16 @@ The **DVLD (Drivers and Vehicles License Department) Management System** is a co
 
 ---
 
+## important note about the commits
+there is a problem happend to me on the repo and i tried force push and some commits did delete so if u want to see what i could get from them :
+**ChangePramch**
+u will find that there is 2 pranches in the repo the new one and that okay but doesnt have the old commits if u wanna see the old commits please change the pracnch to Old History or please visit
+ ```bash
+   
+(https://github.com/brl63/DVLD_APP/tree/old-history)https://github.com/brl63/DVLD_APP/tree/old-history   ```
+
+
+
 ##  Demo 
 You can use the following default account to sign in and explore all the system :
 * **Username:** `user4`
